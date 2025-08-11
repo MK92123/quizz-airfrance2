@@ -346,21 +346,9 @@ const BASE = [
 
   // 79
   {t:"Règles transport allumettes cabine ?", o:["1 paquet allumettes sûreté par personne","Pas d’allumettes","‘Strike anywhere’ autorisées","Allumettes interdites cabine"], c:0, e:"1 paquet d’allumettes sûreté autorisé."},
-
-  // 80
-  {t:"Responsabilités manager ‘process override’ ?", o:["Valider dérogations ponctuelles","Annuler billets","Gérer restauration","Attribuer surclassements"], c:0, e:"Manager valide dérogations (‘process override’)."}
 	
-  // 81
-  {t:"Actions en cas de retard vol supérieur à 3 heures ?", o:["Proposer voucher selon réglementation","Ne rien proposer","Annuler vol","Offrir surclassement"], c:0, e:"Voucher proposé à partir de 3 heures de retard."},
-
-  // 82
-  {t:"Catégories priorisées pour hébergement DBC ?", o:["PMR, familles, clients vulnérables","Tous passagers","Derniers arrivés","Clients sans bagages"], c:0, e:"Priorité aux PMR, familles, vulnérables."},
-
-  // 83
-  {t:"Procédure si client filme agent sans autorisation ?", o:["Informer, consigner, alerter","Laisser filmer","Arrêter client","Permettre vidéo"], c:0, e:"Interdit, consigner et alerter."},
-
   // 84
-  {t:"Règle acheminement fauteuils avec batteries lithium ?", o:["Batteries fixées, bornes protégées, info transporteur","Aucune précaution","Interdits","Acceptés librement"], c:0, e:"Respect règles batteries lithium obligatoires."},
+  {t:"Règle acheminement fauteuils avec WCLB ?", o:["Batteries fixées, bornes protégées, info transporteur","Aucune précaution","Interdits","Acceptés librement"], c:0, e:"Respect règles batteries lithium obligatoires."},
 
   // 85
   {t:"Zone dédiée enregistrement UM Terminal 2E ?", o:["Zone 14","Zone 12","Zone 8","Zone 3"], c:0, e:"Zone 14 pour UM."},
@@ -369,76 +357,38 @@ const BASE = [
   {t:"Poids max autorisé animal AVIH ?", o:["75 kg","50 kg","100 kg","8 kg"], c:0, e:"75 kg max avec caisse."},
 
   // 87
-  {t:"Gestion client indiscipliné en vol ?", o:["Appliquer PAM 6.5 passagers indisciplinés","Ignorer","Laisser faire","Offrir surclassement"], c:0, e:"Procédure PAM appliquée."},
-
-  // 88
-  {t:"Actions annulation last minute affrètement ?", o:["Procédure dédiée avec infos et services","Ne rien faire","Annuler réservations","Reporter clients"], c:0, e:"Procédure spécifique appliquée."},
-
-  // 89
-  {t:"Règle sprays auto-défense ?", o:["Interdits en cabine et soute","Autorisé soute","Autorisé cabine","Pas de restriction"], c:0, e:"Sprays interdits transport passagers."},
+  {t:"Gestion client indiscipliné en vol ?", o:["Appliquer PAM 6.5 passagers indisciplinés","Ignorer","Laisser faire","Offrir surclassement"], c:0, e:"Procédure PAM appliquée 6.5 ."},
 
   // 90
   {t:"Limite âge minimum AVIH ?", o:["15 semaines avec vaccins","8 semaines sans vaccin","10 semaines libre","Aucune limite"], c:0, e:"15 semaines minimum avec vaccins."},
 
-  // 91
-  {t:"Objectif waive ‘COM – EMPOWERMENT’ ?", o:["Geste commercial limité par management","Erreur informatique","Indemnisation retard","Assistance PMR"], c:0, e:"Geste commercial dans limites définies."},
-
-  // 92
-  {t:"Procédure changement configuration cabine ?", o:["Suivre PAM surclassement/déclassement","Ne rien faire","Décision PNC","Surclassement automatique"], c:0, e:"Respect des procédures PAM obligatoire."},
-
-  // 93
-  {t:"Objets interdits en bagages soute ?", o:["Batteries lithium non protégées, sprays auto-défense, allumettes ‘strike anywhere’","Liquides <100 ml","Objets fragiles","Vêtements"], c:0, e:"Objets dangereux interdits."},
-
   // 94
   {t:"Délai conseillé transfert bagages ?", o:["2 heures","1 heure","30 minutes","4 heures"], c:0, e:"2 heures recommandé."},
 
-  // 95
-  {t:"Procédure vol mineur sans AST Espagne ?", o:["Refus embarquement","Accepter sans contrôle","Surclassement offert","Voucher donné"], c:0, e:"AST obligatoire, refus sans."},
-
   // 96
-  {t:"Que signifie waive ‘TECHNICAL – PAIDUPGRADE’ ?", o:["Surclassement payant et franchise","Erreur système","Retard bagage","Assistance PMR"], c:0, e:"Waive pour surclassements payants."},
+  {t:"Que signifie waive ‘TECHNICAL – PAIDUPGRADE’ ?", o:["Waive Surclassement payant en cas de $ sur franchise","Waive en cas de service payant en attente de paiement sur Altéa afichant un $","Waive pour un troisième bagage non inclus dans la franchise","Assistance PMR"], c:0, e:"Waive pour surclassements payants."},
 
   // 97
   {t:"Obligations personnel client filmant sans autorisation ?", o:["Informer, consigner, alerter","Laisser filmer","Interdire sans raison","Ignorer"], c:0, e:"Procédure impose action et consignation."},
 
-  // 98
-  {t:"Poids max sac golf waive ‘GOLF’ ?", o:["Franchise spécifique variable","23 kg fixe","32 kg fixe","Aucune limite"], c:0, e:"Waive autorise franchise spécifique."},
-
-  // 99
-  {t:"Qui a accès zone SkyPriority ?", o:["Business, Premium, Flying Blue Gold/Platinum","PMR uniquement","Economy standard","Tous passagers"], c:0, e:"Zone réservée à statuts/classes spécifiques."},
-
   // 100
-  {t:"Limite poids max waive ‘TOLERANCE 1KG’ ?", o:["1 kg supplémentaire","2 kg","Pas de tolérance","5 kg"], c:0, e:"1 kg supplémentaire par bagage autorisé."},
+  {t:"Limite poids max waive ‘TOLERANCE 1KG’ le bagage est à 23.7 ?", o:["1 kg supplémentaire","2 kg","Pas de tolérance","5 kg"], c:0, e:"1 kg supplémentaire par bagage autorisé."},
 
   // 101
   {t:"Procédure en cas de bagage retardé à l’arrivée ?", o:["Informer client, recherche, indemnisation","Ignorer","Retourner bagage","Offrir surclassement"], c:0, e:"Informer et rechercher bagage en retard."},
 
   // 102
-  {t:"Qu’est-ce que le ‘DISCREPANCY – INTERLINE’ ?", o:["Problème bagage entre compagnies","Bagage perdu","Bagage endommagé","Type de billet"], c:0, e:"Problème bagage intercompagnies."},
-
-  // 103
-  {t:"Qui valide l’empowerment opérationnel ?", o:["Manager opérationnel","Directeur escale","Pas de contrôle","PNC seul"], c:0, e:"Validation par manager selon procédure."},
-
-  // 104
-  {t:"Poids max pour bagage cabine First Class ?", o:["2x18 kg","1x12 kg","2x8 kg","1x20 kg"], c:0, e:"Cabine First permet 2 bagages de 18 kg."},
-
-  // 105
-  {t:"Procédure prise en charge mineur voyageant seul ?", o:["Accompagnement dédié, zone spécifique","Pas de prise en charge","Traitement standard","Accompagnement agent sol sans procédure"], c:0, e:"Accompagnement dédié pour mineurs seuls."},
-
-  // 106
-  {t:"Rôle PAM dans Air France ?", o:["Procédures Assistance et Mise en correspondance","Programme Aide Membres","Plan d’Action Manager","Politique Assurance Membres"], c:0, e:"PAM = Procédures Assistance et Mise en correspondance."},
+  {t:"Qu’est-ce que le ‘DISCREPANCY – INTERLINE’ ?", o:["Bagage affichant un $ le client vient d'un vol d'une autre compagnie","Client local se présentant à l'embarquement avec $ dans son dossier","Bagage affichant un $ le client vient d'un vol AF","Type de billet"], c:0, e:"Problème bagage intercompagnies."},
 
   // 107
   {t:"Comment sont traités les bagages ‘SMART luggage’ ?", o:["Batterie amovible retirée pour soute","Toujours interdits","Transportés en cabine","Transport libre"], c:0, e:"Batterie amovible doit être retirée en soute."},
 
   // 108
-  {t:"Procédure en cas de vol en surcharge (overbooking) ?", o:["Proposer volontaires, indemniser selon règlement","Refuser embarquement arbitrairement","Embarquement prioritaire pour tous","Offrir surclassement"], c:0, e:"Recherche volontaires selon réglementation."},
+  {t:"Procédure en cas de vol en surcharge (overbooking) ?", o:["Proposer volontaires, indemniser selon règlement","Refuser embarquement arbitrairement","Gérer par numéro de REQ","Offrir surclassement"], c:0, e:"Recherche volontaires selon réglementation."},
 
   // 109
   {t:"Quels passagers ont priorité à l’embarquement ?", o:["PMR, familles, Flying Blue Gold/Platinum","Clients Economy","Passagers standby","Clients sans billet"], c:0, e:"Priorité donnée aux PMR, familles, Flying Blue."},
 
-  // 110
-  {t:"Quel est le poids maximum d’un bagage enregistré en classe Premium Economy ?", o:["2 bagages de 23 kg","1 bagage 20 kg","3 bagages 18 kg","1 bagage 23 kg"], c:0, e:"Premium Economy : 2 bagages de 23 kg chacun."}
 ];
 
 
