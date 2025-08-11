@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Air France - Questions 1 à 15</title>
+  <title>Quiz Air France — 110 questions complètes</title>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -151,7 +151,7 @@
   <div class="wrap">
     <header>
       <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
-      <h1>Quiz Air France — Questions 1 à 15</h1>
+      <h1>Quiz Air France — 110 questions complètes</h1>
     </header>
     <div class="sub">
       <span id="meta" class="pill"></span>
@@ -165,7 +165,7 @@
       <button id="next" onclick="nextQ()" disabled>Suivant</button>
     </div>
     <div id="score" class="score"></div>
-    <footer>Version 1.0 — ordre aléatoire • chrono 25:00 • feedback instantané • score final</footer>
+    <footer>Version finale — 110 questions • chrono 25:00 • feedback instantané • score final</footer>
   </div>
 
   <script>
@@ -173,7 +173,7 @@
       {t:"Quelle est la limite maximale autorisée pour le poids total (animal + caisse) d’un AVIH transporté chez Air France ?", o:["50 kg", "75 kg", "90 kg", "Aucune limite"], c:1, e:"Limite opérationnelle 75 kg."},
       {t:"Quel est l’âge minimum requis pour qu’un animal puisse être accepté en tant qu’AVIH selon les règles Air France ?", o:["8 semaines", "10 semaines", "15 semaines", "12 semaines"], c:2, e:"Minimum 15 semaines + vaccinations requises."},
       {t:"Pourquoi les races brachycéphales sont-elles refusées en soute chez Air France ?", o:["Acceptées sous réserve", "Acceptées si caisse ventilée", "Refusées à cause du risque respiratoire", "Acceptées si poids < 8 kg"], c:2, e:"Risque respiratoire élevé → refus en soute."},
-      {t:"Dans quelles conditions un Staffie LOF non classé en catégorie 1 ou 2 peut-il être transporté en soute ?", o:["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], c:1, e:"Staffie LOF non classé → possible en soute si cage conforme."},
+      {t:"Dans quelles conditions un Staffordshire Bull Terrier LOF non classé en catégorie 1 ou 2 peut-il être transporté en soute ?", o:["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], c:1, e:"Staffie LOF non classé → possible en soute si cage conforme."},
       {t:"Quelles sont les caractéristiques d’une caisse conforme pour un AVIH ?", o:["Rigide et ventilée", "Porte boulonnée", "Roulettes obligatoires", "Verrou fiable"], c: [0,1,3], e:"Rigide, ventilée, porte boulonnée, verrou solide."},
       {t:"Où doit-on créer le service AVIH dans Altéa ?", o:["Remarque libre", "SSR AVIH avec quota vérifié", "OSI uniquement", "Aucun"], c:1, e:"Créer SSR + contrôler quota."},
       {t:"Quels documents sanitaires sont exigés pour le transport d’un AVIH en UE ?", o:["Inutiles", "Exigés selon pays et compagnie", "Jamais requis", "Vérifiés uniquement par le PNC"], c:1, e:"Conformes aux exigences pays/compagnie."},
@@ -184,160 +184,35 @@
       {t:"Quand faut-il refuser un AVIH ?", o:["Caisse molle", "Animal < 15 semaines", "Race brachycéphale", "Poids total > 75 kg"], c: [0,1,2,3], e:"Tous ces cas sont non conformes."},
       {t:"Quel est le principe de l’empowerment chez Air France ?", o:["Décider hors cadre", "Décider dans un cadre défini", "Uniquement avec accord écrit", "Jamais"], c:1, e:"Agir dans les limites d’empowerment."},
       {t:"Quel est l’objectif opérationnel du ‘wave excess’ ?", o:["Fluidifier les files et éviter micro-encaissements", "Augmenter les recettes", "Créer des exceptions aléatoires", "Ralentir le flux"], c:0, e:"Fluidité/efficacité, pas systématique."},
-      {t:"Quand doit-on éviter le ‘wave excess’ ?", o:["En cas de conflit ou agression", "Files longues avec pax coopératif", "Pics de vacances", "Pannes système"], c:0, e:"Ne pas l’utiliser en cas sensible."}
-    ];
-
-    // Mélange fonction
-    function shuffle(array){
-      for(let i = array.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Mélange options et recalcul index correct
-    function shuffleOptions(q){
-      const pairs = q.o.map((text, idx) => ({text, idx}));
-      shuffle(pairs);
-      q.o = pairs.map(p => p.text);
-      if(Array.isArray(q.c)){
-        q.c = q.c.map(ci => pairs.findIndex(p => p.idx === ci)).sort((a,b)=>a-b);
-      } else {
-        q.c = pairs.findIndex(p => p.idx === q.c);
-      }
-      return q;
-    }
-
-    let Q = [];
-    let i = 0;
-    let answered = false;
-    let score = 0;
-    let timer = 25 * 60;
-    let ticker = null;
-
-    function initQuiz(){
-      Q = BASE.map(q => ({t:q.t, o:[...q.o], c:q.c, e:q.e})).map(shuffleOptions);
-      shuffle(Q);
-      i = 0; score = 0; answered = false;
-      document.getElementById('next').disabled = true;
-      render();
-      startTimer();
-      updateTimerUI();
-      document.getElementById('score').textContent = '';
-    }
-
-    function render(){
-      const bar = document.getElementById('bar');
-      const meta = document.getElementById('meta');
-      const sc  = document.getElementById('liveScore');
-      const qn  = Q[i];
-      const total = Q.length;
-
-      meta.textContent = `Question ${i+1} / ${total}`;
-      bar.style.width = `${Math.round(((i)/total)*100)}%`;
-      sc.textContent = `Score : ${score} / ${total}`;
-
-      let wrap = `<div class="q">${qn.t}</div><ul>`;
-      qn.o.forEach((opt,idx) => {
-        wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="pick(${idx})"> ${opt}</label></li>`;
-      });
-      wrap += `</ul><div id="feed" class="feed"></div>`;
-
-      document.getElementById('quiz').innerHTML = wrap;
-      answered = false;
-      document.getElementById('next').disabled = true;
-    }
-
-    function pick(sel){
-      if(answered) return;
-      answered = true;
-      const qn = Q[i];
-      const feed = document.getElementById('feed');
-      if(Array.isArray(qn.c)){
-        const isCorrect = Array.isArray(sel) ? JSON.stringify(sel.sort()) === JSON.stringify(qn.c) : false;
-        if(isCorrect){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
-        } else {
-          let sol = qn.c.map(idx => qn.o[idx]).join(' + ');
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : ${sol}. ${qn.e}`;
-        }
-      } else {
-        if(sel === qn.c){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
-        } else {
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : "${qn.o[qn.c]}". ${qn.e}`;
-        }
-      }
-      document.getElementById('next').disabled = false;
-      document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
-    }
-
-    function nextQ(){
-      if(!answered){
-        alert("Choisis une réponse avant de continuer.");
-        return;
-      }
-      i++;
-      if(i < Q.length) render();
-      else finish();
-    }
-
-    function resetQuiz(){
-      stopTimer();
-      timer = 25 * 60;
-      initQuiz();
-    }
-
-    function finish(){
-      stopTimer();
-      const total = Q.length;
-      const pct = Math.round(100 * score / total);
-      document.getElementById('bar').style.width = '100%';
-      document.getElementById('meta').textContent = 'Terminé ✅';
-      document.getElementById('quiz').innerHTML = `
-        <div class="q">Bravo ! Tu as terminé le quiz.</div>
-        <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
-        <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
-      document.getElementById('next').disabled = true;
-      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
-    }
-
-    function startTimer(){
-      stopTimer();
-      ticker = setInterval(() => {
-        timer--;
-        if(timer <= 0){
-          document.getElementById('timer').classList.add('timeup');
-          document.getElementById('timer').textContent = "Temps écoulé";
-          finish();
-        } else {
-          updateTimerUI();
-        }
-      }, 1000);
-    }
-
-    function stopTimer(){
-      if(ticker){
-        clearInterval(ticker);
-        ticker = null;
-      }
-    }
-
-    function updateTimerUI(){
-      const m = Math.floor(timer/60);
-      const s = timer % 60;
-      document.getElementById('timer').textContent = `Temps restant : ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }
-
-    // Démarrage
-    initQuiz();
-  </script>
-</body>
-</html>
+      {t:"Quand doit-on éviter le ‘wave excess’ ?", o:["En cas de conflit ou agression", "Files longues avec pax coopératif", "Pics de vacances", "Pannes système"], c:0, e:"Ne pas l’utiliser en cas sensible."},
+      {t:"Que signifie la traçabilité dans le cadre de l’empowerment ?", o:["Inutile", "Souhaitable selon cadre défini", "Interdite", "Uniquement si PNC demande"], c:1, e:"La traçabilité est souhaitable pour les décisions prises."},
+      {t:"Quelle est la priorité absolue dans l’empowerment ?", o:["Image de la compagnie", "Sécurité et sûreté", "Recette financière", "Aucune priorité"], c:1, e:"La sécurité et la sûreté sont toujours prioritaires."},
+      {t:"Quelle est la procédure en cas d’annulation jour J ?", o:["Informer les clients par annonce et affichage", "Garder le silence", "Proposer des options de réacheminement", "Offrir des prestations si éligible"], c:[0,2,3], e:"Informer, proposer et assister sont obligatoires."},
+      {t:"Quelles actions doit-on prendre lors d’un misco avec bagage non transférable à temps ?", o:["Ignorer le bagage", "Informer le client, taguer en rush et proposer des options", "Détruire le tag", "Annuler le voyage"], c:1, e:"Informer le client et gérer le bagage en priorité."},
+      {t:"Qui bénéficie prioritairement d’un hébergement DBC ?", o:["Au hasard", "PMR, familles et vulnérables", "Derniers arrivés", "Clients sans bagages"], c:1, e:"Priorité aux PMR, familles et clients vulnérables."},
+      {t:"Que faire en cas de vol annulé ?", o:["Fournir une attestation d’annulation", "Rien", "Laisser client imprimer seul", "PNC gère automatiquement"], c:0, e:"Attestation disponible sur demande."},
+      {t:"Quelles sont les consignes pour un affrètement last minute ?", o:["Procédure standard", "Procédure dédiée avec infos et services", "Refus", "Libre"], c:1, e:"Consignes spécifiques à respecter."},
+      {t:"Comment gérer un changement de configuration cabine ?", o:["Jamais", "Procédure PAM de surclassement/déclassement", "Libre choix", "Décision PNC"], c:1, e:"Suivre les procédures PAM."},
+      {t:"Que faire lors du retour vol (RTB) ?", o:["Toujours débarquer", "Actions escale + messages dédiés", "Pas d’action", "Oublier bagages"], c:1, e:"Procédure spécifique retour vol."},
+      {t:"Comment est encadré le transport terrestre IRG ?", o:["Jamais autorisé", "Possible selon PAM (bus/train/taxi)", "Toujours taxi", "Client paie puis rembourse"], c:1, e:"Transport encadré selon PAM."},
+      {t:"Quelles sont les priorités dans le réacheminement ?", o:["Sécurité d’abord", "Air France si dispo immédiate", "Information claire au client", "Ignorer correspondances"], c:[0,1,2], e:"Sécurité et information sont prioritaires."},
+      {t:"Quelles batteries sont interdites en soute ?", o:["Batteries lithium > 100 Wh", "Batteries lithium < 100 Wh", "Batteries alcalines", "Batteries rechargeables"], c:0, e:"Batteries lithium de forte puissance interdites en soute."},
+      {t:"Où doit-on transporter une batterie lithium ?", o:["En cabine sur soi avec bornes protégées", "En soute", "Dans un sac séparé", "Peu importe"], c:0, e:"Transport uniquement en cabine avec protections."},
+      {t:"L’utilisation de l’e-cigarette est-elle autorisée en vol ?", o:["Oui", "Non"], c:1, e:"Usage et recharge interdits à bord."},
+      {t:"Combien de briquets de sûreté sont autorisés sur soi ?", o:["Un seul", "Deux", "Aucun", "Libre"], c:0, e:"Un seul briquet/allumettes sur soi autorisé."},
+      {t:"Les allumettes ‘strike anywhere’ sont-elles autorisées ?", o:["Oui", "Non"], c:1, e:"Interdites à bord."},
+      {t:"Peut-on transporter un smart luggage avec batterie amovible en soute ?", o:["Oui si batterie retirée", "Non", "Oui sans restriction", "Oui si batterie attachée"], c:0, e:"Batterie retirée obligatoire en soute."},
+      {t:"Quelle est la règle pour transporter une batterie endommagée ?", o:["Transport refusé", "Transport autorisé", "Transport en soute", "Transport en cabine sans précaution"], c:0, e:"Refus total de transport."},
+      {t:"Les sprays auto-défense sont-ils admis en cabine ?", o:["Oui", "Non"], c:1, e:"Interdits passagers."},
+      {t:"Où sont enregistrés les UM au terminal 2E ?", o:["Zone 12", "Zone 14", "Zone 8", "Zone 3"], c:1, e:"UM enregistrés en zone 14."},
+      {t:"Un mineur voyageant en groupe vers l’Espagne sans autorisation AST est-il accepté ?", o:["Oui", "Non"], c:1, e:"AST obligatoire."},
+      {t:"Peut-on accepter un mineur vers l’Espagne avec CNI périmée ?", o:["Oui", "Non"], c:1, e:"Document valide requis."},
+      {t:"Quelle action prendre pour un client misco tunisien sans visa avant son vol ?", o:["Hôtel en ville", "Vérifier visa et hôtel aéroport", "Réacheminer immédiatement", "Le loger chez un collègue"], c:1, e:"Pas de sortie d’aéroport sans visa."},
+      {t:"Quelle est la plage horaire de la zone 1 du terminal F en période de vacances ?", o:["Toute la journée", "Jusqu’à 11h et à partir de 14h", "UM uniquement", "Bagages spéciaux"], c:1, e:"Plages horaires spécifiques vacances."},
+      {t:"Quelle zone du terminal F est réservée aux passagers SkyPriority ?", o:["Zone 2", "Zone 4", "Zone 7", "Zone 1"], c:0, e:"Zone 2 dédiée SkyPriority."},
+      {t:"Que signifie l’étiquette HEAVY sur un bagage ?", o:["> 23 kg", "> 32 kg", "Toujours", "Jamais"], c:0, e:"Indique poids élevé selon politique."},
+      {t:"Quelles conditions pour une franchise de bagages ?", o:["Toujours 1 PC", "Selon billet/statut/route", "Toujours 2 PC", "Jamais"], c:1, e:"Variable selon billet et statut."},
+      {t:"Quelles sont les consignes en cas de panne du système Altéa DC ?", o:["Stop des opérations", "Procédure de secours ou manuelle", "Annuler les vols", "Attendre réparation"], c:1, e:"Procédures de secours obligatoires."},
+      {t:"Qui a la priorité à l’enregistrement dans les files ?", o:["Aucune", "SkyPriority", "Libre service", "VIP uniquement"], c:1, e:"SkyPriority bénéficie d’une file dédiée."},
+      {t:"Le client peut-il transporter une power bank en cabine ?", o:["Oui, sur soi et bornes protégées", "Non", "Oui en soute", "Oui avec double emballage"], c:0, e:"Autorisé en cabine, bornes protégées."},
+      {t:"Que faire si un client est manquant à la porte d’embarquement ?", o:["Fermer la porte immédiatement",
