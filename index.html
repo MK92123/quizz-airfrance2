@@ -191,556 +191,136 @@ Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autoris
   </div>
 
 <script>
- const BASE = [
-  // 1
-  {t:"Un passager à destination de Tel-Aviv peut-il obtenir sa carte d’embarquement sans contrôle Securitas ?", 
-   o:["Oui, si le vol est en correspondance", "Non, contrôle obligatoire avant émission", "Oui, sauf vol direct", "Non, sauf cas d'urgence"], 
-   c:1, e:"Le contrôle Securitas est obligatoire avant émission de la carte d’embarquement pour Tel-Aviv."},
-
-  // 2
-  {t:"Les batteries externes (power banks) sont-elles autorisées dans les coffres cabines ?", 
-   o:["Oui, si inférieures à 100 Wh", "Non, elles doivent être sur soi", "Oui, sans restriction en cabine", "Oui, uniquement déchargées"], 
-   c:1, e:"Les batteries externes sont interdites en soute et doivent être transportées sur soi."},
-
-  // 3
-  {t:"La recharge d’une e-cigarette est-elle autorisée à bord ?", 
-   o:["Oui, uniquement en vol long-courrier", "Non, recharge interdite en vol", "Oui, si autorisé par le commandant", "Oui, pendant le taxi"], 
-   c:1, e:"Recharge et vapotage sont interdits à bord, quel que soit le vol."},
-
-  // 4
-  {t:"En cas de bagage abandonné en salle d’embarquement, quelle est la première action ?", 
-   o:["Essayer d’ouvrir pour identifier", "Alerter la sûreté et sécuriser la zone", "Déplacer le bagage vers une zone sécurisée", "Informer le chef de cabine"], 
-   c:1, e:"Ne jamais manipuler un bagage suspect. Alerter la sûreté est la première action."},
-
-  // 5
-  {t:"Quel chapitre du PAM concerne les passagers indisciplinés ?", 
-   o:["6.12", "6.5", "6.9", "6.7"], 
-   c:1, e:"La référence correcte est PAM 6.5 pour les passagers indisciplinés."},
-
-  // 6
-  {t:"Où se trouve la matrice de réacheminement PAM ?", 
-   o:["4.1.6.3", "4.1.6.5", "4.1.6.4", "4.1.5.4"], 
-   c:2, e:"La matrice se trouve en 4.1.6.4 selon la documentation PAM."},
-
-  // 7
-  {t:"Qui peut autoriser un 'process override' en escale selon PAM ?", 
-   o:["Manager opérationnel selon procédure", "Tout agent", "Chef de cabine", "Responsable bagages"], 
-   c:0, e:"Seul le manager opérationnel peut autoriser ce process override."},
-
-  // 8
-  {t:"La tolérance ‘bag pool’ s’applique-t-elle sur tout le réseau Air France ?", 
-   o:["Oui, mais limitée à certains périmètres comme Afrique", "Non, uniquement pour vols domestiques", "Oui, sans restrictions", "Non, uniquement pour vols long-courriers"], 
-   c:0, e:"La tolérance est limitée à certains périmètres, notamment Afrique."},
-
-  // 9
-  {t:"À l’arrivée, où est généralement remise une poussette enregistrée en soute ?", 
-   o:["Toujours au tapis bagages", "Tapis bagages ou comptoir bagages spéciaux selon circuit", "Toujours à l’escale de correspondance", "Directement au client en porte"], 
-   c:1, e:"Selon le circuit bagage et le gabarit, la poussette peut être remise au tapis ou au comptoir spécial."},
-
-  // 10
-  {t:"Quelle est la limite pour les liquides en cabine ?", 
-   o:["100 ml par contenant, sac plastique 1L", "150 ml par contenant, sac plastique 1L", "100 ml par contenant, sans sac spécifique", "200 ml par contenant, sac plastique 2L"], 
-   c:0, e:"La règle est 100 ml max par contenant, tous dans un sac plastique transparent de 1L."},
-
-  // 11
-  {t:"Les allumettes de sûreté sont-elles autorisées ?", 
-   o:["Oui, sur soi uniquement (1)", "Non, interdites partout", "Oui, libre en soute", "Oui, avec autorisation spéciale"], 
-   c:0, e:"Une seule allumette de sûreté sur soi est tolérée, mais aucune en soute."},
-
-  // 12
-  {t:"Pour un PMR, où place-t-on la mention ‘BIS’ dans une commande Ozion ?", 
-   o:["Avant le prénom", "Avant le nom", "En commentaire libre", "Après le nom"], 
-   c:0, e:"‘BIS’ doit être placé avant le prénom sur la commande d'origine."},
-
-  // 13
-  {t:"Quel est le poids maximal autorisé pour un animal AVIH (animal en soute) ?", 
-   o:["50 kg", "75 kg", "100 kg", "60 kg"], 
-   c:1, e:"La limite maximale est 75 kg poids total animal + caisse."},
-
-  // 14
-  {t:"Les races brachycéphales sont-elles acceptées en soute ?", 
-   o:["Oui, sous conditions", "Non, refusées", "Oui, sauf sur vols long-courriers", "Oui, avec certificat médical"], 
-   c:1, e:"Elles sont refusées en soute en raison du risque respiratoire."},
-
-  // 15
-  {t:"Les e-scooters sont-ils autorisés comme bagages cabine ?", 
-   o:["Oui, s'ils sont déchargés", "Non, interdits pour tous", "Oui, toujours", "Oui, uniquement avec batterie retirée"], 
-   c:1, e:"Ils sont généralement interdits pour les passagers en raison du risque batterie lithium."},
-
-  // 16
-  {t:"Quelle zone au Terminal 2E est dédiée à l’enregistrement des UM ?", 
-   o:["Zone 12", "Zone 14", "Zone 8", "Zone 3"], 
-   c:1, e:"La zone dédiée est la 14 pour les UM."},
-
-  // 17
-  {t:"Quelles sont les consignes en cas d’annulation d’un vol le jour même ?", 
-   o:["Informer, assister et proposer des solutions de réacheminement", "Rembourser uniquement sans assistance", "Ne rien faire", "Reporter au lendemain"], 
-   c:0, e:"La procédure oblige à informer, assister et proposer des solutions."},
-
-  // 18
-  {t:"Quel est le poids total maximum autorisé pour un client Business en soute ?", 
-   o:["2 bagages de 32 kg chacun", "3 bagages de 23 kg", "1 bagage de 32 kg", "2 bagages de 23 kg"], 
-   c:0, e:"La franchise Business est 2 x 32 kg."},
-
-  // 19
-  {t:"Que signifie le waive ‘TOLERANCE POOL AFRICA’ ?", 
-   o:["Cumul possible des poids sur 2 bagages dans la zone Afrique", "Franchise bagages doublée pour l’Afrique", "Bagages spéciaux autorisés", "Limitation stricte du poids par bagage"], 
-   c:0, e:"Ce waive autorise le cumul des poids sur 2 bagages dans la zone Afrique."},
-
-  // 20
-  {t:"En cas de surclassement payant en Business après achat, quel waive PAM utiliser ?", 
-   o:["TECHNICAL – PAIDUPGRADE", "COM – EMPOWERMENT", "WAVE EXCESS", "DISCREPANCY – FQTV"], 
-   c:0, e:"Le waive TECHNICAL – PAIDUPGRADE s’applique aux surclassements payants."},
-
-  // 21
-  {t:"Quelle procédure appliquer en cas de retard supérieur à 3 heures ?", 
-   o:["Proposer voucher si éligible", "Pas d’assistance nécessaire", "Rembourser sans voucher", "Offrir compensation automatique"], 
-   c:0, e:"Un retard >3h peut donner droit à un voucher selon conditions."},
-
-  // 22
-  {t:"Quel est le délai minimum recommandé pour le transfert de bagages ?", 
-   o:["2 heures", "1 heure", "3 heures", "4 heures"], 
-   c:0, e:"2 heures est le délai recommandé pour garantir le transfert."},
-
-  // 23
-  {t:"Quelle est la franchise cabine pour un client Business ?", 
-   o:["2 bagages de 8 kg", "1 bagage de 10 kg", "3 bagages de 5 kg", "2 bagages de 12 kg"], 
-   c:0, e:"La franchise cabine Business est de 2 bagages de 8 kg chacun."},
-
-  // 24
-  {t:"Quelles actions prendre en cas de client filmant un agent sans autorisation ?", 
-   o:["Informer du refus, consigner et alerter", "Ignorer", "Demander l’arrêt mais sans consigner", "Autoriser sauf si provocateur"], 
-   c:0, e:"Le refus doit être notifié et consigné avec alerte canal dédié."},
-
-  // 25
-  {t:"Quel type d’allumettes est toléré sur soi ?", 
-   o:["Allumettes de sûreté (strike anywhere interdit)", "Allumettes classiques", "Aucun type autorisé", "Allumettes à friction uniquement"], 
-   c:0, e:"Seules les allumettes de sûreté sont tolérées sur soi."},
-
-  // 26
-  {t:"Quelle est la limite d’âge minimale pour un AVIH ?", 
-   o:["15 semaines", "10 semaines", "8 semaines", "12 semaines"], 
-   c:0, e:"15 semaines minimum avec vaccins requis."},
-
-  // 27
-  {t:"Que faire si un client mineur voyage vers l’Espagne sans AST ?", 
-   o:["Refuser l’embarquement", "Accepter sans problème", "Contacter l’agent au sol", "Laisser partir avec autorisation parentale"], 
-   c:0, e:"L’AST est obligatoire, sinon refus du voyage."},
-
-  // 28
-  {t:"Quel est l’objectif du ‘wave excess’ ?", 
-   o:["Fluidifier les files et limiter micro-encaissements", "Augmenter les recettes", "Créer des exceptions aléatoires", "Ralentir le flux"], 
-   c:0, e:"L’objectif est la fluidité et éviter des micro-encaissements multiples."},
-
-  // 29
-  {t:"Que signifie l’acronyme MISCO ?", 
-   o:["Mise en correspondance", "Annulation de vol", "Service client prioritaire", "Réservation de groupe"], 
-   c:0, e:"MISCO signifie mise en correspondance."},
-
-  // 30
-  {t:"Quel est le rôle du CLD ?", 
-   o:["Coordination Logistique et Détresse", "Client Liaison Desk", "Contrôle des Lignes Directes", "Centre Logistique de Distribution"], 
-   c:0, e:"Le CLD coordonne la logistique et les situations de détresse."},
-
-  // 31
-  {t:"Quelles batteries sont interdites en soute ?", 
-   o:["Lithium >100 Wh", "Lithium <100 Wh", "Alcalines rechargeables", "Batteries au plomb"], 
-   c:0, e:"Les batteries lithium de plus de 100 Wh sont interdites en soute."},
-
-  // 32
-  {t:"Quels documents un AVIH doit-il avoir ?", 
-   o:["Passeport animal et certificats sanitaires", "Carte identité du client", "Certificat de vaccination uniquement", "Justificatif d’assurance"], 
-   c:0, e:"Les documents vétérinaires complets sont obligatoires."},
-
-  // 33
-  {t:"Quelle est la procédure si un client est manquant à la porte ?", 
-   o:["Procédure client manquant et annonces", "Fermer la porte immédiatement", "Appeler la sécurité", "Laisser attendre 5 minutes"], 
-   c:0, e:"Il faut suivre la procédure officielle et faire des annonces."},
-
-  // 34
-  {t:"Quelles sont les priorités d’embarquement pour PMR ?", 
-   o:["Embarquement prioritaire avec assistance", "Embarquement standard", "Priorité uniquement si demandé", "Priorité uniquement sur vols long-courriers"], 
-   c:0, e:"Les PMR bénéficient d’un embarquement prioritaire avec assistance coordonnée."},
-
-  // 35
-  {t:"Que faire en cas de bagage non transféré à temps ?", 
-   o:["Informer le client, apposer étiquette RUSH", "Ignorer", "Renvoyer automatiquement au prochain vol", "Demander au client de récupérer"], 
-   c:0, e:"Le client doit être informé et un tag RUSH apposé."},
-
-  // 36
-  {t:"Qu’est-ce que le waive ‘COM – EMPOWERMENT’ ?", 
-   o:["Geste commercial validé par le management", "Erreur informatique", "Retard bagages", "Assistance PMR"], 
-   c:0, e:"Ce waive correspond à des gestes commerciaux validés localement."},
-
-  // 37
-  {t:"Comment est gérée la priorité d’hébergement DBC ?", 
-   o:["Priorité aux PMR, familles et clients vulnérables", "Au hasard", "Selon ordre d’arrivée", "Par ordre alphabétique"], 
-   c:0, e:"Les plus vulnérables bénéficient de la priorité."},
-
-  // 38
-  {t:"Que signifie une étiquette ‘RUSH’ ?", 
-   o:["Bagage prioritaire à traiter", "Bagage perdu", "Bagage endommagé", "Bagage retardé"], 
-   c:0, e:"RUSH indique une priorité de traitement."},
-
-  // 39
-  {t:"Quelle est la procédure pour un bagage cabine non conforme prélevé en porte ?", 
-   o:["Utiliser le waive OPS – BOARDING", "Ignorer", "Retourner au client", "Notifier le manager"], 
-   c:0, e:"Le waive OPS – BOARDING est utilisé dans ce cas."},
-
-  // 40
-  {t:"Quelle est la règle pour transporter une batterie lithium endommagée ?", 
-   o:["Transport interdit", "Transport possible si isolée", "Transport libre", "Transport avec autorisation spéciale"], 
-   c:0, e:"Le transport de batterie endommagée est interdit."},
-
-  // 41
-  {t:"Quel est le nombre maximum de bagages en franchise pour un client Business ?", 
-   o:["2 bagages en soute", "3 bagages en soute", "2 bagages cabine uniquement", "1 bagage cabine et 1 soute"], 
-   c:0, e:"Le client Business a droit à 2 bagages en soute."},
-
-  // 42
-  {t:"Quel est le poids maximum par bagage en franchise Business ?", 
-   o:["32 kg", "23 kg", "28 kg", "20 kg"], 
-   c:0, e:"Chaque bagage Business peut peser jusqu'à 32 kg."},
-
-  // 43
-  {t:"Le cumul des poids entre deux bagages est-il possible pour la franchise en Afrique ?", 
-   o:["Oui, grâce au waive Pool Africa", "Non, chaque bagage limité individuellement", "Oui, uniquement pour bagages spéciaux", "Non, sauf exceptions sur vols domestiques"], 
-   c:0, e:"Le waive Pool Africa permet le cumul des poids sur 2 bagages."},
-
-  // 44
-  {t:"Quelle est la procédure en cas de bagage en excès de poids dans la zone Pool Africa ?", 
-   o:["Utiliser le waive WAVE EXCESS", "Facturer surpoids immédiatement", "Refuser le bagage", "Transférer à la prochaine escale"], 
-   c:0, e:"Le waive WAVE EXCESS est utilisé pour gérer les excès dans cette zone."},
-
-  // 45
-  {t:"Quelle est la priorité pour l’accès SkyPriority au Terminal 2E ?", 
-   o:["Classe Business et SkyPriority", "Classe Économique uniquement", "Tous les passagers", "Clients fréquents uniquement"], 
-   c:0, e:"SkyPriority est accessible aux passagers en Business et membres SkyPriority."},
-
-  // 46
-  {t:"Quelles sont les conditions pour qu’un animal puisse voyager en cabine (PETC) ?", 
-   o:["Dimensions limitées et confinement sous siège", "Pas de limite de poids", "Pas besoin de caisse", "Doit être tenu en laisse"], 
-   c:0, e:"L’animal doit être dans une caisse adaptée sous le siège."},
-
-  // 47
-  {t:"Quelle est la limite de poids total pour un animal AVIH ?", 
-   o:["75 kg avec caisse", "50 kg avec caisse", "100 kg seul", "60 kg sans caisse"], 
-   c:0, e:"La limite AVIH est de 75 kg poids total animal et caisse."},
-
-  // 48
-  {t:"Que signifie l’acronyme ICP ?", 
-   o:["Intervention en Cas de Passager", "Incident de Comportement Passager", "Inspection Contrôle Passager", "Instruction de Consigne Passager"], 
-   c:1, e:"ICP correspond à Intervention/Incident Comportement Passager."},
-
-  // 49
-  {t:"Quelles sont les consignes en cas d’insultes ou intimidation ?", 
-   o:["Appliquer ICP2, alerter sécurité", "Ignorer", "Répondre sur le même ton", "Expulser immédiatement"], 
-   c:0, e:"ICP2 correspond à agression verbale légère, suivi d'alerte."},
-
-  // 50
-  {t:"Quel type de geste commercial peut être réalisé sous empowerment ?", 
-   o:["Voucher modéré ou geste d’eau", "Remboursement intégral", "Surclassement gratuit", "Annulation sans frais"], 
-   c:0, e:"L’empowerment autorise des gestes limités, pas des remboursements."},
-
-  // 51
-  {t:"Qui valide l’exercice d’empowerment opérationnel ?", 
-   o:["Manager opérationnel", "Agent d’escale", "Chef de cabine", "Client"], 
-   c:0, e:"Le manager opérationnel valide les gestes empowerment."},
-
-  // 52
-  {t:"Que faire en cas de client filmant un agent sans autorisation ?", 
-   o:["Informer du refus, consigner et alerter canal dédié", "Ignorer", "Permettre si non agressif", "Demander à supprimer la vidéo"], 
-   c:0, e:"La procédure impose de refuser et de consigner l’incident."},
-
-  // 53
-  {t:"Quelle zone d’enregistrement est dédiée aux UM au Terminal 2E ?", 
-   o:["Zone 14", "Zone 12", "Zone 8", "Zone 3"], 
-   c:0, e:"Les UM sont enregistrés en zone 14."},
-
-  // 54
-  {t:"Un mineur voyageant vers l’Espagne sans AST peut-il embarquer ?", 
-   o:["Non, AST obligatoire", "Oui, avec autorisation parentale", "Oui, si accompagné d’un adulte", "Non, sauf urgences"], 
-   c:0, e:"L’AST est obligatoire pour les mineurs."},
-
-  // 55
-  {t:"Quelle est la procédure en cas de bagage non transférable à temps ?", 
-   o:["Informer client + étiquette RUSH + options", "Ignorer et embarquer client", "Annuler le voyage", "Mettre le bagage en soute sur le prochain vol"], 
-   c:0, e:"Le client doit être informé, et le bagage traité prioritairement."},
-
-  // 56
-  {t:"Quel est le délai minimal conseillé entre deux vols pour un transfert de bagages fiable ?", 
-   o:["2 heures", "1 heure", "3 heures", "30 minutes"], 
-   c:0, e:"Minimum 2 heures est recommandé."},
-
-  // 57
-  {t:"Que signifie une étiquette ‘RUSH’ sur un bagage ?", 
-   o:["Prioritaire à traiter", "Bagage perdu", "Bagage endommagé", "Bagage retardé"], 
-   c:0, e:"Une étiquette RUSH signifie que le bagage est prioritaire."},
-
-  // 58
-  {t:"Comment gérer un ‘wave excess’ en escale ?", 
-   o:["Fluidification des files et limitation micro-encaissements", "Augmentation des ventes", "Report des clients", "Ralentissement du flux"], 
-   c:0, e:"Le wave excess vise à fluidifier le processus et limiter les micro-paiements."},
-
-  // 59
-  {t:"Que couvre le waive 'GOLF' ?", 
-   o:["Sac de golf pour passagers Flying Blue hors Explorer", "Matériel médical pour clients PWD", "Franchise spécifique pour militaires", "Boite de fleurs"], 
-   c:0, e:"Le waive GOLF concerne l’acheminement du sac de golf."},
-
-  // 60
-  {t:"Que couvre le waive 'MEDICAL' ?", 
-   o:["Matériel médical pour clients PWD", "Franchise bagages supplémentaire", "Equipement de sport", "Produits périssables"], 
-   c:0, e:"Le waive MEDICAL est dédié au matériel médical."},
-
-  // 61
-  {t:"Que signifie le waive 'WEAPON' ?", 
-   o:["Deuxième pièce lorsque munitions séparées", "Interdiction de transport d’armes", "Transport gratuit des armes à feu", "Franchise bagages vol spéciale"], 
-   c:0, e:"Ce waive autorise une deuxième pièce pour armes avec munitions séparées."},
-
-  // 62
-  {t:"Que signifie le waive 'FLEURS' ?", 
-   o:["Boîte de fleurs au départ des COI", "Transport de produits frais", "Sac à main spécial", "Objets fragiles"], 
-   c:0, e:"Ce waive concerne la boîte de fleurs au départ des COI."},
-
-  // 63
-  {t:"Que signifie ‘OPS – BOARDING’ ?", 
-   o:["Waive pour bagage cabine non conforme en transit", "Waive pour excès de bagages", "Waive pour retards", "Waive pour clients fréquents"], 
-   c:0, e:"OPS – BOARDING est utilisé pour bagage cabine non conforme pris en porte."},
-
-  // 64
-  {t:"Comment est validé un surclassement gratuit ?", 
-   o:["Selon disponibilité et statut", "Automatique pour clients fidèles", "Offert à tous les clients", "Uniquement par chef de cabine"], 
-   c:0, e:"Le surclassement gratuit dépend de la disponibilité et statut client."},
-
-  // 65
-  {t:"Quelle est la limite maximale pour les allumettes ‘strike anywhere’ ?", 
-   o:["Interdites", "1 boîte sur soi", "Illimité", "Interdit en cabine uniquement"], 
-   c:0, e:"Les allumettes ‘strike anywhere’ sont interdites."},
-
-  // 66
-  {t:"Comment sont gérés les sprays auto-défense (gaz) ?", 
-   o:["Interdits passagers", "Admis en soute", "Admis en cabine", "Autorisation spéciale nécessaire"], 
-   c:0, e:"Ces sprays sont interdits aux passagers."},
-
-  // 67
-  {t:"Un PETC peut-il voyager sans caisse ?", 
-   o:["Non", "Oui", "Uniquement en cabine", "Oui si calme"], 
-   c:0, e:"Le PETC doit toujours être dans une caisse conforme."},
-
-  // 68
-  {t:"Quel délai minimum pour qu’un bagage suive un réacheminement ?", 
-   o:["2 heures", "1 heure", "3 heures", "30 minutes"], 
-   c:0, e:"Un minimum de 2 heures est conseillé pour garantir le transfert."},
-
-  // 69
-  {t:"Que faire en cas de vol annulé jour J ?", 
-   o:["Informer, assister et réacheminer", "Rembourser sans assistance", "Ne rien faire", "Reporter au lendemain"], 
-   c:0, e:"La compagnie doit informer, assister et proposer des solutions."},
-
-  // 70
-  {t:"Quel waive appliquer pour un surclassement payant ?", 
-   o:["TECHNICAL – PAIDUPGRADE", "COM – EMPOWERMENT", "WAVE EXCESS", "DISCREPANCY – FQTV"], 
-   c:0, e:"Le waive TECHNICAL – PAIDUPGRADE s’applique aux surclassements payants."},
-
-  // 71
-  {t:"Quel est le poids maximum pour un bagage cabine en classe Économique ?", 
-   o:["8 kg", "10 kg", "12 kg", "6 kg"], 
-   c:0, e:"Le poids maximum est de 8 kg par bagage cabine en Éco."},
-
-  // 72
-  {t:"Quelle est la limite de poids par sac pour les liquides en cabine ?", 
-   o:["100 ml par contenant", "150 ml", "50 ml", "200 ml"], 
-   c:0, e:"100 ml est la limite par contenant."},
-
-  // 73
-  {t:"Quelle action prendre en cas de client agressif ?", 
-   o:["Suivre procédure PAM et alerter sécurité", "Laisser faire", "Répondre calmement sans alerter", "Laisser le client"], 
-   c:0, e:"La procédure PAM doit être appliquée, avec alerte sécurité."},
-
-  // 74
-  {t:"Que signifie ‘WCLB’ ?", 
-   o:["Fauteuil roulant batterie lithium", "Fauteuil manuel", "Fauteuil roulant batterie humide", "Fauteuil roulant électrique"], 
-   c:0, e:"WCLB signifie wheelchair lithium battery."},
-
-  // 75
-  {t:"Quel est l’objectif principal d’un waive ‘COM – EMPOWERMENT’ ?", 
-   o:["Geste commercial limité", "Remboursement intégral", "Annulation de vol", "Réservation spéciale"], 
-   c:0, e:"Ce waive concerne des gestes commerciaux dans une limite donnée."},
-
-  // 76
-  {t:"Que faire si un client est filmé sans autorisation ?", 
-   o:["Informer du refus, consigner et alerter", "Autoriser la vidéo", "Ignorer", "Demander à supprimer la vidéo"], 
-   c:0, e:"La procédure impose de refuser et consigner l'incident."},
-
-  // 77
-  {t:"Quel est le poids maximal d’un seul bagage pour un client Éco ?", 
-   o:["23 kg", "32 kg", "28 kg", "20 kg"], 
-   c:0, e:"Le poids maximum standard est 23 kg."},
-
-  // 78
-  {t:"Quelle est la limite maximale de poids totale en Pool Africa pour deux bagages ?", 
-   o:["46 kg (2 x 23 kg)", "44 kg", "50 kg", "40 kg"], 
-   c:0, e:"Le Pool Africa permet le cumul jusqu’à 46 kg."},
-
-  // 79
-  {t:"Quelle est la limite maximale de poids totale en Business class ?", 
-   o:["64 kg (2 x 32 kg)", "46 kg", "54 kg", "50 kg"], 
-   c:0, e:"La franchise Business est 2 x 32 kg."},
-
-  // 80
-  {t:"Quel est le rôle du manager opérationnel en escale ?", 
-   o:["Valider process override et empowerment", "Gérer les bagages uniquement", "Coordonner le PNC", "Faire le briefing"], 
-   c:0, e:"Le manager valide les overrides et gestes commerciaux."},
-
-  // 81
-  {t:"Quel type de bagage ne bénéficie pas de la tolérance Pool Africa ?", 
-   o:["Bagage cabine", "Bagage soute", "Bagage spécial", "Bagage personnel"], 
-   c:0, e:"La tolérance s'applique aux bagages en soute uniquement."},
-
-  // 82
-  {t:"Quel est le poids maximal d’un animal PETC en cabine ?", 
-   o:["8 kg avec caisse", "10 kg", "5 kg", "12 kg"], 
-   c:0, e:"Le poids maximal pour un animal PETC est 8 kg."},
-
-  // 83
-  {t:"Quel est le poids maximal d’un bagage en cabine Business ?", 
-   o:["8 kg", "10 kg", "12 kg", "6 kg"], 
-   c:0, e:"Business permet 2 bagages cabine de 8 kg."},
-
-  // 84
-  {t:"Quelles sont les catégories prioritaires pour l’hébergement DBC ?", 
-   o:["PMR, familles, mineurs", "Clients fréquents", "Business uniquement", "Économique uniquement"], 
-   c:0, e:"Priorité donnée aux clients vulnérables."},
-
-  // 85
-  {t:"Que signifie le terme ‘MISCO’ ?", 
-   o:["Mise en correspondance", "Réservation spéciale", "Assistance client", "Annulation de vol"], 
-   c:0, e:"MISCO désigne la mise en correspondance."},
-
-  // 86
-  {t:"Quelle est la règle pour les cartouches de gaz camping ?", 
-   o:["Interdites", "Admissibles en soute", "Admissibles en cabine", "Autorisation spéciale requise"], 
-   c:0, e:"Les cartouches de gaz camping sont interdites."},
-
-  // 87
-  {t:"Quel est le délai pour qu’un voucher soit proposé en cas de retard ?", 
-   o:["À partir de 3 heures", "À partir de 1 heure", "À partir de 4 heures", "À partir de 2 heures"], 
-   c:0, e:"Les vouchers sont proposés à partir de 3 heures de retard."},
-
-  // 88
-  {t:"Quelles batteries sont interdites en cabine ?", 
-   o:["Aucune, seulement en soute", "Lithium >160 Wh", "Alcalines", "Rechargeables"], 
-   c:1, e:"Batteries lithium >160 Wh interdites en cabine."},
-
-  // 89
-  {t:"Quel est l’âge minimum d’un AVIH ?", 
-   o:["15 semaines", "8 semaines", "10 semaines", "12 semaines"], 
-   c:0, e:"Minimum 15 semaines avec vaccination complète."},
-
-  // 90
-  {t:"Quel document est obligatoire pour un AVIH ?", 
-   o:["Passeport animal", "Carte identité", "Certificat médical", "Autorisation parentale"], 
-   c:0, e:"Le passeport animal avec vaccins est obligatoire."},
-
-  // 91
-  {t:"Qui peut accompagner un client en zone d’enregistrement ?", 
-   o:["Uniquement services autorisés", "Toute personne", "Membre famille", "Personnel au sol"], 
-   c:0, e:"Seuls les services autorisés sont admis."},
-
-  // 92
-  {t:"Que faire en cas de vol annulé sans réacheminement immédiat ?", 
-   o:["Assister et héberger le client", "Laisser le client se débrouiller", "Proposer remboursement uniquement", "Reporter au lendemain"], 
-   c:0, e:"Assistance et hébergement sont obligatoires."},
-
-  // 93
-  {t:"Quelles sont les règles pour les batteries de rechange ?", 
-   o:["Retirer batterie pour soute", "Toujours interdites", "Autorisé en cabine seulement", "Autorisé avec autorisation"], 
-   c:0, e:"Batteries de rechange doivent être retirées pour la soute."},
-
-  // 94
-  {t:"Que signifie le waive 'MILITARY' ?", 
-   o:["Franchise spécifique militaire", "Bagage militaire interdit", "Assistance spéciale", "Bagage prioritaire"], 
-   c:0, e:"Le waive MILITARY couvre la franchise militaire spécifique."},
-
-  // 95
-  {t:"Quel est le poids maximal d’un bagage en soute en classe Économique ?", 
-   o:["23 kg", "32 kg", "20 kg", "18 kg"], 
-   c:0, e:"Le poids maximal standard est 23 kg."},
-
-  // 96
-  {t:"Quel est le poids maximal total pour deux bagages en classe Économique ?", 
-   o:["46 kg", "50 kg", "40 kg", "44 kg"], 
-   c:0, e:"Le total autorisé pour 2 bagages est 46 kg dans certaines zones."},
-
-  // 97
-  {t:"Quel est le rôle de la conciergerie AF BeMyGuest ?", 
-   o:["Accompagnement clients VIP", "Gestion bagages", "Assistance technique", "Sécurité"], 
-   c:0, e:"Conciergerie BeMyGuest accompagne les clients VIP."},
-
-  // 98
-  {t:"Quelles sont les consignes pour un affrètement last minute ?", 
-   o:["Procédure dédiée avec infos et services", "Procédure standard", "Refus systématique", "Libre"], 
-   c:0, e:"Il existe une procédure spécifique à respecter."},
-
-  // 99
-  {t:"Comment doit être géré un changement de configuration cabine ?", 
-   o:["Suivre procédure PAM de surclassement/déclassement", "Libre choix", "Interdit", "Décision PNC seul"], 
-   c:0, e:"Il faut suivre la procédure PAM."},
-
-  // 100
-  {t:"Quelles sont les restrictions sur les smart luggage ?", 
-   o:["Batterie amovible doit être retirée", "Interdits totalement", "Admis en soute sans batterie", "Interdits cabine"], 
-   c:0, e:"Batterie amovible doit être retirée si en soute."},
-
-  // 101
-  {t:"Que signifie le waive ‘DISCREPANCY – INTERLINE’ ?", 
-   o:["Waive pour bagages non transférés entre compagnies", "Waive pour bagages endommagés", "Waive pour surpoids", "Waive pour retard"], 
-   c:0, e:"Il s'agit du waive pour problème intercompagnie."},
-
-  // 102
-  {t:"Quel waive s’applique pour un client ayant payé un surclassement ?", 
-   o:["TECHNICAL – PAIDUPGRADE", "COM – EMPOWERMENT", "WAVE EXCESS", "DISCREPANCY – FQTV"], 
-   c:0, e:"Waive dédié aux surclassements payants."},
-
-  // 103
-  {t:"Quel est le rôle du chef de cabine ?", 
-   o:["Gestion sécurité cabine", "Gestion bagages", "Coordination au sol", "Ventes à bord"], 
-   c:0, e:"Le chef de cabine gère la sécurité et l’équipage en cabine."},
-
-  // 104
-  {t:"Quelles sont les responsabilités du manager d’escale ?", 
-   o:["Validation des overrides et empowerment", "Vente de billets", "Embarquement client", "Service bagages"], 
-   c:0, e:"Il valide les processus opérationnels critiques."},
-
-  // 105
-  {t:"Que signifie PAM dans le contexte Air France ?", 
-   o:["Procédures d’Assistance et de Mise en correspondance", "Programme d’Aide aux Membres", "Plan d’Action du Manager", "Politique d’Assurance des Membres"], 
-   c:0, e:"PAM = Procédures d’Assistance et de Mise en correspondance."},
-
-  // 106
-  {t:"Quel est le rôle des agents Securitas en escale ?", 
-   o:["Contrôle sécurité passagers", "Gestion bagages", "Service client", "Assistance PNC"], 
-   c:0, e:"Ils assurent le contrôle sécurité passagers."},
-
-  // 107
-  {t:"Quelle est la durée de validité d’un contrôle technique pour voiture ?", 
-   o:["2 ans", "1 an", "3 ans", "6 mois"], 
-   c:0, e:"Le contrôle technique est valide 2 ans."},
-
-  // 108
-  {t:"Que signifie ICP2 dans la gestion de conflits passagers ?", 
-   o:["Agression verbale ou physique légère", "Agression grave", "Ignorance", "Retrait du passager"], 
-   c:0, e:"ICP2 correspond à un comportement agressif léger."},
-
-  // 109
-  {t:"Quelle est la réglementation pour les liquides achetés en duty free ?", 
-   o:["Pas de limite si scellés", "Limite 100 ml même scellés", "Interdits", "Limite 150 ml"], 
-   c:0, e:"Les liquides duty free sont exemptés de la limite s’ils sont scellés."},
-
-  // 110
-  {t:"Quelle est la sanction possible en cas de non-respect des consignes PAM ?", 
-   o:["Avertissement et suivi disciplinaire", "Aucune sanction", "Expulsion immédiate", "Amende"], 
-   c:0, e:"Le non-respect peut entraîner un avertissement et suivi."}
+const BASE = [
+  {t:"Un passager à destination de Tel-Aviv peut-il obtenir sa carte d’embarquement sans contrôle Securitas ?", o:["Oui","Non","Seulement avec autorisation spéciale","Uniquement pour les vols directs"], c:1, e:"Contrôle Securitas obligatoire avant émission de la BP pour Tel-Aviv."},
+  {t:"Les batteries externes (power banks) sont-elles autorisées dans les coffres cabines ?", o:["Non, sauf sur soi","Oui sans restriction","Seulement si inférieures à 100Wh","Uniquement dans les bagages en soute"], c:0, e:"Power banks admis en cabine mais sur soi. Strictement interdites en soute."},
+  {t:"Quelle est la franchise bagage standard pour un client Business ?", o:["2 x 32 kg","3 x 23 kg","1 x 32 kg","2 x 23 kg"], c:0, e:"En Business, la franchise est de 2 bagages de 32 kg chacun."},
+  {t:"Qu’est-ce que le 'wave excess' dans la gestion des bagages ?", o:["Une tolérance de poids cumulée entre plusieurs bagages","Un bagage hors dimensions","Un excès de poids individuel","Un type de surcharge appliquée aux passagers"], c:0, e:"Le wave excess permet de cumuler les poids de plusieurs bagages sous certaines conditions."},
+  {t:"Quand utilise-t-on le waive 'TOLERANCE POOL AFRICA' ?", o:["Pour cumuler le poids de deux bagages en soute en Afrique","Pour les bagages perdus en transit","Pour les équipements médicaux","Pour les sacs de golf"], c:0, e:"Ce waive s’applique pour le cumul de poids des bagages en Afrique."},
+  {t:"Quelle est la limite de poids pour un AVIH (animal en soute) ?", o:["75 kg avec caisse","50 kg avec caisse","100 kg sans caisse","60 kg avec caisse"], c:0, e:"La limite AVIH est de 75 kg incluant la caisse."},
+  {t:"Un mineur non accompagné (UM) est enregistré dans quelle zone au Terminal 2E ?", o:["Zone 14","Zone 12","Zone 8","Zone 3"], c:0, e:"Les UM sont enregistrés en zone 14 au Terminal 2E."},
+  {t:"Quels objets sont interdits dans la soute pour des raisons de sécurité ?", o:["Batteries lithium >100 Wh","Liquides en grande quantité","Allumettes de sûreté","Appareils électroniques"], c:0, e:"Les batteries lithium >100 Wh sont interdites en soute."},
+  {t:"Un passager en Business peut-il enregistrer un troisième bagage sans supplément ?", o:["Non","Oui si poids total < 90 kg","Oui, toujours","Seulement sur certains vols"], c:0, e:"La franchise Business est limitée à 2 bagages."},
+  {t:"Quelle est la procédure si un bagage n’arrive pas à temps pour un correspondance ?", o:["Informer le client et étiqueter RUSH","Ignorer le problème","Renvoyer le bagage à la destination finale sans prévenir","Compensation automatique"], c:0, e:"Le bagage doit être identifié et le client informé avec une étiquette RUSH."},
+
+  {t:"Comment est géré un client sans visa valide en zone de transit ?", o:["Interdiction de sortie de l'aéroport","Laisser passer avec document provisoire","Logement à l’hôtel à la charge du client","Réacheminement immédiat"], c:0, e:"Sans visa, le client ne peut pas sortir de l'aéroport."},
+  {t:"Quelles sont les priorités d’embarquement pour les PMR ?", o:["Embarquement prioritaire","Embarquement standard","Embarquement après Business","Embarquement en dernier"], c:0, e:"Les PMR bénéficient d’un embarquement prioritaire."},
+  {t:"Quelles sont les conditions pour transporter un PETC en cabine ?", o:["Dimensions sous le siège et poids max","Pas de limite si calme","Pas besoin de caisse","Transport interdit"], c:0, e:"Le PETC doit tenir sous le siège et respecter le poids maximum."},
+  {t:"Que signifie l’étiquette ‘RUSH’ sur un bagage ?", o:["Bagage prioritaire à traiter","Bagage perdu","Bagage endommagé","Bagage retardé"], c:0, e:"L’étiquette RUSH indique un bagage prioritaire."},
+  {t:"Un passager avec un billet prime peut-il bénéficier d’un surclassement ?", o:["Non","Oui, sous conditions","Oui, toujours","Non, sauf exceptions"], c:0, e:"Les billets prime sont généralement exclus des surclassements."},
+  {t:"Quel est le poids maximal autorisé par bagage en classe économique ?", o:["23 kg","20 kg","25 kg","32 kg"], c:0, e:"En économique, la franchise standard est de 23 kg par bagage."},
+  {t:"Quelles sont les règles pour le transport d’allumettes en cabine ?", o:["Une seule allumette de sûreté sur soi","Allumettes interdites","Nombre illimité autorisé","Allumettes uniquement en soute"], c:0, e:"Une allumette de sûreté est tolérée sur soi."},
+  {t:"Que doit faire un agent en cas de bagage abandonné suspect ?", o:["Alerter sûreté et sécuriser le périmètre","Essayer d’ouvrir","Déplacer le bagage","Ignorer"], c:0, e:"Ne jamais manipuler un bagage suspect, alerter la sûreté."},
+  {t:"Quel est le rôle du CLD ?", o:["Coordination Logistique et Détresse","Client Liaison Desk","Contrôle Ligne Directe","Centre Logistique Distribution"], c:0, e:"Le CLD coordonne la logistique et les situations de détresse."},
+  {t:"Quelle est la procédure en cas d’annulation de vol jour J ?", o:["Réacheminement immédiat et assistance","Remboursement automatique","Attente au guichet","Aucune"], c:0, e:"La compagnie doit assister et réacheminer le client."},
+
+  // 20-30
+  {t:"Quel délai est conseillé entre deux vols pour assurer le transfert des bagages ?", o:["2 heures minimum","1 heure","3 heures","4 heures"], c:0, e:"Minimum 2 heures pour transfert bagages fiable."},
+  {t:"Que couvre le waive 'GOLF' ?", o:["Sac de golf pour certains passagers","Matériel médical","Franchise militaire","Boite de fleurs"], c:0, e:"Le waive GOLF permet le transport du sac de golf pour certains clients."},
+  {t:"Le waive 'MEDICAL' concerne :", o:["Matériel médical pour clients PWD","Équipements sportifs","Bagages surdimensionnés","Animaux"], c:0, e:"Ce waive est dédié au matériel médical."},
+  {t:"Que signifie le waive 'WEAPON' ?", o:["Deuxième pièce pour armes et munitions","Interdiction totale","Transport gratuit d’armes","Franchise spéciale vol"], c:0, e:"Permet un bagage supplémentaire pour armes et munitions séparées."},
+  {t:"Quel est l’âge minimum requis pour un AVIH ?", o:["15 semaines","8 semaines","10 semaines","20 semaines"], c:0, e:"Minimum 15 semaines et vaccins requis."},
+  {t:"Quels chiens sont interdits en soute ?", o:["Races brachycéphales (pit-bull, tosa)","Tous les chiens de grande taille","Chiens LOF","Chiens d’assistance"], c:0, e:"Les races brachycéphales sont interdites en soute."},
+  {t:"Quelle est la tolérance pour un bagage dépassant légèrement le poids autorisé ?", o:["TOLERANCE 1KG","COM EMPOWERMENT","WAVE EXCESS","DISCREPANCY"], c:0, e:"TOLERANCE 1KG autorise jusqu’à 1 kg de dépassement."},
+  {t:"Que signifie ‘MISCO’ ?", o:["Mise en correspondance","Annulation de vol","Service client prioritaire","Réservation de groupe"], c:0, e:"MISCO signifie mise en correspondance."},
+  {t:"Quelles sont les consignes pour transporter une batterie lithium endommagée ?", o:["Transport refusé","Transport autorisé isolée","Transport limité à la cabine","Transport autorisé en soute"], c:0, e:"Le transport d’une batterie lithium endommagée est interdit."},
+  {t:"Comment est attribuée la priorité pour l’hébergement DBC ?", o:["Priorité aux PMR, familles, vulnérables","Ordre d’arrivée","Premier arrivé, premier servi","Clients sans bagages"], c:0, e:"Priorité donnée aux PMR, familles et clients vulnérables."},
+
+  // 31-40
+  {t:"Quelles sont les situations où l’empowerment est pertinent ?", o:["Petit geste commercial","Corriger erreur Air France","Dénier systématiquement CE261","Adapter accès SkyPriority PMR"], c:[0,1,3], e:"Empowerment utilisé pour gestes commerciaux dans le cadre."},
+  {t:"Qui valide l’empowerment opérationnel ?", o:["Manager opérationnel","Directeur d’escale","PNC seul","Pas de contrôle"], c:0, e:"Validation par manager opérationnel selon procédure."},
+  {t:"Quelle est la priorité d’embarquement pour les PMR ?", o:["Embarquement prioritaire","Embarquement normal","Dernier embarquement","Business uniquement"], c:0, e:"Les PMR embarquent en priorité."},
+  {t:"Que signifie une étiquette ‘RUSH’ ?", o:["Bagage prioritaire","Bagage perdu","Bagage endommagé","Bagage retardé"], c:0, e:"Étiquette ‘RUSH’ signifie traitement prioritaire."},
+  {t:"Combien de bagages cabine un client Business peut-il emporter ?", o:["2 x 8 kg","1 x 8 kg","2 x 12 kg","1 x 12 kg"], c:0, e:"2 bagages cabine de 8 kg chacun autorisés en Business."},
+  {t:"Que faire en cas de bagage non transférable à temps ?", o:["Informer client + tag RUSH","Ignorer","Détruire étiquette","Annuler voyage"], c:0, e:"Informer client et traiter avec étiquette RUSH."},
+  {t:"Quelles sont les règles pour transporter un scooter électrique ?", o:["Interdit aux passagers","Autorisé en cabine déchargé","Toujours autorisé","Autorisé en soute"], c:0, e:"Souvent interdit aux passagers pour risque lithium."},
+  {t:"Quelle est la procédure si un client filme un agent sans autorisation ?", o:["Informer refus + consigner + alerter","Ignorer","Autoriser","Avertir client"], c:0, e:"Refus de filmer; consigner et alerter."},
+  {t:"Que faire en cas d’embarquement d’un client sans AST pour un mineur ?", o:["Refuser embarquement","Accepter","Informer agent sécurité","Demander autorisation parentale"], c:0, e:"L’AST est obligatoire pour mineurs non accompagnés."},
+  {t:"Quelle est la durée du chronomètre dans le quiz ?", o:["30 minutes","20 minutes","45 minutes","15 minutes"], c:0, e:"Le chronomètre est réglé à 30 minutes."},
+
+  // 41-50
+  {t:"Quel waive est utilisé pour les sacs de golf ?", o:["GOLF","MEDICAL","COM EMPOWERMENT","TECHNICAL"], c:0, e:"Le waive GOLF est dédié aux sacs de golf."},
+  {t:"Quel waive permet un geste commercial sur franchise bagages ?", o:["COM EMPOWERMENT","WAVE EXCESS","TECHNICAL","DISCREPANCY"], c:0, e:"COM EMPOWERMENT permet des gestes commerciaux."},
+  {t:"Quels documents sont requis pour un AVIH ?", o:["Passeport animal, certificats sanitaires","Carte d’identité","Passeport client","Certificat bancaire"], c:0, e:"Documents vétérinaires obligatoires pour AVIH."},
+  {t:"Que signifie PAM ?", o:["Procédures d’Assistance et Mise en correspondance","Programme d’aide membre","Plan d’action manager","Politique assurance"], c:0, e:"PAM signifie Procédures d’Assistance et Mise en correspondance."},
+  {t:"Qui peut autoriser un ‘process override’ en escale ?", o:["Manager opérationnel","Chef de cabine","Agent au guichet","Client"], c:0, e:"Le manager opérationnel a cette autorité."},
+  {t:"Quelles sont les actions à prendre en cas d’annulation jour J ?", o:["Informer client, réacheminement, assistance","Remboursement automatique","Silence","Offrir prestations sans condition"], c:0, e:"Obligation d’assistance et réacheminement."},
+  {t:"Que signifie ‘WCLB’ ?", o:["Fauteuil roulant batterie lithium","Fauteuil manuel","Fauteuil batterie sèche","Fauteuil électrique"], c:0, e:"WCLB = Wheelchair Lithium Battery."},
+  {t:"Quelle zone au Terminal F est dédiée aux UM ?", o:["Zone 1","Zone 2","Zone 4","Zone 7"], c:0, e:"Zone 1 au Terminal F est dédiée aux UM."},
+  {t:"Quel est le poids maximal d’un bagage cabine en Business ?", o:["2 x 8 kg","2 x 12 kg","1 x 8 kg","1 x 12 kg"], c:0, e:"En Business, 2 bagages cabine de 8 kg autorisés."},
+  {t:"Quel est le délai conseillé pour transfert de bagages ?", o:["2 heures","1 heure","3 heures","4 heures"], c:0, e:"2 heures minimum pour un transfert fiable."},
+
+  // 51-60
+  {t:"Quel waive PAM est utilisé pour un surclassement payant ?", o:["TECHNICAL – PAIDUPGRADE","COM EMPOWERMENT","DISCREPANCY","WAVE EXCESS"], c:0, e:"TECHNICAL – PAIDUPGRADE couvre les surclassements payants."},
+  {t:"Quel est l’objectif principal de la gestion du ‘wave excess’ ?", o:["Fluidifier files d’attente et éviter micro-encaissements","Augmenter recettes","Créer exceptions","Ralentir flux"], c:0, e:"Wave excess vise fluidité et efficacité."},
+  {t:"Que faire si un client est manquant à la porte ?", o:["Procédure client manquant et annonces","Fermer porte immédiatement","Ignorer","Appeler sécurité"], c:0, e:"Procédure obligatoire pour client manquant."},
+  {t:"Quelle est la limite de poids d’un bagage en classe économique ?", o:["23 kg","32 kg","20 kg","25 kg"], c:0, e:"23 kg est la limite standard en économique."},
+  {t:"Quels objets sont interdits en cabine ?", o:["Sprays auto-défense","Appareils électroniques","Liquides en petite quantité","Allumettes de sûreté"], c:0, e:"Sprays auto-défense interdits en cabine."},
+  {t:"Que signifie le waive ‘DISCREPANCY – INTERLINE’ ?", o:["Bagage cabine non conforme en transit","Erreur de réservation","Problème technique","Retard de vol"], c:0, e:"Waive pour bagage non conforme en transit."},
+  {t:"Combien de temps dure le quiz ?", o:["30 minutes","20 minutes","1 heure","45 minutes"], c:0, e:"Le quiz est chronométré sur 30 minutes."},
+  {t:"Que doit faire un agent si un client filme sans autorisation ?", o:["Informer du refus, consigner, alerter canal dédié","Laisser faire","Autoriser","Intervenir verbalement"], c:0, e:"Interdiction de filmer, consigner et alerter."},
+  {t:"Quel est le poids maximal autorisé pour un AVIH ?", o:["75 kg","50 kg","100 kg","60 kg"], c:0, e:"Limite AVIH de 75 kg incluant la caisse."},
+  {t:"Quelles batteries sont interdites en soute ?", o:["Lithium >100 Wh","Lithium <100 Wh","Alcalines","Rechargeables"], c:0, e:"Batteries lithium >100 Wh interdites en soute."},
+
+  // 61-70
+  {t:"Quelle est la règle pour les liquides en cabine ?", o:["100 ml maximum par contenant","Pas de limite","1 litre maximum total","500 ml maximum total"], c:0, e:"Limite de 100 ml par contenant, sac 1 litre."},
+  {t:"Que signifie ‘WCLB’ ?", o:["Fauteuil roulant batterie lithium","Fauteuil manuel","Fauteuil batterie sèche","Fauteuil électrique"], c:0, e:"WCLB = Wheelchair Lithium Battery."},
+  {t:"Quelle est la procédure pour un bagage non transféré à temps ?", o:["Informer le client et taguer RUSH","Ignorer","Détruire le tag","Réacheminer plus tard"], c:0, e:"Informer client et appliquer étiquette RUSH."},
+  {t:"Que signifie PAM ?", o:["Procédures d’Assistance et Mise en correspondance","Programme d’aide membre","Plan d’action manager","Politique assurance"], c:0, e:"PAM = Procédures d’Assistance et Mise en correspondance."},
+  {t:"Quel est le délai minimum entre deux vols pour transfert bagages ?", o:["2 heures","1 heure","3 heures","4 heures"], c:0, e:"Minimum 2 heures recommandé."},
+  {t:"Que faire en cas de vol annulé jour J ?", o:["Réacheminement immédiat + assistance","Remboursement automatique","Silence","Attente au guichet"], c:0, e:"Obligation d’assistance et réacheminement."},
+  {t:"Quels passagers bénéficient prioritairement d’un hébergement DBC ?", o:["PMR, familles, clients vulnérables","Tous","Clients business","Voyageurs fréquents"], c:0, e:"Priorité aux PMR, familles et clients vulnérables."},
+  {t:"Quel waive est utilisé pour accorder un geste commercial sur franchise bagages ?", o:["COM EMPOWERMENT","TECHNICAL","DISCREPANCY","WAVE EXCESS"], c:0, e:"COM EMPOWERMENT pour gestes commerciaux."},
+  {t:"Que signifie ‘ICP’ dans le livret ? ", o:["Interdiction, Consignes, Procédures","Instruction de conduite professionnelle","Intervention critique ponctuelle","Indicateur de contrôle personnel"], c:0, e:"ICP = Interdiction, Consignes, Procédures."},
+  {t:"Quel est le poids maximal autorisé par bagage en classe économique ?", o:["23 kg","20 kg","32 kg","25 kg"], c:0, e:"23 kg est la limite standard."},
+
+  // 71-80
+  {t:"Quelle est la règle pour les sprays auto-défense ?", o:["Interdits en cabine","Autorisé en cabine","Autorisé en soute","Limité à 100 ml"], c:0, e:"Sprays auto-défense interdits en cabine."},
+  {t:"Quel est l’âge minimum pour qu’un AVIH soit accepté ?", o:["15 semaines","10 semaines","8 semaines","20 semaines"], c:0, e:"Minimum 15 semaines et vaccins obligatoires."},
+  {t:"Que faire si un client est manquant à la porte ?", o:["Suivre procédure client manquant et faire annonces","Fermer porte immédiatement","Ignorer","Appeler sécurité"], c:0, e:"Procédure et annonces obligatoires."},
+  {t:"Que signifie ‘MISCO’ ?", o:["Mise en correspondance","Annulation de vol","Service client prioritaire","Réservation groupe"], c:0, e:"MISCO signifie mise en correspondance."},
+  {t:"Quelles sont les consignes pour les allumettes ?", o:["Une seule allumette de sûreté sur soi autorisée","Interdites en cabine","Nombre illimité autorisé","Autorisé en soute"], c:0, e:"Une allumette de sûreté est tolérée sur soi."},
+  {t:"Quelles sont les procédures pour la gestion des clients agressifs ?", o:["Suivre PAM, alerter sécurité","Ignorer","Répondre agressivement","Intervenir personnellement"], c:0, e:"Suivre procédure PAM et alerter la sécurité."},
+  {t:"Quel est le poids total cumulé pour utiliser le waive Pool Africa ?", o:["2 x 23 kg = 46 kg","1 x 32 kg","2 x 20 kg","3 x 15 kg"], c:0, e:"Waive Pool Africa permet cumul jusqu’à 46 kg."},
+  {t:"Que signifie ‘OPS – BOARDING’ ?", o:["Bagage cabine non conforme en transit prélevé en porte","Problème d’embarquement","Retard vol","Erreur réservation"], c:0, e:"Waive pour bagage cabine non conforme en transit."},
+  {t:"Quels sont les critères pour un surclassement ?", o:["Disponibilité et statut","Automatique","Réservé aux clients fidèles","Jamais"], c:0, e:"Surclassement selon disponibilité et statut."},
+  {t:"Que signifie le waive 'TECHNICAL – PAIDUPGRADE' ?", o:["Surclassement payant","Erreur technique","Geste commercial","Retard bagages"], c:0, e:"Waive dédié aux surclassements payants."},
+
+  // 81-90
+  {t:"Quelle est la procédure si un client est sans AST pour un mineur ?", o:["Refuser embarquement","Accepter","Informer agent sécurité","Demander autorisation parentale"], c:0, e:"AST obligatoire pour mineurs non accompagnés."},
+  {t:"Quelles sont les règles pour le transport de batteries de rechange ?", o:["< 160 Wh autorisées en cabine","Interdites en cabine","Autorisé uniquement en soute","Autorisé sans restriction"], c:0, e:"Batteries >160 Wh interdites en cabine et soute."},
+  {t:"Quel est le poids maximal d’un bagage pour un client Business en soute ?", o:["2 x 32 kg","3 x 23 kg","2 x 23 kg","1 x 32 kg"], c:0, e:"2 bagages de 32 kg chacun en Business."},
+  {t:"Comment traiter un client misco sans visa ?", o:["Vérifier visa, sinon hébergement aéroport","Laisser passer","Réacheminer immédiatement","Loger chez collègue"], c:0, e:"Sans visa, hébergement ou réacheminement."},
+  {t:"Que signifie ‘WCLB’ ?", o:["Fauteuil roulant batterie lithium","Fauteuil manuel","Fauteuil batterie sèche","Fauteuil électrique"], c:0, e:"WCLB = Wheelchair Lithium Battery."},
+  {t:"Quelle zone du terminal est réservée aux UM ?", o:["Zone 14","Zone 12","Zone 8","Zone 3"], c:0, e:"UM au Terminal 2E en zone 14."},
+  {t:"Quelle est la procédure pour les bagages en excès de poids ?", o:["Appliquer waive ou surcharge","Refuser embarquement","Détruire bagage","Transport gratuit"], c:0, e:"Waive ou surcharge selon règle."},
+  {t:"Quel est le poids maximal autorisé pour un bagage en classe économique ?", o:["23 kg","20 kg","32 kg","25 kg"], c:0, e:"23 kg en classe économique."},
+  {t:"Quelles sont les règles pour le transport des animaux en cabine ?", o:["Dimensions sous siège et poids limités","Pas de limite","Sans caisse","Interdit"], c:0, e:"Respect des dimensions et poids sous siège."},
+  {t:"Quel est le délai recommandé pour le transfert des bagages ?", o:["2 heures","1 heure","3 heures","4 heures"], c:0, e:"2 heures minimum conseillé."},
+
+  // 91-100
+  {t:"Que signifie ‘COM – EMPOWERMENT’ ?", o:["Geste commercial validé par management","Erreur informatique","Retard bagages","Assistance PMR"], c:0, e:"Geste commercial dans cadre empowerment."},
+  {t:"Quelles sont les consignes pour la gestion d’un bagage abandonné ?", o:["Alerter sûreté, ne pas toucher","Essayer d’ouvrir","Déplacer","Ignorer"], c:0, e:"Ne jamais manipuler un bagage suspect."},
+  {t:"Que faire si un client filme un agent sans autorisation ?", o:["Informer, consigner, alerter","Laisser faire","Autoriser","Intervenir verbalement"], c:0, e:"Interdiction de filmer, consigner et alerter."},
+  {t:"Quel est le poids autorisé pour un PETC en cabine ?", o:["Dimensions et poids limités sous siège","Pas de limite","Pas de caisse requise","Interdit"], c:0, e:"Le PETC doit être dans un contenant adapté sous le siège."},
+  {t:"Quel est le poids maximal pour un AVIH ?", o:["75 kg","50 kg","100 kg","60 kg"], c:0, e:"Limite AVIH de 75 kg incluant la caisse."},
+  {t:"Que faire en cas d’annulation de vol le jour même ?", o:["Assistance et réacheminement obligatoire","Remboursement automatique","Pas d’action","Attente au guichet"], c:0, e:"Assistance et réacheminement sont obligatoires."},
+  {t:"Que signifie ‘ICP2’ ?", o:["Agressivité verbale ou physique légère","Avertissement verbal","Procédure d’exclusion","Licence temporaire"], c:0, e:"ICP2 correspond à agressivité légère."},
+  {t:"Quel est le rôle du CLD ?", o:["Coordination logistique et assistance","Centre de liaison clients","Contrôle des lignes","Département sécurité"], c:0, e:"Coordination logistique et détresse."},
+  {t:"Quelle est la tolérance pour un bagage dépassant légèrement le poids autorisé ?", o:["1 kg supplémentaire autorisé","5 kg supplémentaires","Aucune tolérance","2 kg supplémentaires"], c:0, e:"Tolérance de 1 kg sur le poids déclaré."},
+  {t:"Quels passagers bénéficient de l’accès SkyPriority ?", o:["Clients Business et PMR","Tous les passagers","Seulement membres Flying Blue","Clients économiques"], c:0, e:"Clients Business et PMR bénéficient de SkyPriority."},
+
+  // 101-110
+  {t:"Comment doit être placée la mention ‘BIS’ sur une commande Ozion PMR ?", o:["Avant prénom","Avant nom","En commentaire","Non obligatoire"], c:0, e:"‘BIS’ doit précéder le prénom sur la commande."},
+  {t:"Quelles sont les conditions pour un bagage smart luggage ?", o:["Batterie amovible retirée si en soute","Toujours interdit","Toujours autorisé","Batterie non amovible autorisée"], c:0, e:"La batterie amovible doit être retirée en soute."},
+  {t:"Quelle est la procédure lors d’un affrètement last minute ?", o:["Procédure dédiée avec infos et services","Procédure standard","Refus","Libre"], c:0, e:"Respect des consignes spécifiques."},
+  {t:"Que signifie ‘WAVE EXCESS’ ?", o:["Tolérance poids cumulée pour bagages","Excès individuel","Surcharge bagage cabine","Erreur informatique"], c:0, e:"Gestion d’excès de poids cumulés sur bagages."},
+  {t:"Quelle est la priorité pour les conciergeries en enregistrement ?", o:["AF BeMyGuest & ADP Extime uniquement","Toute conciergerie","Pas de restriction","Libre accès"], c:0, e:"Accès restreint aux services autorisés."},
+  {t:"Quel est le délai minimum recommandé pour un transfert bagage lors d’un réacheminement ?", o:["2 heures","1 heure","3 heures","4 heures"], c:0, e:"2 heures minimum conseillé."},
+  {t:"Que faire en cas de surbooking ?", o:["Application des règles CE261 et assistance","Refuser l’embarquement sans compensation","Remboursement immédiat","Aucune procédure"], c:0, e:"Application des règles et assistance selon CE261."},
+  {t:"Quelle est la limite de poids pour un bagage cabine en Business ?", o:["2 x 8 kg","2 x 12 kg","1 x 8 kg","1 x 12 kg"], c:0, e:"2 bagages cabine de 8 kg chacun en Business."},
+  {t:"Quelles sont les exigences pour une caisse AVIH ?", o:["Rigide avec porte boulonnée, ventilation et verrou","Tissu","Bois simple","Plastique souple"], c:0, e:"Caisse rigide et sécurisée obligatoire."},
+  {t:"Quel type de bagages bénéficie d’une étiquette ‘RUSH’ ?", o:["Bagages prioritaires non transférés à temps","Bagages perdus","Bagages endommagés","Bagages retardés"], c:0, e:"Bagages prioritaires à traiter rapidement."}
 ];
 
 
