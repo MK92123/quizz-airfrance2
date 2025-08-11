@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz Air France — Accès protégé</title>
   <style>
-    :root{--bg:#f6f7fb;--card:#ffffff;--txt:#111827;--muted:#6b7280;--ok:#0f766e;--bad:#b91c1c;--pri:#0a66ff;--warn:#b45309;--warnbg:#fff7ed}
+    :root{--bg:#f6f7fb;--card:#ffffff;--txt:#111827;--muted:#6b7280;--ok:#0f766e;--bad:#b91c1c;--pri:#0a66ff;--warn:#b45309;--warnbg:#fff7ed;--time:#991b1b;--timebg:#fee2e2}
     body{margin:0;padding:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    .wrap{max-width:980px;margin:0 auto;background:var(--card);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:24px;margin-top:24px;margin-bottom:24px}
+    .wrap{max-width:980px;margin:24px auto;background:var(--card);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:24px}
     header{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-bottom:8px}
     header img{max-width:220px;height:auto;display:block}
     h1{margin:4px 0 0;text-align:center}
-    .sub{color:var(--muted);text-align:center;margin:6px 0 12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .sub{color:var(--muted);text-align:center;margin:6px 0 12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
     .pill{background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:4px 10px;font-size:.9rem}
     .progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:8px 0 18px}
     .bar{height:100%;width:0;background:var(--pri);transition:width .25s}
@@ -30,10 +30,13 @@
     #reset{background:#6b7280;color:#fff}
     .score{margin-top:8px;text-align:center;color:var(--muted)}
     footer{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
-    .timer{background:#fee2e2;color:#991b1b;border-radius:999px;padding:4px 10px;font-weight:700}
+    .timer{background:var(--timebg);color:var(--time);border-radius:999px;padding:4px 10px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
     .time-low{background:#fecaca;color:#7f1d1d}
     .pill-ghost{background:#f3f4f6;color:#374151}
     .disclaimer{background:var(--warnbg);border:1px solid #fed7aa;color:var(--warn);padding:10px 12px;border-radius:10px;margin:8px 0 12px;font-size:.95rem}
+    .timebar{height:6px;background:#fde2e2;border-radius:999px;overflow:hidden}
+    .timebar > div{height:100%;width:100%;background:#ef4444;transition:width .2s linear}
+
     /* Gate */
     #gate{display:flex;min-height:100vh;align-items:center;justify-content:center;background:#0f172a;padding:16px}
     .card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:380px;width:100%}
@@ -72,17 +75,18 @@
 
       <div class="sub">
         <span id="meta" class="pill"></span>
-        <span id="timer" class="timer">00:30</span>
+        <span id="timer" class="timer"><span id="ttext">00:30</span></span>
         <span id="liveScore" class="pill-ghost"></span>
       </div>
+      <div class="timebar"><div id="timebarfill"></div></div>
       <div class="progress"><div id="bar" class="bar"></div></div>
       <div id="quiz"></div>
       <div class="row">
         <button id="reset" onclick="resetQuiz()">Recommencer (nouvel ordre)</button>
-        <button id="next" onclick="nextQ()" disabled>Suivant</button>
+        <button id="next" onclick="nextQ()" disabled>Valider</button>
       </div>
       <div id="score" class="score"></div>
-      <footer>Mode examen — 30s / question — ordre aléatoire — feedback instantané — généré le 2025-08-11 02:22.</footer>
+      <footer>Mode examen — 30s / question — ordre aléatoire — feedback instantané — généré le 2025-08-11 02:47.</footer>
     </div>
   </div>
 
@@ -91,7 +95,7 @@
   </audio>
 
   <script>
-    // 🔐 Password (change-le ici)
+    // 🔐 Password
     const PASSWORD = "AF2025!";
     if (sessionStorage.getItem("quiz_unlocked") === "1") { document.getElementById("gate").style.display="none"; document.getElementById("app").style.display="block"; }
 
@@ -111,133 +115,8 @@
     }
     document.addEventListener("keydown", (e)=>{ if (document.getElementById("gate").style.display!=="none" && e.key==="Enter") unlock(); });
 
-    // === Quiz ===
-
-    // Question schema:
-    // type: 'single' or 'multi'
-    // t: text, o: options[], c: correct index (single) or array of index (multi), e: explanation
-    const BASE = [
-      {type:'single', t:"Un pax à destination de Tel-Aviv peut-il obtenir sa carte d’embarquement sans contrôle Securitas ?", o:["Oui","Non"], c:1, e:"Contrôle Securitas obligatoire avant émission de la BP pour TLV."},
-      {type:'single', t:"Les batteries externes (power banks) sont-elles autorisées dans les coffres cabines ?", o:["Non","Oui"], c:0, e:"Admis en cabine mais sur soi. Strictement interdites en soute."},
-      {type:'single', t:"La recharge d’une e-cigarette est-elle autorisée à bord ?", o:["Oui","Non"], c:1, e:"Recharge et vapotage interdits à bord."},
-      {type:'single', t:"Bagage abandonné en salle d’embarquement : première action ?", o:["Alerter sûreté et sécuriser le périmètre","Essayer d’ouvrir pour identifier"], c:0, e:"Ne jamais manipuler un bagage suspect."},
-      {type:'single', t:"PAM – chapitre pour passagers indisciplinés ?", o:["6.5","6.9","6.12"], c:0, e:"Réf. PAM 6.5."},
-      {type:'single', t:"Où se trouve la Matrice de réacheminement PAM ?", o:["4.1.6.3","4.1.6.4","4.1.6.5"], c:1, e:"Réf. PAM 4.1.6.4."},
-      {type:'single', t:"PAM – qui peut autoriser un ‘process override’ en escale ?", o:["Tout agent","Manager opérationnel selon procédure"], c:1, e:"Chaîne d’autorité définie."},
-
-      {type:'single', t:"Tolérance ‘bag pool’ s’applique-t-elle à tout le réseau AF ?", o:["Oui","Non, périmètre limité (ex. Afrique 12–13)"], c:1, e:"Limitée à un périmètre défini."},
-      {type:'single', t:"À l’arrivée, poussette enregistrée en soute :", o:["Toujours remise passerelle","Tapis bagages ou comptoir bagages spéciaux selon acheminement","Toujours à l’escale de correspondance"], c:1, e:"Selon circuit/gabarit ; parfois passerelle si soute accessible."},
-      {type:'single', t:"Liquides en cabine :", o:["100 ml max chacun, sac 1L","Aucune limite"], c:0, e:"Règle 100 ml + sac 1L (exceptions duty free/médicaux)."},
-      {type:'single', t:"Aérosols de toilette (250 ml) :", o:["Admis avec restrictions","Jamais admis"], c:0, e:"Quantités et protections de valve requises."},
-      {type:'single', t:"Allumettes de sûreté/petit briquet :", o:["Sur soi uniquement (1), pas en soute","Libre en soute"], c:0, e:"Tolérance limitée ; soute interdite."},
-
-      {type:'single', t:"Ozion PMR Manager – où placer “BIS” d’une commande dans le cas ou il s'agit d'une deuxième commande PHMR ?", o:["Avant NOM","Avant PRÉNOM (commande d’origine)","En commentaire"], c:1, e:"‘BIS’ avant le prénom sur la commande d’origine."},
-      {type:'single', t:"PMR – priorité d’embarquement :", o:["Oui (procédure dédiée)","Non"], c:0, e:"Embarquement prioritaire + coordination assistance."},
-      {type:'single', t:"PMR – imprévu de prise en charge, qui alerter ?", o:["CLD/manager opérationnel","PNC uniquement"], c:0, e:"Coordination côté sol."},
-
-      {type:'single', t:"Poids > 8 kg (caisse incluse) pour animal :", o:["Cabine","Soute AVIH"], c:1, e:">8 kg → AVIH (jusqu’à 75 kg)."},
-      {type:'single', t:"Poids maximal AVIH (animal + caisse) :", o:["50 kg","75 kg","100 kg"], c:1, e:"Limite AVIH à 75 kg."},
-      {type:'single', t:"Âge minimum AVIH :", o:["8 semaines","10 semaines","15 semaines"], c:2, e:"≥ 15 semaines + vaccins."},
-      {type:'single', t:"Caisse AVIH conforme :", o:["Bois","Fibre/plastique rigide + porte boulonnée","Tissu"], c:1, e:"Rigide + boulons, ventilation, verrou."},
-      {type:'single', t:"Races brachycéphales acceptées en soute ?", o:["Oui","Non"], c:1, e:"Refusées en soute (risque respiratoire)."},
-      {type:'single', t:"Chiens cat. 1 (pit-bull, tosa, etc.) :", o:["Acceptés","Interdits"], c:1, e:"Interdits sur vols commerciaux AF."},
-      {type:'single', t:"Staffordshire Bull Terrier LOF :", o:["Interdit","Possible en soute avec cage conforme"], c:1, e:"Staffie LOF non classé cat.1/2."},
-      {type:'single', t:"PETC (cabine) : exigence clé", o:["Dimensions/poids cabine, sous le siège","Aucune limite si calme"], c:0, e:"Confinement sous le siège."},
-      {type:'single', t:"SVAN (service animal) :", o:["Toujours libre sans doc","Sous conditions et docs pays/compagnie"], c:1, e:"Règles pays/compagnie."},
-
-      {type:'single', t:"E‑scooters / e‑bikes :", o:["Admis en cabine déchargés","Généralement interdits passagers"], c:1, e:"Risque lithium élevé."},
-      {type:'single', t:"Smart luggage (batterie amovible) :", o:["Soute OK si batterie retirée","Toujours interdit"], c:0, e:"Retirer la batterie si en soute."},
-      {type:'single', t:"Glace carbonique (denrées) :", o:["Toujours interdite","Autorisée avec limite et ventilation"], c:1, e:"Limite (ex. 2,5 kg) + ventilation/étiquetage."},
-      {type:'single', t:"Batterie lithium endommagée :", o:["Transport possible si isolée","Transport refusé"], c:1, e:"Refus de transport."},
-      {type:'single', t:"Sprays auto‑défense (gaz) :", o:["Admis soute","Interdits passagers"], c:1, e:"Interdits passagers."},
-      {type:'multi',  t:"Sélectionne les éléments corrects pour batteries de rechange (lithium)", o:["Toujours en cabine","Bornes protégées/isolées","OK en soute si <100 Wh","Jamais avec bornes exposées"], c:[0,1,3], e:"Rechanges lithium en cabine uniquement, bornes protégées."},
-
-      {type:'single', t:"Terminal 2E : zone d’enregistrement des UM ?", o:["Zone 12","Zone 14","Zone 8","Zone 3"], c:1, e:"UM au 2E → Zone 14."},
-      {type:'single', t:"Mineure en groupe/colonie pour l’Espagne sans AST :", o:["Accepté","Refusé"], c:1, e:"AST obligatoire."},
-      {type:'single', t:"Mineur pour l’Espagne avec CNI périmée :", o:["Possible","Impossible"], c:1, e:"Document valide requis."},
-
-      {type:'single', t:"Client misco tunisien sans visa, vol le lendemain : que faire ?", o:["Hôtel en ville","Vérifier visa ; sinon solution hôtel à l’aéroport","Réacheminer immédiatement","Le loger chez un collègue"], c:1, e:"Sans visa, pas de sortie aéroport."},
-
-      {type:'single', t:"F – Zone 1 :", o:["Toute la journée","Vacances : jusqu’à 11h et à partir de 14h","UM uniquement","Bagages spéciaux"], c:1, e:"Plages vacances indiquées."},
-      {type:'single', t:"F – Zone 2 :", o:["SkyPriority","UM","Long‑courrier","Bagages volumineux"], c:0, e:"SkyPriority."},
-      {type:'single', t:"F – Zone 4 :", o:["UM/BACABA/PWD","SkyPriority","Vols Afrique","Standby"], c:0, e:"UM/BACABA/PWD."},
-      {type:'single', t:"F – Zone 7 :", o:["Standby, AVIH, PETC…","SkyPriority","Vols domestiques","UM"], c:0, e:"Particularités."},
-
-      {type:'single', t:"Misco de Tunis (3 bagages), il est 10h00. Quel vol ?", o:["TU725 12h30","AF1084 11h30","AF1385 15h30","Aucun"], c:2, e:"Transfert bagages ≥ 2h30 → AF1385 15h30."},
-
-      {type:'single', t:"DBC vers Marrakech, droit à :", o:["Rien","Réacheminement + assistance + indemnisation CE261","Un bon café","Seulement un changement de vol"], c:1, e:"Règlement CE261."},
-
-      {type:'single', t:"Client Middle East en Business au 2E : accès SkyPriority ?", o:["Oui","Non"], c:0, e:"Oui, classe Business."},
-
-      {type:'single', t:"ICP – insultes/intimidation :", o:["ICP1","ICP2","ICP3"], c:1, e:"ICP2 = agressif verbal/physique léger."},
-      {type:'single', t:"ICP – bristol d’avertissement remis par :", o:["Tout agent","Manager de proximité"], c:1, e:"Remis par le manager."},
-      {type:'single', t:"Après ICP grave :", o:["Rien","Déclarer via LDIF + entretien (puis suivi)"], c:1, e:"LDIF + entretiens."},
-      {type:'single', t:"Client filme un agent :", o:["Ignorer","Informer du refus + consigner + alerter canal dédié"], c:1, e:"Refus d’être filmé; consigner; alerte."},
-
-      {type:'single', t:"Conciergeries autorisées en enregistrement/embarquement :", o:["Toute conciergerie","AF BeMyGuest & ADP Extime uniquement"], c:1, e:"Accès restreint."},
-      {type:'single', t:"Conciergerie sans badge :", o:["Laisser passer","Demander badge TCA (challenging) ; sinon CIC/Manager"], c:1, e:"Challenging + alerte si besoin."},
-      {type:'single', t:"Qui peut accompagner un client en zone d’enregistrement ?", o:["Uniquement AF BeMyGuest/ADP Extime","Toute conciergerie réservée"], c:0, e:"Restriction stricte."},
-
-      {type:'single', t:"WCBD signifie :", o:["Fauteuil manuel","Fauteuil batterie sèche","Fauteuil batterie lithium"], c:1, e:"Wheelchair Battery Dry."},
-      {type:'single', t:"WCLB signifie :", o:["Fauteuil manuel","Fauteuil batterie lithium","Fauteuil batterie humide"], c:1, e:"Wheelchair Lithium Battery."},
-      {type:'single', t:"WCMP signifie :", o:["Fauteuil manuel propulsé","Fauteuil batterie humide","Fauteuil batterie sèche"], c:0, e:"Wheelchair Manual Propelled."},
-      {type:'single', t:"WCLB (lithium) – point clé :", o:["Batterie fixée/isolée, bornes protégées, info au transporteur","Aucune précaution"], c:0, e:"Procédures lithium à respecter."},
-      {type:'single', t:"Acheminement WCBD/WCLB :", o:["Toujours en cabine","Procédure PMR + règles DG batteries"], c:1, e:"Procédures PMR + DG."},
-
-      {type:'single', t:"Altéa CM – ajout d’un SSR AVIH :", o:["En commentaire libre","Via service code + quota vérifié"], c:1, e:"Créer le service + contrôler quota."},
-      {type:'single', t:"Réacheminement prioritaire :", o:["Solution partenaire d’abord","Solution AF immédiate si possible"], c:1, e:"Toujours privilégier AF si dispo immédiate."},
-      {type:'single', t:"Revalidation de billet en réacheminement :", o:["Toujours inutile","Nécessaire selon changement de routing/classe"], c:1, e:"Selon règles tarifaires."},
-      {type:'single', t:"Bagage non transférable à temps :", o:["Ignorer et embarquer","Informer pax + options + étiquettes RUSH"], c:1, e:"Information + traitement bagages (RUSH)."},
-
-      {type:'single', t:"Allumettes ‘strike anywhere’ :", o:["Tolérées","Interdites"], c:1, e:"Interdites ; seules allumettes de sûreté tolérées sur soi (1)."},
-      {type:'single', t:"Batteries de rechange >160 Wh :", o:["Admis en cabine","Interdit au transport pax"], c:1, e:">160 Wh interdit."},
-      {type:'single', t:"Cartouches gaz camping :", o:["Libre en soute","Interdites"], c:1, e:"Interdit pax."}
-    ];
-
-    const EXTRA = [
-      {type:'single', t:"AVIH : appel CLD et télex obligatoires si :", o:["Toujours, même si réservé","Si pas de réservation AVIH et ajout en dernière minute","Jamais"], c:1, e:"Coordination CLD + télex si ajout tardif/sans réservation."},
-      {type:'single', t:"AVIH : nombre max par passager (sous réserve quotas) :", o:["1","2","3","4"], c:2, e:"Jusqu’à 3 AVIH par pax selon quotas."},
-      {type:'single', t:"AVIH : race brachycéphale chat/chien :", o:["Acceptée en soute","Refusée en soute"], c:1, e:"Risque respiratoire."},
-      {type:'multi',  t:"AVIH : exigences cage conformes", o:["Rigide + ventilée","Porte boulonnée","Roulettes obligatoires","Verrouillage sûr"], c:[0,1,3], e:"Caisse rigide ventilée, porte boulonnée, verrou sûr."},
-      {type:'single', t:"AVIH : âge minimum pour voyager :", o:["8 sem.","10 sem.","15 sem."], c:2, e:"Au moins 15 semaines."},
-      {type:'single', t:"AVIH : poids max (animal+caisse) :", o:["50 kg","75 kg","90 kg"], c:1, e:"Max 75 kg."},
-      {type:'single', t:"AVIH : staffie LOF :", o:["Interdit","Accepté avec cage conforme"], c:1, e:"LOF non classé cat.1/2."},
-
-      {type:'single', t:"Empowerment : tu peux accorder une prestation sans manager si :", o:["Dans le cadre défini (barème/limite)","À ta convenance"], c:0, e:"Agir dans le cadre d’empowerment défini."},
-      {type:'single', t:"Wave excess : objectif :", o:["Réduire files en évitant encaissement micro-excédents","Augmenter la taxation à tout prix"], c:0, e:"Fluidité/efficacité opérationnelle."},
-      {type:'single', t:"Wave excess : niveau d’usage cible du dispositif", o:["~10% des cas pertinents","~50% des pax"], c:0, e:"Utilisation ciblée, pas systématique."},
-      {type:'multi',  t:"Empowerment : cas typiques d’usage", o:["Petit geste PAX (eau, voucher modéré)","Correction erreur AF évidente","Refus systématique d’indemniser CE261","Ajustement file SkyPriority pour PMR"], c:[0,1,3], e:"Rester dans le périmètre et la logique qualité/sécurité."},
-      {type:'single', t:"Wave excess : on l’applique de préférence quand :", o:["Impact opération faible et passager coopératif","Conflit et agression"], c:0, e:"Outil de fluidification, pas pour cas sensibles."},
-
-      {type:'single', t:"MISCO : priorité de réacheminement :", o:["Partenaire d’abord","AF immédiat si possible"], c:1, e:"Toujours privilégier solution AF."},
-      {type:'single', t:"DBC : base réglementaire EU :", o:["CE261/2004","CE201/1999"], c:0, e:"CE261/2004."},
-      {type:'multi',  t:"Annulation jour J : informer le client avec", o:["Annonce + affichage","Options de réacheminement","Silence pour éviter la foule","Prestations si éligible"], c:[0,1,3], e:"Infos + options + prestations selon matrices."},
-      {type:'single', t:"MISCO avec bagage non transférable :", o:["Ignorer le bagage","Informer + options + tag RUSH"], c:1, e:"Traiter bagage et informer pax."},
-      {type:'single', t:"DBC : priorités d’hébergement", o:["Au hasard","Vulnérables/PMR/familles en priorité"], c:1, e:"Priorisation clients vulnérables."},
-      {type:'single', t:"Annulation multiple vols : outil support au sol", o:["Matrice d’assistance/services","Aucune trame"], c:0, e:"Utiliser la matrice d’assistance."},
-
-      {type:'single', t:"Powerbank pendant le vol :", o:["Branchée pour charger","Éteinte/isolée, bornes protégées"], c:1, e:"Jamais branchée en vol."},
-      {type:'single', t:"Thermomètre au mercure (perso) :", o:["Admis librement","Restreint/à éviter"], c:1, e:"Risque mercure, restrictions fortes."},
-      {type:'single', t:"Briquet torche (flamme bleue) :", o:["Autorisé","Interdit"], c:1, e:"Généralement interdit."},
-
-      {type:'single', t:"POC (concentrateur oxygène) :", o:["Libre sans doc","Sous conditions (modèle approuvé, batterie suffisante)"], c:1, e:"POC soumis conditions et autonomie batterie."},
-      {type:'single', t:"DPNA (déficience mentale) :", o:["Assistance adaptée + briefing","Aucune particularité"], c:0, e:"Assistance et communication adaptées."},
-      {type:'single', t:"STCR (civière) :", o:["Toujours refusé","Accepté sous conditions + procédure dédiée"], c:1, e:"Règles d’acceptation spécifiques."},
-
-      {type:'single', t:"API USA/UK/CA :", o:["Saisies électroniques obligatoires selon pays","Optionnel"], c:0, e:"Formalités électroniques spécifiques par pays."},
-      {type:'single', t:"Contrôle documentaire :", o:["À faire à l’enregistrement","Inutile si e-ticket"], c:0, e:"Contrôle visas/durée/documents obligatoire."},
-
-      {type:'single', t:"Zone boarding :", o:["Aléatoire","Séquençage par zones + priorités"], c:1, e:"Zones + priorités (SkyPriority/PMR etc.)."},
-      {type:'single', t:"Client manquant à l’embarquement :", o:["Lancer recherche + procédure manquant","Fermer la porte sans action"], c:0, e:"Procédure ‘client manquant’."},
-
-      {type:'single', t:"Accès salons : dépend de", o:["Statut/Classe/Destination","Hasard"], c:0, e:"Éligibilité selon statut/produit."},
-      {type:'single', t:"Flying Blue Elite Plus :", o:["Éligible SkyPriority","Non"], c:0, e:"Elite Plus = SkyPriority."},
-
-      {type:'single', t:"Cigarette électronique :", o:["Transport cabine, usage/charge interdits","Libre à bord"], c:0, e:"Transport OK, usage non."},
-      {type:'single', t:"Instrument musique fragile :", o:["Toujours soute","Possible CBBG si nécessaire"], c:1, e:"Siège payant (CBBG) possible."}
-    ];
-
-    const POOL = BASE.concat(EXTRA);
+    // === Question pool (110) ===
+    const POOL = [{"type": "single", "t": "AVIH : poids max (animal + caisse) ?", "o": ["50 kg", "75 kg", "90 kg", "Aucune limite"], "c": 1, "e": "Limite opérationnelle 75 kg."}, {"type": "single", "t": "AVIH : âge minimum d’acceptation ?", "o": ["8 semaines", "10 semaines", "15 semaines", "12 semaines"], "c": 2, "e": "Minimum 15 semaines + vaccinations requises."}, {"type": "single", "t": "AVIH : races brachycéphales en soute ?", "o": ["Acceptées sous réserve", "Acceptées si caisse ventilée", "Refusées", "Acceptées si < 8 kg"], "c": 2, "e": "Risque respiratoire élevé → refus en soute."}, {"type": "single", "t": "AVIH : Staffie LOF (non classé cat.1/2) ?", "o": ["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], "c": 1, "e": "Staffie LOF non classé → possible en soute si cage conforme."}, {"type": "multi", "t": "AVIH : caractéristiques d’une caisse conforme", "o": ["Rigide et ventilée", "Porte boulonnée", "Roulettes obligatoires", "Verrou fiable"], "c": [0, 1, 3], "e": "Rigide, ventilée, porte boulonnée, verrou solide."}, {"type": "single", "t": "AVIH : où créer le service dans Altéa ?", "o": ["Remarque libre", "SSR AVIH avec quota vérifié", "OSI uniquement", "Aucun"], "c": 1, "e": "Créer SSR + contrôler quota."}, {"type": "single", "t": "AVIH : documents sanitaires ?", "o": ["Inutiles en UE", "Exigés selon pays et compagnie", "Jamais requis", "Vérifiés par le PNC uniquement"], "c": 1, "e": "Conformes aux exigences pays/compagnie."}, {"type": "single", "t": "AVIH : appel CLD + télex requis quand ?", "o": ["Toujours, même si déjà réservé", "Uniquement si réservations sold out", "Si ajout tardif/sans réservation", "Jamais"], "c": 2, "e": "Si pas de réservation AVIH et ajout tardif."}, {"type": "single", "t": "AVIH en transit court SPL/CDG/ORY :", "o": ["Toujours refusé", "Accepté sans condition", "Traité selon procédures dédiées", "Libre si caisse souple"], "c": 2, "e": "Procédures AVIH spécifiques en correspondance."}, {"type": "single", "t": "PETC (cabine) : règle clé ?", "o": ["Animal libre", "Sous le siège, gabarit/poids cabine", "Dans le coffre cabine", "Dans les toilettes"], "c": 1, "e": "Confiné sous le siège, limites cabine."}, {"type": "single", "t": "SVAN : acceptation ?", "o": ["Sans aucun document", "Sous conditions et docs pays/compagnie", "Toujours refusé", "Bagage cabine obligatoire"], "c": 1, "e": "Selon réglementation pays/compagnie."}, {"type": "multi", "t": "AVIH : quand refuser ?", "o": ["Caisse molle", "Animal < 15 semaines", "Race brachycéphale", "Poids total > 75 kg"], "c": [0, 1, 2, 3], "e": "Tous ces cas sont non conformes."}, {"type": "single", "t": "Empowerment : principe ?", "o": ["Décider hors cadre", "Décider dans un cadre défini", "Uniquement avec accord écrit", "Jamais"], "c": 1, "e": "Agir dans les limites d’empowerment."}, {"type": "single", "t": "Wave excess : objectif opérationnel ?", "o": ["Fluidifier files, éviter micro-encaissements", "Augmenter recettes", "Créer exceptions aléatoires", "Ralentir flux"], "c": 0, "e": "Fluidité/efficacité, pas systématique."}, {"type": "single", "t": "Wave excess : cible d’usage ?", "o": ["~10% des cas pertinents", "~50% pax", "Toujours", "Jamais"], "c": 0, "e": "Utilisation ciblée, ≈10%."}, {"type": "multi", "t": "Empowerment : situations pertinentes", "o": ["Petit geste eau/voucher modéré", "Corriger erreur AF évidente", "Dénier CE261 par principe", "Adapter accès SkyPriority PMR"], "c": [0, 1, 3], "e": "Toujours pro, sécurité/qualité d’abord."}, {"type": "single", "t": "Empowerment : qui valide ?", "o": ["Toujours Dir. Escale", "Manager opérationnel selon cas", "Aucun contrôle", "PNC"], "c": 1, "e": "Selon procédure locale/cadre défini."}, {"type": "single", "t": "Wave excess : quand éviter ?", "o": ["Conflit/agression", "Files longues et pax coopératif", "Pics vacances", "Pannes système"], "c": 0, "e": "Ne pas l’utiliser en cas sensible."}, {"type": "single", "t": "Empowerment : traçabilité ?", "o": ["Inutile", "Souhaitable selon cadre", "Interdite", "Uniquement si PNC demande"], "c": 1, "e": "Tracer selon procédure."}, {"type": "single", "t": "Wave excess : communication au client ?", "o": ["Aucune explication", "Rester flou", "Transparente et factuelle", "Promettre systématiquement"], "c": 2, "e": "Communication claire et neutre."}, {"type": "single", "t": "Empowerment : périmètre financier ?", "o": ["Sans limite", "Dans des seuils définis", "Au jugé", "Toujours 0€"], "c": 1, "e": "Respecter seuils/barèmes."}, {"type": "single", "t": "Empowerment : priorité ?", "o": ["Image > sécurité", "Sécurité/sûreté > tout le reste", "Recette > image", "Aucune"], "c": 1, "e": "Sécurité/sûreté toujours prioritaires."}, {"type": "single", "t": "Wave excess : documentation ?", "o": ["Toujours dossier long", "Note rapide si requis", "Jamais", "Demander signature client"], "c": 1, "e": "Note rapide si requis par process."}, {"type": "multi", "t": "Empowerment : erreurs à éviter", "o": ["Promesses hors politique", "Contredire PAM", "Exposer données personnelles", "Rester factuel"], "c": [0, 1, 2], "e": "Rester dans le cadre et RGPD."}, {"type": "single", "t": "MISCO : choix prioritaire ?", "o": ["Partenaire d’abord", "Solution AF immédiate si possible", "Train uniquement", "Attendre pax"], "c": 1, "e": "Toujours privilégier AF si dispo."}, {"type": "single", "t": "DBC UE : référence ?", "o": ["CE261/2004", "CE201/1999", "IATA 302", "PAM 7.5"], "c": 0, "e": "Règlement CE261/2004."}, {"type": "multi", "t": "Annulation jour J : actions", "o": ["Informer (annonce/affichage)", "Proposer options", "Garder silence", "Prestations si éligible"], "c": [0, 1, 3], "e": "Informer + options + prestations."}, {"type": "single", "t": "MISCO avec bagage non transférable :", "o": ["Ignorer", "Informer + tag RUSH + options", "Destruire tag", "Annuler voyage"], "c": 1, "e": "Informer et traiter bagage (RUSH)."}, {"type": "single", "t": "DBC : hébergement priorité ?", "o": ["Au hasard", "PMR/familles/vulnérables d’abord", "Derniers arrivés", "Clients sans bagage"], "c": 1, "e": "Prioriser vulnérables."}, {"type": "single", "t": "Réacheminement sur vol complet :", "o": ["Impossible", "Voir matrice de réacheminement", "Toujours forcer", "Jamais contacter CCO"], "c": 1, "e": "Réf. matrice PAM."}, {"type": "single", "t": "Vol annulé : attestation ?", "o": ["Inutile", "Fournir attestation d’annulation", "Client imprime seul", "PNC gère"], "c": 1, "e": "Attestation sur demande."}, {"type": "single", "t": "Affrètement last minute :", "o": ["Procédure standard", "Procédure dédiée (infos + services)", "Refus", "Libre"], "c": 1, "e": "Consignes spécifiques d’info/traitement."}, {"type": "single", "t": "Changement de config cabine :", "o": ["Jamais", "Procédure PAM (sur/déclassement)", "Libre choix", "PNC décide"], "c": 1, "e": "Suivre procédures PAM."}, {"type": "single", "t": "Retour vol (RTB) :", "o": ["Toujours débarquer", "Actions escale + messages dédiés", "Pas d’action", "Oublier bagages"], "c": 1, "e": "Procédure retour vol."}, {"type": "single", "t": "Transport terrestre (bus/train) IRG :", "o": ["Jamais", "Possible selon PAM", "Toujours taxi", "Client paie puis rembourse"], "c": 1, "e": "Selon PAM : bus/train/taxi encadrés."}, {"type": "multi", "t": "Réacheminement : priorités", "o": ["Sécurité d’abord", "AF si dispo immédiate", "Info claire client", "Ignorer correspondances"], "c": [0, 1, 2], "e": "Sécurité, AF prioritaire, info claire."}, {"type": "single", "t": "Power bank en soute ?", "o": ["Autorisé si éteint", "Strictement interdit", "Autorisé <100 Wh", "Autorisé si double emballage"], "c": 1, "e": "Batteries de rechange lithium interdites en soute."}, {"type": "single", "t": "Power bank en cabine :", "o": ["Sur soi, bornes protégées", "Dans coffre cabine", "Dans poche siège", "Dans galley"], "c": 0, "e": "Sur soi, bornes protégées."}, {"type": "single", "t": "E‑cigarette :", "o": ["Usage autorisé", "Recharge autorisée", "Transport cabine uniquement, usage interdit", "Soute uniquement"], "c": 2, "e": "Transport cabine, usage/charge interdits."}, {"type": "single", "t": "Briquet standard :", "o": ["1 sur soi", "Libre en soute", "2 en poche", "Interdit totalement"], "c": 0, "e": "Un briquet/allumettes de sûreté sur soi."}, {"type": "single", "t": "Briquet torche :", "o": ["Autorisé", "Interdit", "Soute OK", "Cabine OK"], "c": 1, "e": "Généralement interdit."}, {"type": "single", "t": "Allumettes ‘strike anywhere’ :", "o": ["Tolérées", "Interdites", "Soute uniquement", "Cabine illimité"], "c": 1, "e": "Interdites."}, {"type": "multi", "t": "Batteries de rechange (lithium) :", "o": ["Cabine uniquement", "Bornes protégées", "Soute si <100 Wh", "Jamais bornes exposées"], "c": [0, 1, 3], "e": "Cabine, bornes protégées."}, {"type": "single", "t": "Batteries >160 Wh :", "o": ["Admis cabine", "Admis soute", "Interdit au transport pax", "Libre si déchargées"], "c": 2, "e": "Interdits pour pax."}, {"type": "single", "t": "Glace carbonique (denrées) :", "o": ["Toujours interdite", "Autorisée avec limite + ventilation", "Soute sans limite", "Cabine sans limite"], "c": 1, "e": "Limite (p.ex. 2,5 kg) + ventilation."}, {"type": "single", "t": "Cartouches gaz camping :", "o": ["Libre", "Interdit passager", "Soute OK", "Cabine OK"], "c": 1, "e": "Interdit passagers."}, {"type": "single", "t": "Aérosol de toilette 250 ml :", "o": ["Autorisé avec conditions", "Toujours interdit", "Uniquement soute", "Uniquement cabine"], "c": 0, "e": "Tolérance sous conditions."}, {"type": "single", "t": "Thermomètre mercure perso :", "o": ["Libre", "Restreint/à éviter", "Toujours soute", "Toujours cabine"], "c": 1, "e": "Risque mercure."}, {"type": "single", "t": "Smart luggage (batt. amovible) :", "o": ["Soute OK si batterie retirée", "Toujours interdit", "Cabine OK sans retrait", "Soute avec batterie"], "c": 0, "e": "Retirer la batterie si en soute."}, {"type": "single", "t": "Batterie endommagée :", "o": ["Transport possible", "Refus de transport", "Soute uniquement", "Informer PNC et charger"], "c": 1, "e": "Refus."}, {"type": "single", "t": "E‑scooter/e‑bike :", "o": ["Admis déchargé", "Généralement interdit pax", "Soute autorisée", "Cabine autorisée"], "c": 1, "e": "Généralement interdit."}, {"type": "multi", "t": "Liquides cabine :", "o": ["Récipients ≤100 ml", "Dans sac 1L", "Sans limite qty", "Exceptions duty free/med"], "c": [0, 1, 3], "e": "Règle 100 ml + sac 1L + exceptions."}, {"type": "single", "t": "Sprays auto‑défense :", "o": ["Admis soute", "Interdits passagers", "Cabine OK", "Libre"], "c": 1, "e": "Interdits passagers."}, {"type": "single", "t": "Allumettes de sûreté :", "o": ["Sur soi (1)", "Soute", "Cabine (x3)", "Interdit"], "c": 0, "e": "Sur soi uniquement."}, {"type": "single", "t": "Bouteilles d’oxygène perso :", "o": ["Libre", "Réglementé/accord requis", "Soute uniquement", "Jamais"], "c": 1, "e": "Accord + restrictions."}, {"type": "single", "t": "POC (concentrateur) :", "o": ["Libre sans doc", "Sous conditions (modèle approuvé, autonomie)", "Soute", "Interdit"], "c": 1, "e": "Conditions spécifiques."}, {"type": "single", "t": "Batterie lithium appareil installé :", "o": ["Cabine seulement", "Soute seulement", "Cabine/soute selon appareil", "Toujours interdit"], "c": 2, "e": "Selon appareil/puissance."}, {"type": "single", "t": "Chargeur batterie en vol :", "o": ["Autorisé tout le temps", "Déconseillé/peut être interdit", "Obligatoire", "PNC charge"], "c": 1, "e": "Peut être interdit."}, {"type": "single", "t": "Retrait articles interdits cabine :", "o": ["Jamais", "Procédure dédiée", "À la discrétion pax", "Ignorer"], "c": 1, "e": "Procédure retrait/consignation."}, {"type": "single", "t": "Ballons hélium :", "o": ["Libre", "Réglementé/selon aéroport", "Toujours interdit", "Soute obligatoire"], "c": 1, "e": "Selon règles locales/aéroport."}, {"type": "single", "t": "Denrées périssables :", "o": ["Jamais admises", "Admissibles sous conditions", "Toujours cabine", "Toujours soute"], "c": 1, "e": "Sous conditions d’emballage/quantité."}, {"type": "single", "t": "WCBD :", "o": ["Fauteuil manuel", "Fauteuil batt. sèche", "Fauteuil batt. lithium", "Civière"], "c": 1, "e": "Wheelchair Battery Dry."}, {"type": "single", "t": "WCLB :", "o": ["Fauteuil manuel", "Fauteuil batt. lithium", "Fauteuil batt. humide", "Béquilles"], "c": 1, "e": "Wheelchair Lithium Battery."}, {"type": "single", "t": "WCMP :", "o": ["Fauteuil manuel propulsé", "Batt. humide", "Batt. sèche", "Assistance PMR"], "c": 0, "e": "Wheelchair Manual Propelled."}, {"type": "single", "t": "WCLB – précaution clé :", "o": ["Batterie fixée/isolée, bornes protégées", "Aucune", "Soute libre", "Cabine obligatoire"], "c": 0, "e": "Règles lithium."}, {"type": "single", "t": "Acheminement WCBD/WCLB :", "o": ["Toujours cabine", "Procédures PMR + DG", "Libre", "Refus"], "c": 1, "e": "Procédures PMR+DG."}, {"type": "single", "t": "WCHC assistance :", "o": ["Pas prioritaire", "Prioritaire et coordonnée", "Jamais bus", "PNC seul"], "c": 1, "e": "Priorité + coordination assistance."}, {"type": "single", "t": "STCR (civière) :", "o": ["Refusée", "Acceptée sous conditions", "Libre", "Uniquement USA"], "c": 1, "e": "Procédure dédiée."}, {"type": "single", "t": "Jambe en extension :", "o": ["Règles d’acceptation spécifiques", "Libre", "Toujours exit", "Soute"], "c": 0, "e": "Positions spécifiques."}, {"type": "single", "t": "DPNA :", "o": ["Aucune particularité", "Assistance/briefing adaptés", "Refus", "Toujours avec escorte"], "c": 1, "e": "Accompagnement adapté."}, {"type": "single", "t": "Oxygène fourni Cie :", "o": ["Toujours dispo", "Sur routes spécifiques et réservation", "Jamais", "Uniquement LC"], "c": 1, "e": "Voir politique/route."}, {"type": "single", "t": "POC – batteries :", "o": ["Autonomie suffisante requise", "Sans importance", "Soute", "Prêt par Cie"], "c": 0, "e": "Autonomie exigée."}, {"type": "single", "t": "Poussette enregistrée :", "o": ["Toujours passerelle", "Selon circuit (tapis/comptoir spéciaux)", "Toujours à CDG2E", "Jamais cabine"], "c": 1, "e": "Selon acheminement/gabarit."}, {"type": "single", "t": "Etiquette PWD bagage :", "o": ["Aucun marquage", "Étiquette dédiée PMR", "Étiquette UM", "Étiquette P"], "c": 1, "e": "Étiquette PWD dédiée."}, {"type": "single", "t": "Quota PMR/SSR en cabine :", "o": ["Sans limite", "Sous quotas/config avion", "Toujours refusé", "Libre"], "c": 1, "e": "Selon config et sécurité."}, {"type": "multi", "t": "Aide mobilité personnelle :", "o": ["Identification", "Protections bornes", "Info transporteur", "Embarquement sans contrôle"], "c": [0, 1, 2], "e": "Identification + protections + info."}, {"type": "single", "t": "Contrôle documentaire :", "o": ["Inutile si e-ticket", "Obligatoire à l’enregistrement", "PNC uniquement", "Client s’auto-contrôle"], "c": 1, "e": "Vérif. visas/durée/documents."}, {"type": "single", "t": "API USA/UK/CA :", "o": ["Optionnel", "Obligatoire selon pays", "Toujours inutile", "PAM ne traite pas"], "c": 1, "e": "Formalités électroniques par pays."}, {"type": "single", "t": "HLE :", "o": ["Heure limite d’enregistrement", "Heure libre d’embarquement", "Heure limite embarquement", "Heure légale Europe"], "c": 0, "e": "Heure Limite d’Enregistrement."}, {"type": "single", "t": "Enregistrement de bout en bout (EBB) :", "o": ["Sans conditions", "Conditions + restrictions", "Toujours refusé", "PNC gère"], "c": 1, "e": "EBB soumis à conditions."}, {"type": "single", "t": "Affichage zone enregistrement :", "o": ["Aucun obligatoire", "Infos réglementaires + commerciales", "Pub uniquement", "Prix billets"], "c": 1, "e": "Infos obligatoires + commerciales."}, {"type": "single", "t": "Files d’attente :", "o": ["Aucune gestion", "Gestion dédiée + SkyPriority", "Libre service uniquement", "VIP uniquement"], "c": 1, "e": "Gestion files + SkyPriority."}, {"type": "single", "t": "Kiosks – impression BP :", "o": ["Jamais", "Possible", "Interdit USA", "PNC imprime"], "c": 1, "e": "Possible selon système."}, {"type": "single", "t": "Clôture enregistrement :", "o": ["Accepter liste attente après", "Traiter refusés + standby", "Libre", "Toujours prolonger"], "c": 1, "e": "Procédures dédiées."}, {"type": "single", "t": "Messages fin de vol :", "o": ["Inutiles", "Automatiques + manuels", "PNC uniquement", "Jamais envoyés"], "c": 1, "e": "Automatiques/manuels."}, {"type": "single", "t": "Panne Altéa DC :", "o": ["Stop opération", "Procédure DC Backup ou manuelle", "Annuler vols", "Attendre"], "c": 1, "e": "Procédures de secours."}, {"type": "single", "t": "Zone boarding :", "o": ["Aléatoire", "Par zones + priorités", "VIP seulement", "PMR à la fin"], "c": 1, "e": "Zones + priorités (PMR/SkyPriority)."}, {"type": "single", "t": "Pré-embarquement :", "o": ["Jamais", "PMR/UM/ familles selon PAM", "Toujours business", "Aucun"], "c": 1, "e": "Pré-embarquement dédié."}, {"type": "single", "t": "Client manquant à la porte :", "o": ["Fermer directement", "Procédure client manquant + annonces", "Ignorer", "PNC décide"], "c": 1, "e": "Procédure dédiée."}, {"type": "single", "t": "OK fermeture porte :", "o": ["Annonce interne + retrait passerelle", "Fermer sans annonce", "PNC choisit", "Toujours 15 min avant STD"], "c": 0, "e": "Procédure OK porte."}, {"type": "single", "t": "Modifications last minute :", "o": ["Jamais", "Processus dédié (PAM)", "Libre", "PNC décide"], "c": 1, "e": "Procédures PAM."}, {"type": "single", "t": "Contact équipage :", "o": ["Inutile", "PIL/PIM/coordination", "Client informe", "Jamais"], "c": 1, "e": "PIL/PIM + coordination équipage."}, {"type": "single", "t": "Conditions météo défavorables :", "o": ["Aucune adaptation", "Procédures spécifiques", "PNC décide", "Toujours bus"], "c": 1, "e": "Procédures PAM."}, {"type": "single", "t": "Débarquement rapide global :", "o": ["Inexistant", "Procédure dédiée", "Toujours", "PNC seul"], "c": 1, "e": "Procédure PAM."}, {"type": "single", "t": "Bagages cabine non garantis :", "o": ["Toujours garantis", "Peuvent être repris en porte", "Jamais repris", "Toujours payants"], "c": 1, "e": "Peuvent être repris (porte)."}, {"type": "single", "t": "CBBG (bagage sur siège) :", "o": ["Interdit", "Possible selon conditions", "Toujours gratuit", "Soute obligatoire"], "c": 1, "e": "Conditions CBBG."}, {"type": "single", "t": "Étiquette HEAVY :", "o": [">23 kg typiquement", ">32 kg", "Toujours", "Jamais"], "c": 0, "e": "Marquage poids élevé (selon politique)."}, {"type": "single", "t": "Étiquette PRIORITY :", "o": ["Jamais", "Pour statuts/produits éligibles", "Uniquement UM", "Toujours"], "c": 1, "e": "Éligibilité SP/Statut."}, {"type": "single", "t": "Étiquette UM :", "o": ["Sur bagage UM", "Interdite", "Sur tous bagages enfants", "Sur poussettes"], "c": 0, "e": "Étiquette dédiée UM."}, {"type": "single", "t": "Bagage ‘pooling’ :", "o": ["Valable partout", "Périmètre limité", "Inexistant", "Toujours refusé"], "c": 1, "e": "Périmètre limité (ex. zones spécifiques)."}, {"type": "single", "t": "Franchise soute :", "o": ["Toujours 1PC", "Selon billet/statut/route", "Toujours 2PC", "Jamais"], "c": 1, "e": "Franchise varie."}, {"type": "single", "t": "ABA (bagage supp. anticipé) :", "o": ["Inexistant", "Possible (achat à l’avance)", "Toujours gratuit", "Uniquement à l’aéroport"], "c": 1, "e": "ABA possible en amont."}, {"type": "single", "t": "DSI (déclaration valeur) :", "o": ["Inutile", "Possible avec calcul montant", "Toujours obligatoire", "PNC gère"], "c": 1, "e": "DSI selon valeur."}, {"type": "single", "t": "WorldTracer :", "o": ["Jamais", "Outil suivi bagages (perte/dommage)", "PNC", "Client seul"], "c": 1, "e": "Outil suivi bagages."}, {"type": "single", "t": "Conciergeries admises zone enregistrement :", "o": ["Toutes", "AF BeMyGuest & ADP Extime", "Aucune", "Selon badge pax"], "c": 1, "e": "Services autorisés uniquement."}, {"type": "single", "t": "Conciergerie sans badge :", "o": ["Laisser passer", "Challenger badge TCA ; alerter si besoin", "Toujours refuser", "Ignorer"], "c": 1, "e": "Challenging + alerte."}, {"type": "single", "t": "Accompagnement zone enregistrement :", "o": ["Toute conciergerie réservée", "Uniquement AF BeMyGuest/ADP Extime", "Toujours famille", "PNC"], "c": 1, "e": "Restriction stricte."}, {"type": "single", "t": "ICP – insultes/intimidation :", "o": ["ICP1", "ICP2", "ICP3", "Pas ICP"], "c": 1, "e": "ICP2 : agressif verbal/physique léger."}, {"type": "single", "t": "Bristol d’avertissement :", "o": ["Tout agent", "Manager de proximité", "PNC", "Client"], "c": 1, "e": "Remis par manager."}, {"type": "single", "t": "Filmer un agent :", "o": ["Autorisé", "Refuser, consigner, alerter canal dédié", "Ignorer", "PNC répond"], "c": 1, "e": "Refuser/consigner/alerter."}];
 
     function shuffle(arr){
       for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
@@ -292,7 +171,7 @@
       remaining = 30;
       document.getElementById('timer').classList.remove('time-low');
       updateTimerUI();
-      document.getElementById('next').textContent = 'Suivant';
+      document.getElementById('next').textContent = 'Valider';
     }
 
     function onSelect(){
@@ -340,6 +219,8 @@
       answered = true;
       stopPerQuestionTimer();
       document.getElementById('next').textContent = 'Question suivante';
+      // Auto-advance after short delay to read feedback
+      setTimeout(()=>{ i++; if (i < Q.length) { render(); startPerQuestionTimer(); } else { finish(); } }, 1100);
     }
 
     function autoTimeUp(){
@@ -348,6 +229,7 @@
       answered = true;
       document.getElementById('next').disabled = false;
       document.getElementById('next').textContent = 'Question suivante';
+      setTimeout(()=>{ i++; if (i < Q.length) { render(); startPerQuestionTimer(); } else { finish(); } }, 800);
     }
 
     function resetQuiz(){
@@ -359,24 +241,33 @@
       stopPerQuestionTimer();
       const total = Q.length;
       const pct = Math.round(100 * score / total);
+      const appr = (pct>=90) ? "Excellent (maîtrise)"
+                  : (pct>=80) ? "Très bien (solide)"
+                  : (pct>=70) ? "Bien (à consolider)"
+                  : (pct>=60) ? "Passable (renforcer les bases)"
+                  : "Insuffisant (réviser PAM/IRG/DG)";
       document.getElementById('bar').style.width = '100%';
       document.getElementById('meta').textContent = 'Terminé ✅';
       document.getElementById('quiz').innerHTML =
         `<div class="q">Bravo ! Tu as terminé le quiz.</div>
-         <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
+         <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%) — ${appr}</p>
          <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
       document.getElementById('next').disabled = true;
-      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
-      document.getElementById('timer').textContent = '--:--';
+      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%) — ${appr}`;
+      document.getElementById('ttext').textContent = '--:--';
+      document.getElementById('timebarfill').style.width = '0%';
     }
 
-    // Timer 30s/question
+    // Timer 30s/question with visual bar
     function startPerQuestionTimer(){
       stopPerQuestionTimer();
       remaining = 30;
+      document.getElementById('timebarfill').style.width = '100%';
       updateTimerUI();
       ticker = setInterval(()=>{
         remaining--;
+        const pct = Math.max(0, remaining/30)*100;
+        document.getElementById('timebarfill').style.width = pct + '%';
         if (remaining === 5) {
           const beep = document.getElementById('beep'); if (beep) beep.play().catch(()=>{});
           document.getElementById('timer').classList.add('time-low');
@@ -388,7 +279,7 @@
     function stopPerQuestionTimer(){ if (ticker) { clearInterval(ticker); ticker=null; } }
     function updateTimerUI(){
       const m = Math.floor(remaining/60); const s = remaining % 60;
-      document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+      document.getElementById('ttext').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
     // Start
