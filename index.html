@@ -1,63 +1,127 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Air France — Accès protégé</title>
+  <title>Quiz Air France — PAM & procédures</title>
   <style>
-    :root{--bg:#f6f7fb;--card:#ffffff;--txt:#111827;--muted:#6b7280;--ok:#0f766e;--bad:#b91c1c;--pri:#0a66ff;--warn:#b45309;--warnbg:#fff7ed;--time:#991b1b;--timebg:#fee2e2}
-    body{margin:0;padding:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial}
-    .wrap{max-width:980px;margin:24px auto;background:var(--card);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.06);padding:24px}
-    header{display:flex;flex-direction:column;align-items:center;gap:.35rem;margin-bottom:8px}
-    header img{max-width:220px;height:auto;display:block}
-    h1{margin:4px 0 0;text-align:center}
-    .sub{color:var(--muted);text-align:center;margin:6px 0 12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
-    .pill{background:#eef2ff;color:#1e3a8a;border-radius:999px;padding:4px 10px;font-size:.9rem}
-    .progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:8px 0 18px}
-    .bar{height:100%;width:0;background:var(--pri);transition:width .25s}
-    .q{font-weight:700;margin:10px 0 12px}
-    ul{list-style:none;padding:0;margin:0}
-    li{margin:.5rem 0}
-    label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
-    input[type=radio], input[type=checkbox]{margin-top:.25rem}
-    .feed{display:none;margin-top:12px;border-radius:10px;padding:10px}
-    .ok{display:block;background:#e7f7f3;color:#065f46}
-    .bad{display:block;background:#fdeaea;color:#7f1d1d}
-    .row{display:flex;gap:10px;justify-content:space-between;margin-top:16px;flex-wrap:wrap}
-    button{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
-    #next{background:var(--pri);color:#fff} #next:disabled{opacity:.5;cursor:not-allowed}
-    #reset{background:#6b7280;color:#fff}
-    .score{margin-top:8px;text-align:center;color:var(--muted)}
-    footer{margin-top:18px;text-align:center;color:var(--muted);font-size:.9rem}
-    .timer{background:var(--timebg);color:var(--time);border-radius:999px;padding:4px 10px;font-weight:700;display:inline-flex;align-items:center;gap:8px}
-    .time-low{background:#fecaca;color:#7f1d1d}
-    .pill-ghost{background:#f3f4f6;color:#374151}
-    .disclaimer{background:var(--warnbg);border:1px solid #fed7aa;color:var(--warn);padding:10px 12px;border-radius:10px;margin:8px 0 12px;font-size:.95rem}
-    .timebar{height:6px;background:#fde2e2;border-radius:999px;overflow:hidden}
-    .timebar > div{height:100%;width:100%;background:#ef4444;transition:width .2s linear}
-
-    /* Gate */
-    #gate{display:flex;min-height:100vh;align-items:center;justify-content:center;background:#0f172a;padding:16px}
-    .card{background:#fff;padding:24px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:380px;width:100%}
-    .card h2{margin:0 0 8px}
-    .card p{margin:0 0 10px;color:#6b7280}
-    .card input{width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:10px}
-    .card button{width:100%;padding:10px 14px;border:0;border-radius:10px;background:#0a66ff;color:#fff;font-weight:600;cursor:pointer}
-    .error{color:#b91c1c;margin-top:8px;display:none}
+    :root {
+      --bg: #f6f7fb; --card: #ffffff; --txt: #111827; --muted: #6b7280;
+      --ok: #0f766e; --bad: #b91c1c; --pri: #0a66ff; --warn: #b45309;
+      --warnbg: #fff7ed; --time: #991b1b; --timebg: #fee2e2;
+    }
+    body {
+      margin: 0; padding: 0; background: var(--bg); color: var(--txt);
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    .wrap {
+      max-width: 980px; margin: 24px auto; background: var(--card);
+      border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06);
+      padding: 24px;
+    }
+    header {
+      display: flex; flex-direction: column; align-items: center;
+      gap: .35rem; margin-bottom: 8px;
+    }
+    header img {
+      max-width: 220px; height: auto; display: block;
+    }
+    h1 {
+      margin: 4px 0 0; text-align: center;
+    }
+    .sub {
+      color: var(--muted); text-align: center;
+      margin: 6px 0 12px; display: flex; gap: 12px;
+      justify-content: center; flex-wrap: wrap; align-items: center;
+    }
+    .pill {
+      background: #eef2ff; color: #1e3a8a; border-radius: 999px;
+      padding: 4px 10px; font-size: .9rem;
+    }
+    .timer {
+      background: var(--timebg); color: var(--time);
+      border-radius: 999px; padding: 4px 14px; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 1.1rem;
+      user-select: none;
+      min-width: 90px;
+      justify-content: center;
+    }
+    .time-low {
+      background: #fecaca; color: #7f1d1d;
+    }
+    .q {
+      font-weight: 700; margin: 10px 0 12px;
+    }
+    ul {
+      list-style: none; padding: 0; margin: 0;
+    }
+    li {
+      margin: .5rem 0;
+    }
+    label {
+      display: flex; gap: .6rem; align-items: flex-start;
+      cursor: pointer;
+    }
+    input[type=radio], input[type=checkbox] {
+      margin-top: .25rem;
+    }
+    .feed {
+      display: none; margin-top: 12px; border-radius: 10px; padding: 10px;
+    }
+    .ok {
+      display: block; background: #e7f7f3; color: #065f46;
+    }
+    .bad {
+      display: block; background: #fdeaea; color: #7f1d1d;
+    }
+    .row {
+      display: flex; gap: 10px; justify-content: space-between;
+      margin-top: 16px; flex-wrap: wrap;
+    }
+    button {
+      border: 0; border-radius: 10px; padding: 10px 14px;
+      cursor: pointer; font-weight: 600;
+    }
+    #next {
+      background: var(--pri); color: #fff;
+    }
+    #next:disabled {
+      opacity: .5; cursor: not-allowed;
+    }
+    #reset {
+      background: #6b7280; color: #fff;
+    }
+    .score {
+      margin-top: 8px; text-align: center; color: var(--muted);
+    }
+    footer {
+      margin-top: 18px; text-align: center; color: var(--muted);
+      font-size: .9rem;
+    }
+    .progress {
+      height: 10px; background: #e5e7eb; border-radius: 99px; overflow: hidden; margin: 8px 0 18px;
+    }
+    .bar {
+      height: 100%; width: 0; background: var(--pri); transition: width .25s;
+    }
   </style>
 </head>
 <body>
 
   <!-- 🔐 PASSWORD GATE -->
   <div id="gate">
-    <div class="card">
+    <div class="card" style="max-width: 380px; margin: 40vh auto;">
       <h2>Accès quiz</h2>
       <p>Entrez le mot de passe pour continuer.</p>
-      <input id="pw" type="password" placeholder="Mot de passe">
+      <input id="pw" type="password" placeholder="Mot de passe" />
       <button onclick="unlock()">Entrer</button>
-      <div id="pwmsg" class="error">Mot de passe incorrect</div>
-      <div style="margin-top:12px;font-size:.85rem;color:#94a3b8">Astuce : le mot de passe est sensible à la casse.</div>
+      <div id="pwmsg" class="error" style="color:#b91c1c; display:none; margin-top:8px;">
+        Mot de passe incorrect
+      </div>
+      <div style="margin-top:12px; font-size:.85rem; color:#94a3b8;">
+        Astuce : le mot de passe est sensible à la casse.
+      </div>
     </div>
   </div>
 
@@ -65,225 +129,441 @@
   <div id="app" style="display:none">
     <div class="wrap">
       <header>
-        <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
+        <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'"/>
         <h1>Quiz Air France</h1>
       </header>
 
-      <div class="disclaimer">
-        Ceci est <strong>confidentiel</strong> et ne doit pas être partagé. En cas de partage, contactez : <strong>kneycie@gmail.com</strong>. Propriété intellectuelle d’un agent AF.
-      </div>
-
       <div class="sub">
         <span id="meta" class="pill"></span>
-        <span id="timer" class="timer"><span id="ttext">00:30</span></span>
+        <span id="timer" class="timer">30:00</span>
         <span id="liveScore" class="pill-ghost"></span>
       </div>
-      <div class="timebar"><div id="timebarfill"></div></div>
+
       <div class="progress"><div id="bar" class="bar"></div></div>
+
       <div id="quiz"></div>
+
       <div class="row">
         <button id="reset" onclick="resetQuiz()">Recommencer (nouvel ordre)</button>
         <button id="next" onclick="nextQ()" disabled>Valider</button>
       </div>
+
       <div id="score" class="score"></div>
-      <footer>Mode examen — 30s / question — ordre aléatoire — feedback instantané — généré le 2025-08-11 02:47.</footer>
+
+      <footer>Mode examen — 30 minutes pour tout le quiz — ordre aléatoire — feedback instantané — généré le 2025-08-11.</footer>
     </div>
   </div>
 
   <audio id="beep">
-    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAAABWAAACAAA=" type="audio/wav">
+    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAAABWAAACAAA=" type="audio/wav" />
   </audio>
 
-  <script>
-    // 🔐 Password
-    const PASSWORD = "AF2025!";
-    if (sessionStorage.getItem("quiz_unlocked") === "1") { document.getElementById("gate").style.display="none"; document.getElementById("app").style.display="block"; }
+<script>
+  // 🔐 Password
+  const PASSWORD = "AF2025!";
+  if (sessionStorage.getItem("quiz_unlocked") === "1") {
+    document.getElementById("gate").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  }
+  function unlock(){
+    const v = (document.getElementById("pw").value||"").trim();
+    if (v === PASSWORD) {
+      sessionStorage.setItem("quiz_unlocked","1");
+      document.getElementById("gate").style.display="none";
+      document.getElementById("app").style.display="block";
+      setTimeout(()=>{
+        const first = document.querySelector('#app input[type="radio"], #app input[type="checkbox"]');
+        if (first) first.focus();
+      }, 50);
+    } else {
+      const msg = document.getElementById("pwmsg");
+      msg.style.display="block";
+      setTimeout(()=>msg.style.display="none", 2000);
+    }
+  }
+  document.addEventListener("keydown", (e)=>{
+    if (document.getElementById("gate").style.display !== "none" && e.key === "Enter") unlock();
+  });
 
-    function unlock(){
-      const v = (document.getElementById("pw").value||"").trim();
-      if (v === PASSWORD) {
-        sessionStorage.setItem("quiz_unlocked","1");
-        document.getElementById("gate").style.display="none";
-        document.getElementById("app").style.display="block";
-        setTimeout(()=>{
-          const first = document.querySelector('#app input[type="radio"], #app input[type="checkbox"]');
-          if (first) first.focus();
-        }, 50);
+  // === Questions formulées en phrases complètes ===
+  const POOL = [
+    {
+      type: "single",
+      t: "Qu'est-ce qu'un UMNR (Unaccompanied Minor) chez Air France, et quel âge maximum un enfant doit-il avoir pour être considéré comme UMNR ?",
+      o: [
+        "Un UMNR est un enfant voyageant seul sans accompagnateur adulte, et il doit avoir moins de 12 ans pour bénéficier de ce statut.",
+        "Un UMNR est un adulte accompagné d’un mineur, et ce mineur doit avoir moins de 15 ans.",
+        "Un UMNR est un enfant qui voyage uniquement en cabine affaires, sans limite d’âge.",
+        "Un UMNR désigne un passager ayant une assistance particulière, quel que soit son âge."
+      ],
+      c: 0,
+      e: "UMNR désigne un mineur non accompagné âgé de moins de 12 ans selon la politique Air France."
+    },
+    {
+      type: "single",
+      t: "Dans quelles conditions un passager peut-il bénéficier d'un surclassement chez Air France selon les procédures PAM ?",
+      o: [
+        "Un passager peut être surclassé uniquement s'il a un statut élite, réserve une classe tarifaire premium, et s'il y a de la disponibilité dans la cabine supérieure.",
+        "Tous les passagers ont automatiquement droit à un surclassement, quelle que soit leur classe ou statut.",
+        "Le surclassement est offert uniquement aux passagers ayant réservé une classe économique non remboursable.",
+        "Les mineurs non accompagnés (UMNR) sont prioritaires pour les surclassements."
+      ],
+      c: 0,
+      e: "Le surclassement dépend du statut client, de la classe tarifaire et de la disponibilité de sièges en cabine supérieure."
+    },
+    {
+      type: "multi",
+      t: "Quels sont les droits en matière de franchise bagages pour un passager Flying Blue Gold voyageant en classe économique ? Sélectionnez toutes les affirmations vraies.",
+      o: [
+        "Le passager a droit à 2 bagages en soute, chacun pesant jusqu'à 23 kg.",
+        "Le passager peut embarquer 1 seul bagage cabine sans limite de poids.",
+        "Il bénéficie de priorités spécifiques à l’enregistrement, mais pas de franchise bagages supplémentaire.",
+        "Le passager doit payer un supplément pour chaque bagage enregistré."
+      ],
+      c: [0],
+      e: "Un membre Flying Blue Gold en classe économique bénéficie d’une franchise bagage en soute de 2 pièces de 23 kg chacune."
+    },
+    {
+      type: "single",
+      t: "Que doit faire un agent Air France en cas d'annulation d’un vol pour informer et assister les passagers selon les règles PAM ?",
+      o: [
+        "Informer les passagers via annonce et affichage, proposer un réacheminement adapté, et offrir des prestations si les passagers y ont droit.",
+        "Laisser les passagers attendre sans information, car cela relève du service client.",
+        "Procéder uniquement au remboursement du billet sans autre prestation.",
+        "Fermer les guichets et refuser toute prise en charge."
+      ],
+      c: 0,
+      e: "Les agents doivent impérativement informer, proposer des alternatives et assister les passagers conformément aux règles PAM."
+    },
+    {
+      type: "single",
+      t: "Quelle est la définition exacte de MISCO dans le cadre des procédures Air France ?",
+      o: [
+        "MISCO signifie « Message d’Information Spécifique au Client » : un message dédié pour informer un passager sur une situation particulière.",
+        "MISCO est un protocole de sécurité à bord des avions.",
+        "MISCO désigne une procédure interne de maintenance des avions.",
+        "MISCO est un programme de fidélité pour les clients fréquents."
+      ],
+      c: 0,
+      e: "MISCO est un message personnalisé adressé aux clients pour les informer précisément d’un problème ou d’une situation."
+    },
+    {
+      type: "multi",
+      t: "Lorsque Air France doit réacheminer un passager suite à une perturbation, quelles sont les priorités opérationnelles et humaines à respecter ? Sélectionnez toutes les réponses exactes.",
+      o: [
+        "Assurer la sécurité du passager en priorité absolue.",
+        "Prioriser un vol Air France disponible avant de considérer un vol partenaire.",
+        "Fournir une information claire et complète au passager sur les modalités du réacheminement.",
+        "Annuler les correspondances du passager sans autre démarche."
+      ],
+      c: [0,1,2],
+      e: "La sécurité, la priorité aux vols AF, et la communication claire sont essentielles. Annuler sans information n’est pas conforme."
+    },
+    {
+      type: "single",
+      t: "Lors d’un embarquement, quel traitement particulier est réservé aux mineurs non accompagnés (UMNR) ?",
+      o: [
+        "Les UMNR embarquent en priorité avant les autres passagers pour leur faciliter l’accès à bord.",
+        "Les UMNR embarquent en dernier pour éviter tout dérangement.",
+        "Ils embarquent uniquement en même temps que leur famille.",
+        "Ils doivent passer par une zone d’embarquement spécifique, séparée des autres."
+      ],
+      c: 0,
+      e: "Les UMNR bénéficient d’un embarquement prioritaire pour faciliter leur prise en charge."
+    },
+    {
+      type: "single",
+      t: "Quelle franchise bagage supplémentaire est accordée aux passagers à mobilité réduite (PMR) ?",
+      o: [
+        "Un bagage supplémentaire gratuit en soute leur est accordé pour transporter leur matériel médical ou d’assistance.",
+        "Ils doivent payer un supplément pour chaque bagage comme tous les passagers.",
+        "Ils ne bénéficient d’aucune franchise supplémentaire.",
+        "Ils peuvent embarquer un bagage cabine plus lourd que les autres passagers."
+      ],
+      c: 0,
+      e: "Les PMR bénéficient d’un bagage supplémentaire gratuit en soute pour leur matériel spécifique."
+    },
+    {
+      type: "single",
+      t: "Selon les règles PAM, que doit faire un agent à l’escale en cas de report ou retard important d’un vol ?",
+      o: [
+        "Informer rapidement les clients, organiser les prestations nécessaires (repas, hébergement), et gérer le réacheminement.",
+        "Ne rien communiquer jusqu’à nouvel ordre.",
+        "Ne fournir que des bons repas sans autres prestations.",
+        "Reporter automatiquement tous les clients sur un autre vol sans explications."
+      ],
+      c: 0,
+      e: "La prise en charge complète avec information et gestion des prestations est obligatoire."
+    },
+    {
+      type: "multi",
+      t: "Dans quels cas un agent peut-il exercer son droit d’empowerment (décision autonome) selon PAM ? Cochez toutes les réponses correctes.",
+      o: [
+        "Pour corriger une erreur évidente du système de réservation Air France.",
+        "Pour offrir un voucher modéré en compensation d’un désagrément.",
+        "Pour refuser systématiquement toute demande basée sur le règlement CE261.",
+        "Pour adapter l’accès prioritaire SkyPriority à un passager PMR."
+      ],
+      c: [0,1,3],
+      e: "L’empowerment permet ces décisions, mais pas le refus systématique du CE261."
+    },
+    {
+      type: "single",
+      t: "Que signifie l'acronyme PAD dans le contexte des priorités d’embarquement et d’accès chez Air France ?",
+      o: [
+        "Priorité d’Accès au Départ, donnant certains privilèges aux passagers concernés.",
+        "Passenger Arrival Document, un document de voyage.",
+        "Procédure Administrative Départ, une formalité au comptoir.",
+        "Passenger Assistance Directive, un guide d’assistance passagers."
+      ],
+      c: 0,
+      e: "PAD est la Priorité d’Accès au Départ, accordée à certains passagers."
+    },
+    {
+      type: "single",
+      t: "Si un passager est refusé à l’embarquement pour surréservation (DBC), quelles sont les prestations qu’il doit recevoir selon la réglementation ?",
+      o: [
+        "Une indemnisation financière, une assistance au sol, et un réacheminement vers sa destination finale.",
+        "Aucune prestation, il doit simplement accepter le refus.",
+        "Un remboursement partiel du billet sans assistance supplémentaire.",
+        "Un surclassement gratuit sur un vol ultérieur."
+      ],
+      c: 0,
+      e: "Le passager DBC a droit à une indemnisation, assistance et réacheminement selon la réglementation."
+    },
+    {
+      type: "single",
+      t: "Quel est le rôle principal de l’équipe DEDICATE (Dedicated Disruption Customer Assistance Team) chez Air France ?",
+      o: [
+        "Gérer spécifiquement l’assistance aux clients lors des perturbations opérationnelles.",
+        "Piloter les avions en cas d’urgence.",
+        "Assurer la maintenance des équipements à bord.",
+        "Gérer le programme de fidélité Flying Blue."
+      ],
+      c: 0,
+      e: "DEDICATE est une équipe dédiée à la gestion client lors de perturbations."
+    },
+    {
+      type: "multi",
+      t: "Que peut faire un agent en cas d’excès de bagage (overweight) ? Cochez les bonnes pratiques.",
+      o: [
+        "Proposer au client d’acheter une franchise bagage anticipée (ABA) avant l’enregistrement.",
+        "Refuser systématiquement le bagage sur le vol.",
+        "Émettre un billet électronique de paiement (EMD) pour le supplément bagage.",
+        "Accepter le bagage sans supplément quel que soit le poids."
+      ],
+      c: [0,2],
+      e: "L’ABA et la facturation via EMD sont les solutions recommandées."
+    },
+    {
+      type: "single",
+      t: "Est-ce qu’une surcharge est appliquée aux mineurs non accompagnés (UMNR) lors de la réservation ?",
+      o: [
+        "Oui, une surcharge UMNR est appliquée pour la prise en charge spécifique.",
+        "Non, les mineurs ne payent jamais de surcharge.",
+        "Oui, mais uniquement sur les vols long-courriers.",
+        "Non, sauf s’ils voyagent en classe affaires."
+      ],
+      c: 0,
+      e: "Une surcharge UMNR est systématiquement appliquée pour la prise en charge dédiée."
+    }
+  ];
+
+  // Shuffle utils
+  function shuffle(arr){
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function shuffleOptions(q){
+    const pairs = q.o.map((text, idx) => ({ text, idx }));
+    shuffle(pairs);
+    q.o = pairs.map(p => p.text);
+    if (q.type === 'single') {
+      q.c = pairs.findIndex(p => p.idx === q.c);
+    } else if (q.type === 'multi') {
+      q.c = q.c.map(idx => pairs.findIndex(p => p.idx === idx)).sort((a,b) => a-b);
+    }
+    return q;
+  }
+
+  let Q = [];
+  let i = 0;
+  let answered = false;
+  let score = 0;
+
+  // Timer global 30 minutes en secondes
+  let totalTime = 30 * 60;
+  let timerInterval = null;
+
+  function initQuiz(){
+    Q = POOL.map(q => ({type:q.type||'single', t:q.t, o:[...q.o], c: Array.isArray(q.c)?[...q.c]:q.c, e:q.e})).map(shuffleOptions);
+    shuffle(Q);
+    i = 0; score = 0; answered = false;
+    document.getElementById('next').disabled = true;
+    render();
+    startGlobalTimer();
+  }
+
+  function render(){
+    const bar = document.getElementById('bar');
+    const meta = document.getElementById('meta');
+    const sc = document.getElementById('liveScore');
+    const qn = Q[i];
+    const total = Q.length;
+
+    meta.textContent = `Question ${i+1} / ${total}${qn.type==='multi'?' • (plusieurs réponses)':''}`;
+    bar.style.width = `${Math.round(((i)/total)*100)}%`;
+    sc.textContent = `Score : ${score} / ${total}`;
+
+    const wrap = [];
+    wrap.push(`<div class="q">${qn.t}</div><ul>`);
+    if (qn.type === 'multi') {
+      qn.o.forEach((opt, idx) => {
+        wrap.push(`<li><label><input type="checkbox" name="opt" value="${idx}" onclick="onSelect()"/> ${opt}</label></li>`);
+      });
+    } else {
+      qn.o.forEach((opt, idx) => {
+        wrap.push(`<li><label><input type="radio" name="opt" value="${idx}" onclick="onSelect()"/> ${opt}</label></li>`);
+      });
+    }
+    wrap.push(`</ul><div id="feed" class="feed"></div>`);
+    document.getElementById('quiz').innerHTML = wrap.join('');
+
+    answered = false;
+    document.getElementById('next').disabled = true;
+    document.getElementById('next').textContent = 'Valider';
+  }
+
+  function onSelect(){
+    if (!answered) document.getElementById('next').disabled = false;
+  }
+
+  function evaluate(){
+    const qn = Q[i];
+    let correct = false;
+    if (qn.type === 'single') {
+      const sel = document.querySelector('input[name="opt"]:checked');
+      if (!sel) return null;
+      correct = (parseInt(sel.value, 10) === qn.c);
+    } else {
+      const sels = Array.from(document.querySelectorAll('input[name="opt"]:checked')).map(x=>parseInt(x.value, 10)).sort((a,b)=>a-b);
+      if (sels.length === 0) return null;
+      correct = (JSON.stringify(sels) === JSON.stringify(qn.c));
+    }
+    return correct;
+  }
+
+  function showFeedback(correct){
+    const qn = Q[i];
+    const feed = document.getElementById('feed');
+    if (correct) {
+      feed.className = 'feed ok';
+      feed.textContent = `Bonne réponse. ${qn.e}`;
+    } else {
+      feed.className = 'feed bad';
+      let sol = (qn.type === 'single') ? qn.o[qn.c] : qn.c.map(idx => qn.o[idx]).join(' + ');
+      feed.textContent = `Mauvaise réponse. Solution : ${sol}. ${qn.e}`;
+    }
+  }
+
+  function nextQ(){
+    if (answered) {
+      i++;
+      if (i < Q.length) {
+        render();
       } else {
-        const msg = document.getElementById("pwmsg"); msg.style.display="block"; setTimeout(()=>msg.style.display="none", 2000);
+        finish();
       }
+      return;
     }
-    document.addEventListener("keydown", (e)=>{ if (document.getElementById("gate").style.display!=="none" && e.key==="Enter") unlock(); });
-
-    // === Question pool (110) ===
-    const POOL = [{"type": "single", "t": "AVIH : poids max (animal + caisse) ?", "o": ["50 kg", "75 kg", "90 kg", "Aucune limite"], "c": 1, "e": "Limite opérationnelle 75 kg."}, {"type": "single", "t": "AVIH : âge minimum d’acceptation ?", "o": ["8 semaines", "10 semaines", "15 semaines", "12 semaines"], "c": 2, "e": "Minimum 15 semaines + vaccinations requises."}, {"type": "single", "t": "AVIH : races brachycéphales en soute ?", "o": ["Acceptées sous réserve", "Acceptées si caisse ventilée", "Refusées", "Acceptées si < 8 kg"], "c": 2, "e": "Risque respiratoire élevé → refus en soute."}, {"type": "single", "t": "AVIH : Staffie LOF (non classé cat.1/2) ?", "o": ["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], "c": 1, "e": "Staffie LOF non classé → possible en soute si cage conforme."}, {"type": "multi", "t": "AVIH : caractéristiques d’une caisse conforme", "o": ["Rigide et ventilée", "Porte boulonnée", "Roulettes obligatoires", "Verrou fiable"], "c": [0, 1, 3], "e": "Rigide, ventilée, porte boulonnée, verrou solide."}, {"type": "single", "t": "AVIH : où créer le service dans Altéa ?", "o": ["Remarque libre", "SSR AVIH avec quota vérifié", "OSI uniquement", "Aucun"], "c": 1, "e": "Créer SSR + contrôler quota."}, {"type": "single", "t": "AVIH : documents sanitaires ?", "o": ["Inutiles en UE", "Exigés selon pays et compagnie", "Jamais requis", "Vérifiés par le PNC uniquement"], "c": 1, "e": "Conformes aux exigences pays/compagnie."}, {"type": "single", "t": "AVIH : appel CLD + télex requis quand ?", "o": ["Toujours, même si déjà réservé", "Uniquement si réservations sold out", "Si ajout tardif/sans réservation", "Jamais"], "c": 2, "e": "Si pas de réservation AVIH et ajout tardif."}, {"type": "single", "t": "AVIH en transit court SPL/CDG/ORY :", "o": ["Toujours refusé", "Accepté sans condition", "Traité selon procédures dédiées", "Libre si caisse souple"], "c": 2, "e": "Procédures AVIH spécifiques en correspondance."}, {"type": "single", "t": "PETC (cabine) : règle clé ?", "o": ["Animal libre", "Sous le siège, gabarit/poids cabine", "Dans le coffre cabine", "Dans les toilettes"], "c": 1, "e": "Confiné sous le siège, limites cabine."}, {"type": "single", "t": "SVAN : acceptation ?", "o": ["Sans aucun document", "Sous conditions et docs pays/compagnie", "Toujours refusé", "Bagage cabine obligatoire"], "c": 1, "e": "Selon réglementation pays/compagnie."}, {"type": "multi", "t": "AVIH : quand refuser ?", "o": ["Caisse molle", "Animal < 15 semaines", "Race brachycéphale", "Poids total > 75 kg"], "c": [0, 1, 2, 3], "e": "Tous ces cas sont non conformes."}, {"type": "single", "t": "Empowerment : principe ?", "o": ["Décider hors cadre", "Décider dans un cadre défini", "Uniquement avec accord écrit", "Jamais"], "c": 1, "e": "Agir dans les limites d’empowerment."}, {"type": "single", "t": "Wave excess : objectif opérationnel ?", "o": ["Fluidifier files, éviter micro-encaissements", "Augmenter recettes", "Créer exceptions aléatoires", "Ralentir flux"], "c": 0, "e": "Fluidité/efficacité, pas systématique."}, {"type": "single", "t": "Wave excess : cible d’usage ?", "o": ["~10% des cas pertinents", "~50% pax", "Toujours", "Jamais"], "c": 0, "e": "Utilisation ciblée, ≈10%."}, {"type": "multi", "t": "Empowerment : situations pertinentes", "o": ["Petit geste eau/voucher modéré", "Corriger erreur AF évidente", "Dénier CE261 par principe", "Adapter accès SkyPriority PMR"], "c": [0, 1, 3], "e": "Toujours pro, sécurité/qualité d’abord."}, {"type": "single", "t": "Empowerment : qui valide ?", "o": ["Toujours Dir. Escale", "Manager opérationnel selon cas", "Aucun contrôle", "PNC"], "c": 1, "e": "Selon procédure locale/cadre défini."}, {"type": "single", "t": "Wave excess : quand éviter ?", "o": ["Conflit/agression", "Files longues et pax coopératif", "Pics vacances", "Pannes système"], "c": 0, "e": "Ne pas l’utiliser en cas sensible."}, {"type": "single", "t": "Empowerment : traçabilité ?", "o": ["Inutile", "Souhaitable selon cadre", "Interdite", "Uniquement si PNC demande"], "c": 1, "e": "Tracer selon procédure."}, {"type": "single", "t": "Wave excess : communication au client ?", "o": ["Aucune explication", "Rester flou", "Transparente et factuelle", "Promettre systématiquement"], "c": 2, "e": "Communication claire et neutre."}, {"type": "single", "t": "Empowerment : périmètre financier ?", "o": ["Sans limite", "Dans des seuils définis", "Au jugé", "Toujours 0€"], "c": 1, "e": "Respecter seuils/barèmes."}, {"type": "single", "t": "Empowerment : priorité ?", "o": ["Image > sécurité", "Sécurité/sûreté > tout le reste", "Recette > image", "Aucune"], "c": 1, "e": "Sécurité/sûreté toujours prioritaires."}, {"type": "single", "t": "Wave excess : documentation ?", "o": ["Toujours dossier long", "Note rapide si requis", "Jamais", "Demander signature client"], "c": 1, "e": "Note rapide si requis par process."}, {"type": "multi", "t": "Empowerment : erreurs à éviter", "o": ["Promesses hors politique", "Contredire PAM", "Exposer données personnelles", "Rester factuel"], "c": [0, 1, 2], "e": "Rester dans le cadre et RGPD."}, {"type": "single", "t": "MISCO : choix prioritaire ?", "o": ["Partenaire d’abord", "Solution AF immédiate si possible", "Train uniquement", "Attendre pax"], "c": 1, "e": "Toujours privilégier AF si dispo."}, {"type": "single", "t": "DBC UE : référence ?", "o": ["CE261/2004", "CE201/1999", "IATA 302", "PAM 7.5"], "c": 0, "e": "Règlement CE261/2004."}, {"type": "multi", "t": "Annulation jour J : actions", "o": ["Informer (annonce/affichage)", "Proposer options", "Garder silence", "Prestations si éligible"], "c": [0, 1, 3], "e": "Informer + options + prestations."}, {"type": "single", "t": "MISCO avec bagage non transférable :", "o": ["Ignorer", "Informer + tag RUSH + options", "Destruire tag", "Annuler voyage"], "c": 1, "e": "Informer et traiter bagage (RUSH)."}, {"type": "single", "t": "DBC : hébergement priorité ?", "o": ["Au hasard", "PMR/familles/vulnérables d’abord", "Derniers arrivés", "Clients sans bagage"], "c": 1, "e": "Prioriser vulnérables."}, {"type": "single", "t": "Réacheminement sur vol complet :", "o": ["Impossible", "Voir matrice de réacheminement", "Toujours forcer", "Jamais contacter CCO"], "c": 1, "e": "Réf. matrice PAM."}, {"type": "single", "t": "Vol annulé : attestation ?", "o": ["Inutile", "Fournir attestation d’annulation", "Client imprime seul", "PNC gère"], "c": 1, "e": "Attestation sur demande."}, {"type": "single", "t": "Affrètement last minute :", "o": ["Procédure standard", "Procédure dédiée (infos + services)", "Refus", "Libre"], "c": 1, "e": "Consignes spécifiques d’info/traitement."}, {"type": "single", "t": "Changement de config cabine :", "o": ["Jamais", "Procédure PAM (sur/déclassement)", "Libre choix", "PNC décide"], "c": 1, "e": "Suivre procédures PAM."}, {"type": "single", "t": "Retour vol (RTB) :", "o": ["Toujours débarquer", "Actions escale + messages dédiés", "Pas d’action", "Oublier bagages"], "c": 1, "e": "Procédure retour vol."}, {"type": "single", "t": "Transport terrestre (bus/train) IRG :", "o": ["Jamais", "Possible selon PAM", "Toujours taxi", "Client paie puis rembourse"], "c": 1, "e": "Selon PAM : bus/train/taxi encadrés."}, {"type": "multi", "t": "Réacheminement : priorités", "o": ["Sécurité d’abord", "AF si dispo immédiate", "Info claire client", "Ignorer correspondances"], "c": [0, 1, 2], "e": "Sécurité, AF prioritaire, info claire."}, {"type": "single", "t": "Power bank en soute ?", "o": ["Autorisé si éteint", "Strictement interdit", "Autorisé <100 Wh", "Autorisé si double emballage"], "c": 1, "e": "Batteries de rechange lithium interdites en soute."}, {"type": "single", "t": "Power bank en cabine :", "o": ["Sur soi, bornes protégées", "Dans coffre cabine", "Dans poche siège", "Dans galley"], "c": 0, "e": "Sur soi, bornes protégées."}, {"type": "single", "t": "E‑cigarette :", "o": ["Usage autorisé", "Recharge autorisée", "Transport cabine uniquement, usage interdit", "Soute uniquement"], "c": 2, "e": "Transport cabine, usage/charge interdits."}, {"type": "single", "t": "Briquet standard :", "o": ["1 sur soi", "Libre en soute", "2 en poche", "Interdit totalement"], "c": 0, "e": "Un briquet/allumettes de sûreté sur soi."}, {"type": "single", "t": "Briquet torche :", "o": ["Autorisé", "Interdit", "Soute OK", "Cabine OK"], "c": 1, "e": "Généralement interdit."}, {"type": "single", "t": "Allumettes ‘strike anywhere’ :", "o": ["Tolérées", "Interdites", "Soute uniquement", "Cabine illimité"], "c": 1, "e": "Interdites."}, {"type": "multi", "t": "Batteries de rechange (lithium) :", "o": ["Cabine uniquement", "Bornes protégées", "Soute si <100 Wh", "Jamais bornes exposées"], "c": [0, 1, 3], "e": "Cabine, bornes protégées."}, {"type": "single", "t": "Batteries >160 Wh :", "o": ["Admis cabine", "Admis soute", "Interdit au transport pax", "Libre si déchargées"], "c": 2, "e": "Interdits pour pax."}, {"type": "single", "t": "Glace carbonique (denrées) :", "o": ["Toujours interdite", "Autorisée avec limite + ventilation", "Soute sans limite", "Cabine sans limite"], "c": 1, "e": "Limite (p.ex. 2,5 kg) + ventilation."}, {"type": "single", "t": "Cartouches gaz camping :", "o": ["Libre", "Interdit passager", "Soute OK", "Cabine OK"], "c": 1, "e": "Interdit passagers."}, {"type": "single", "t": "Aérosol de toilette 250 ml :", "o": ["Autorisé avec conditions", "Toujours interdit", "Uniquement soute", "Uniquement cabine"], "c": 0, "e": "Tolérance sous conditions."}, {"type": "single", "t": "Thermomètre mercure perso :", "o": ["Libre", "Restreint/à éviter", "Toujours soute", "Toujours cabine"], "c": 1, "e": "Risque mercure."}, {"type": "single", "t": "Smart luggage (batt. amovible) :", "o": ["Soute OK si batterie retirée", "Toujours interdit", "Cabine OK sans retrait", "Soute avec batterie"], "c": 0, "e": "Retirer la batterie si en soute."}, {"type": "single", "t": "Batterie endommagée :", "o": ["Transport possible", "Refus de transport", "Soute uniquement", "Informer PNC et charger"], "c": 1, "e": "Refus."}, {"type": "single", "t": "E‑scooter/e‑bike :", "o": ["Admis déchargé", "Généralement interdit pax", "Soute autorisée", "Cabine autorisée"], "c": 1, "e": "Généralement interdit."}, {"type": "multi", "t": "Liquides cabine :", "o": ["Récipients ≤100 ml", "Dans sac 1L", "Sans limite qty", "Exceptions duty free/med"], "c": [0, 1, 3], "e": "Règle 100 ml + sac 1L + exceptions."}, {"type": "single", "t": "Sprays auto‑défense :", "o": ["Admis soute", "Interdits passagers", "Cabine OK", "Libre"], "c": 1, "e": "Interdits passagers."}, {"type": "single", "t": "Allumettes de sûreté :", "o": ["Sur soi (1)", "Soute", "Cabine (x3)", "Interdit"], "c": 0, "e": "Sur soi uniquement."}, {"type": "single", "t": "Bouteilles d’oxygène perso :", "o": ["Libre", "Réglementé/accord requis", "Soute uniquement", "Jamais"], "c": 1, "e": "Accord + restrictions."}, {"type": "single", "t": "POC (concentrateur) :", "o": ["Libre sans doc", "Sous conditions (modèle approuvé, autonomie)", "Soute", "Interdit"], "c": 1, "e": "Conditions spécifiques."}, {"type": "single", "t": "Batterie lithium appareil installé :", "o": ["Cabine seulement", "Soute seulement", "Cabine/soute selon appareil", "Toujours interdit"], "c": 2, "e": "Selon appareil/puissance."}, {"type": "single", "t": "Chargeur batterie en vol :", "o": ["Autorisé tout le temps", "Déconseillé/peut être interdit", "Obligatoire", "PNC charge"], "c": 1, "e": "Peut être interdit."}, {"type": "single", "t": "Retrait articles interdits cabine :", "o": ["Jamais", "Procédure dédiée", "À la discrétion pax", "Ignorer"], "c": 1, "e": "Procédure retrait/consignation."}, {"type": "single", "t": "Ballons hélium :", "o": ["Libre", "Réglementé/selon aéroport", "Toujours interdit", "Soute obligatoire"], "c": 1, "e": "Selon règles locales/aéroport."}, {"type": "single", "t": "Denrées périssables :", "o": ["Jamais admises", "Admissibles sous conditions", "Toujours cabine", "Toujours soute"], "c": 1, "e": "Sous conditions d’emballage/quantité."}, {"type": "single", "t": "WCBD :", "o": ["Fauteuil manuel", "Fauteuil batt. sèche", "Fauteuil batt. lithium", "Civière"], "c": 1, "e": "Wheelchair Battery Dry."}, {"type": "single", "t": "WCLB :", "o": ["Fauteuil manuel", "Fauteuil batt. lithium", "Fauteuil batt. humide", "Béquilles"], "c": 1, "e": "Wheelchair Lithium Battery."}, {"type": "single", "t": "WCMP :", "o": ["Fauteuil manuel propulsé", "Batt. humide", "Batt. sèche", "Assistance PMR"], "c": 0, "e": "Wheelchair Manual Propelled."}, {"type": "single", "t": "WCLB – précaution clé :", "o": ["Batterie fixée/isolée, bornes protégées", "Aucune", "Soute libre", "Cabine obligatoire"], "c": 0, "e": "Règles lithium."}, {"type": "single", "t": "Acheminement WCBD/WCLB :", "o": ["Toujours cabine", "Procédures PMR + DG", "Libre", "Refus"], "c": 1, "e": "Procédures PMR+DG."}, {"type": "single", "t": "WCHC assistance :", "o": ["Pas prioritaire", "Prioritaire et coordonnée", "Jamais bus", "PNC seul"], "c": 1, "e": "Priorité + coordination assistance."}, {"type": "single", "t": "STCR (civière) :", "o": ["Refusée", "Acceptée sous conditions", "Libre", "Uniquement USA"], "c": 1, "e": "Procédure dédiée."}, {"type": "single", "t": "Jambe en extension :", "o": ["Règles d’acceptation spécifiques", "Libre", "Toujours exit", "Soute"], "c": 0, "e": "Positions spécifiques."}, {"type": "single", "t": "DPNA :", "o": ["Aucune particularité", "Assistance/briefing adaptés", "Refus", "Toujours avec escorte"], "c": 1, "e": "Accompagnement adapté."}, {"type": "single", "t": "Oxygène fourni Cie :", "o": ["Toujours dispo", "Sur routes spécifiques et réservation", "Jamais", "Uniquement LC"], "c": 1, "e": "Voir politique/route."}, {"type": "single", "t": "POC – batteries :", "o": ["Autonomie suffisante requise", "Sans importance", "Soute", "Prêt par Cie"], "c": 0, "e": "Autonomie exigée."}, {"type": "single", "t": "Poussette enregistrée :", "o": ["Toujours passerelle", "Selon circuit (tapis/comptoir spéciaux)", "Toujours à CDG2E", "Jamais cabine"], "c": 1, "e": "Selon acheminement/gabarit."}, {"type": "single", "t": "Etiquette PWD bagage :", "o": ["Aucun marquage", "Étiquette dédiée PMR", "Étiquette UM", "Étiquette P"], "c": 1, "e": "Étiquette PWD dédiée."}, {"type": "single", "t": "Quota PMR/SSR en cabine :", "o": ["Sans limite", "Sous quotas/config avion", "Toujours refusé", "Libre"], "c": 1, "e": "Selon config et sécurité."}, {"type": "multi", "t": "Aide mobilité personnelle :", "o": ["Identification", "Protections bornes", "Info transporteur", "Embarquement sans contrôle"], "c": [0, 1, 2], "e": "Identification + protections + info."}, {"type": "single", "t": "Contrôle documentaire :", "o": ["Inutile si e-ticket", "Obligatoire à l’enregistrement", "PNC uniquement", "Client s’auto-contrôle"], "c": 1, "e": "Vérif. visas/durée/documents."}, {"type": "single", "t": "API USA/UK/CA :", "o": ["Optionnel", "Obligatoire selon pays", "Toujours inutile", "PAM ne traite pas"], "c": 1, "e": "Formalités électroniques par pays."}, {"type": "single", "t": "HLE :", "o": ["Heure limite d’enregistrement", "Heure libre d’embarquement", "Heure limite embarquement", "Heure légale Europe"], "c": 0, "e": "Heure Limite d’Enregistrement."}, {"type": "single", "t": "Enregistrement de bout en bout (EBB) :", "o": ["Sans conditions", "Conditions + restrictions", "Toujours refusé", "PNC gère"], "c": 1, "e": "EBB soumis à conditions."}, {"type": "single", "t": "Affichage zone enregistrement :", "o": ["Aucun obligatoire", "Infos réglementaires + commerciales", "Pub uniquement", "Prix billets"], "c": 1, "e": "Infos obligatoires + commerciales."}, {"type": "single", "t": "Files d’attente :", "o": ["Aucune gestion", "Gestion dédiée + SkyPriority", "Libre service uniquement", "VIP uniquement"], "c": 1, "e": "Gestion files + SkyPriority."}, {"type": "single", "t": "Kiosks – impression BP :", "o": ["Jamais", "Possible", "Interdit USA", "PNC imprime"], "c": 1, "e": "Possible selon système."}, {"type": "single", "t": "Clôture enregistrement :", "o": ["Accepter liste attente après", "Traiter refusés + standby", "Libre", "Toujours prolonger"], "c": 1, "e": "Procédures dédiées."}, {"type": "single", "t": "Messages fin de vol :", "o": ["Inutiles", "Automatiques + manuels", "PNC uniquement", "Jamais envoyés"], "c": 1, "e": "Automatiques/manuels."}, {"type": "single", "t": "Panne Altéa DC :", "o": ["Stop opération", "Procédure DC Backup ou manuelle", "Annuler vols", "Attendre"], "c": 1, "e": "Procédures de secours."}, {"type": "single", "t": "Zone boarding :", "o": ["Aléatoire", "Par zones + priorités", "VIP seulement", "PMR à la fin"], "c": 1, "e": "Zones + priorités (PMR/SkyPriority)."}, {"type": "single", "t": "Pré-embarquement :", "o": ["Jamais", "PMR/UM/ familles selon PAM", "Toujours business", "Aucun"], "c": 1, "e": "Pré-embarquement dédié."}, {"type": "single", "t": "Client manquant à la porte :", "o": ["Fermer directement", "Procédure client manquant + annonces", "Ignorer", "PNC décide"], "c": 1, "e": "Procédure dédiée."}, {"type": "single", "t": "OK fermeture porte :", "o": ["Annonce interne + retrait passerelle", "Fermer sans annonce", "PNC choisit", "Toujours 15 min avant STD"], "c": 0, "e": "Procédure OK porte."}, {"type": "single", "t": "Modifications last minute :", "o": ["Jamais", "Processus dédié (PAM)", "Libre", "PNC décide"], "c": 1, "e": "Procédures PAM."}, {"type": "single", "t": "Contact équipage :", "o": ["Inutile", "PIL/PIM/coordination", "Client informe", "Jamais"], "c": 1, "e": "PIL/PIM + coordination équipage."}, {"type": "single", "t": "Conditions météo défavorables :", "o": ["Aucune adaptation", "Procédures spécifiques", "PNC décide", "Toujours bus"], "c": 1, "e": "Procédures PAM."}, {"type": "single", "t": "Débarquement rapide global :", "o": ["Inexistant", "Procédure dédiée", "Toujours", "PNC seul"], "c": 1, "e": "Procédure PAM."}, {"type": "single", "t": "Bagages cabine non garantis :", "o": ["Toujours garantis", "Peuvent être repris en porte", "Jamais repris", "Toujours payants"], "c": 1, "e": "Peuvent être repris (porte)."}, {"type": "single", "t": "CBBG (bagage sur siège) :", "o": ["Interdit", "Possible selon conditions", "Toujours gratuit", "Soute obligatoire"], "c": 1, "e": "Conditions CBBG."}, {"type": "single", "t": "Étiquette HEAVY :", "o": [">23 kg typiquement", ">32 kg", "Toujours", "Jamais"], "c": 0, "e": "Marquage poids élevé (selon politique)."}, {"type": "single", "t": "Étiquette PRIORITY :", "o": ["Jamais", "Pour statuts/produits éligibles", "Uniquement UM", "Toujours"], "c": 1, "e": "Éligibilité SP/Statut."}, {"type": "single", "t": "Étiquette UM :", "o": ["Sur bagage UM", "Interdite", "Sur tous bagages enfants", "Sur poussettes"], "c": 0, "e": "Étiquette dédiée UM."}, {"type": "single", "t": "Bagage ‘pooling’ :", "o": ["Valable partout", "Périmètre limité", "Inexistant", "Toujours refusé"], "c": 1, "e": "Périmètre limité (ex. zones spécifiques)."}, {"type": "single", "t": "Franchise soute :", "o": ["Toujours 1PC", "Selon billet/statut/route", "Toujours 2PC", "Jamais"], "c": 1, "e": "Franchise varie."}, {"type": "single", "t": "ABA (bagage supp. anticipé) :", "o": ["Inexistant", "Possible (achat à l’avance)", "Toujours gratuit", "Uniquement à l’aéroport"], "c": 1, "e": "ABA possible en amont."}, {"type": "single", "t": "DSI (déclaration valeur) :", "o": ["Inutile", "Possible avec calcul montant", "Toujours obligatoire", "PNC gère"], "c": 1, "e": "DSI selon valeur."}, {"type": "single", "t": "WorldTracer :", "o": ["Jamais", "Outil suivi bagages (perte/dommage)", "PNC", "Client seul"], "c": 1, "e": "Outil suivi bagages."}, {"type": "single", "t": "Conciergeries admises zone enregistrement :", "o": ["Toutes", "AF BeMyGuest & ADP Extime", "Aucune", "Selon badge pax"], "c": 1, "e": "Services autorisés uniquement."}, {"type": "single", "t": "Conciergerie sans badge :", "o": ["Laisser passer", "Challenger badge TCA ; alerter si besoin", "Toujours refuser", "Ignorer"], "c": 1, "e": "Challenging + alerte."}, {"type": "single", "t": "Accompagnement zone enregistrement :", "o": ["Toute conciergerie réservée", "Uniquement AF BeMyGuest/ADP Extime", "Toujours famille", "PNC"], "c": 1, "e": "Restriction stricte."}, {"type": "single", "t": "ICP – insultes/intimidation :", "o": ["ICP1", "ICP2", "ICP3", "Pas ICP"], "c": 1, "e": "ICP2 : agressif verbal/physique léger."}, {"type": "single", "t": "Bristol d’avertissement :", "o": ["Tout agent", "Manager de proximité", "PNC", "Client"], "c": 1, "e": "Remis par manager."}, {"type": "single", "t": "Filmer un agent :", "o": ["Autorisé", "Refuser, consigner, alerter canal dédié", "Ignorer", "PNC répond"], "c": 1, "e": "Refuser/consigner/alerter."}];
-
-    function shuffle(arr){
-      for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
-      return arr;
+    const res = evaluate();
+    if (res === null) {
+      alert("Choisis au moins une réponse.");
+      return;
     }
-
-    function shuffleOptions(q){
-      const pairs = q.o.map((text, idx)=>({text, idx}));
-      shuffle(pairs);
-      q.o = pairs.map(p=>p.text);
-      if (q.type === 'single') { q.c = pairs.findIndex(p=>p.idx === q.c); }
-      else if (q.type === 'multi') { q.c = q.c.map(idx => pairs.findIndex(p=>p.idx === idx)).sort((a,b)=>a-b); }
-      return q;
-    }
-
-    let Q = [];
-    let i = 0;
-    let answered = false;
-    let score = 0;
-    let remaining = 30;
-    let ticker = null;
-
-    function initQuiz(){
-      Q = POOL.map(q => ({type:q.type||'single', t:q.t, o:[...q.o], c: Array.isArray(q.c)?[...q.c]:q.c, e:q.e})).map(shuffleOptions);
-      shuffle(Q);
-      i = 0; score = 0; answered = false;
-      document.getElementById('next').disabled = true;
-      render();
-      startPerQuestionTimer();
-    }
-
-    function render(){
-      const bar = document.getElementById('bar');
-      const meta = document.getElementById('meta');
-      const sc  = document.getElementById('liveScore');
-      const qn  = Q[i];
-      const total = Q.length;
-
-      meta.textContent = `Question ${i+1} / ${total}${qn.type==='multi'?' • (plusieurs réponses)':''}`;
-      bar.style.width = `${Math.round(((i)/total)*100)}%`;
-      sc.textContent = `Score : ${score} / ${total}`;
-
-      const wrap = [];
-      wrap.push(`<div class="q">${qn.t}</div><ul>`);
-      if (qn.type === 'multi') { qn.o.forEach((opt,idx)=>{ wrap.push(`<li><label><input type="checkbox" name="opt" value="${idx}" onclick="onSelect()"> ${opt}</label></li>`); }); }
-      else { qn.o.forEach((opt,idx)=>{ wrap.push(`<li><label><input type="radio" name="opt" value="${idx}" onclick="onSelect()"> ${opt}</label></li>`); }); }
-      wrap.push(`</ul><div id="feed" class="feed"></div>`);
-      document.getElementById('quiz').innerHTML = wrap.join('');
-
-      answered = false;
-      document.getElementById('next').disabled = true;
-      remaining = 30;
-      document.getElementById('timer').classList.remove('time-low');
-      updateTimerUI();
-      document.getElementById('next').textContent = 'Valider';
-    }
-
-    function onSelect(){
-      if (!answered) document.getElementById('next').disabled = false;
-    }
-
-    function evaluate(){
-      const qn = Q[i];
-      let correct = false;
-      if (qn.type === 'single') {
-        const sel = document.querySelector('input[name="opt"]:checked');
-        if (!sel) return null;
-        correct = (parseInt(sel.value,10) === qn.c);
+    if (res) score++;
+    showFeedback(res);
+    document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
+    answered = true;
+    document.getElementById('next').textContent = 'Question suivante';
+    // Auto-advance after short delay to read feedback
+    setTimeout(() => {
+      i++;
+      if (i < Q.length) {
+        render();
       } else {
-        const sels = Array.from(document.querySelectorAll('input[name="opt"]:checked')).map(x=>parseInt(x.value,10)).sort((a,b)=>a-b);
-        if (sels.length === 0) return null;
-        correct = (JSON.stringify(sels) === JSON.stringify(qn.c));
+        finish();
       }
-      return correct;
-    }
+    }, 1100);
+  }
 
-    function showFeedback(correct){
-      const qn = Q[i];
-      const feed = document.getElementById('feed');
-      if (correct) { feed.className = 'feed ok'; feed.textContent = `Bonne réponse. ${qn.e}`; }
-      else {
-        feed.className = 'feed bad';
-        let sol = (qn.type==='single') ? qn.o[qn.c] : qn.c.map(idx=>qn.o[idx]).join(' + ');
-        feed.textContent = `Mauvaise réponse. Solution : ${sol}. ${qn.e}`;
-      }
-    }
-
-    function nextQ(){
-      if (answered) {
-        i++;
-        if (i < Q.length) render(); else finish();
-        startPerQuestionTimer();
-        return;
-      }
-      const res = evaluate();
-      if (res === null) { alert("Choisis au moins une réponse."); return; }
-      if (res) score++;
-      showFeedback(res);
-      document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
-      answered = true;
-      stopPerQuestionTimer();
-      document.getElementById('next').textContent = 'Question suivante';
-      // Auto-advance after short delay to read feedback
-      setTimeout(()=>{ i++; if (i < Q.length) { render(); startPerQuestionTimer(); } else { finish(); } }, 1100);
-    }
-
-    function autoTimeUp(){
-      if (answered) return;
-      showFeedback(false);
-      answered = true;
-      document.getElementById('next').disabled = false;
-      document.getElementById('next').textContent = 'Question suivante';
-      setTimeout(()=>{ i++; if (i < Q.length) { render(); startPerQuestionTimer(); } else { finish(); } }, 800);
-    }
-
-    function resetQuiz(){
-      stopPerQuestionTimer();
-      initQuiz();
-    }
-
-    function finish(){
-      stopPerQuestionTimer();
-      const total = Q.length;
-      const pct = Math.round(100 * score / total);
-      const appr = (pct>=90) ? "Excellent (maîtrise)"
-                  : (pct>=80) ? "Très bien (solide)"
-                  : (pct>=70) ? "Bien (à consolider)"
-                  : (pct>=60) ? "Passable (renforcer les bases)"
-                  : "Insuffisant (réviser PAM/IRG/DG)";
-      document.getElementById('bar').style.width = '100%';
-      document.getElementById('meta').textContent = 'Terminé ✅';
-      document.getElementById('quiz').innerHTML =
-        `<div class="q">Bravo ! Tu as terminé le quiz.</div>
-         <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%) — ${appr}</p>
-         <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
-      document.getElementById('next').disabled = true;
-      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%) — ${appr}`;
-      document.getElementById('ttext').textContent = '--:--';
-      document.getElementById('timebarfill').style.width = '0%';
-    }
-
-    // Timer 30s/question with visual bar
-    function startPerQuestionTimer(){
-      stopPerQuestionTimer();
-      remaining = 30;
-      document.getElementById('timebarfill').style.width = '100%';
-      updateTimerUI();
-      ticker = setInterval(()=>{
-        remaining--;
-        const pct = Math.max(0, remaining/30)*100;
-        document.getElementById('timebarfill').style.width = pct + '%';
-        if (remaining === 5) {
-          const beep = document.getElementById('beep'); if (beep) beep.play().catch(()=>{});
-          document.getElementById('timer').classList.add('time-low');
-        }
-        if (remaining <= 0) { stopPerQuestionTimer(); autoTimeUp(); }
-        else { updateTimerUI(); }
-      }, 1000);
-    }
-    function stopPerQuestionTimer(){ if (ticker) { clearInterval(ticker); ticker=null; } }
-    function updateTimerUI(){
-      const m = Math.floor(remaining/60); const s = remaining % 60;
-      document.getElementById('ttext').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }
-
-    // Start
+  function resetQuiz(){
+    stopGlobalTimer();
     initQuiz();
-  </script>
+  }
+
+  function finish(){
+    stopGlobalTimer();
+    const total = Q.length;
+    const pct = Math.round(100 * score / total);
+    const appr = (pct >= 90) ? "Excellent (maîtrise)"
+                : (pct >= 80) ? "Très bien (solide)"
+                : (pct >= 70) ? "Bien (à consolider)"
+                : (pct >= 60) ? "Passable (renforcer les bases)"
+                : "Insuffisant (réviser PAM/IRG/DG)";
+    document.getElementById('bar').style.width = '100%';
+    document.getElementById('meta').textContent = 'Terminé ✅';
+    document.getElementById('quiz').innerHTML =
+      `<div class="q">Bravo ! Tu as terminé le quiz.</div>
+       <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%) — ${appr}</p>
+       <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
+    document.getElementById('next').disabled = true;
+    document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%) — ${appr}`;
+    document.getElementById('timer').textContent = '--:--';
+  }
+
+  // Timer global 30 minutes
+  function startGlobalTimer(){
+    stopGlobalTimer();
+    totalTime = 30 * 60;
+    updateTimerUI();
+    timerInterval = setInterval(() => {
+      totalTime--;
+      if (totalTime <= 60) {
+        document.getElementById('timer').classList.add('time-low');
+      }
+      if (totalTime <= 0) {
+        stopGlobalTimer();
+        alert("Temps écoulé ! Le quiz est terminé.");
+        finish();
+      } else {
+        updateTimerUI();
+      }
+    }, 1000);
+  }
+
+  function stopGlobalTimer(){
+    if(timerInterval){
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  function updateTimerUI(){
+    const m = Math.floor(totalTime/60);
+    const s = totalTime % 60;
+    document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  // Démarrage si déjà déverrouillé
+  if(sessionStorage.getItem("quiz_unlocked") === "1"){
+    initQuiz();
+  }
+</script>
+
 </body>
 </html>
