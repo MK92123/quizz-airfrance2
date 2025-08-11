@@ -278,8 +278,8 @@
   {t:"Qui bénéficie prioritairement d’un hébergement DBC ?", o:["Au hasard", "PMR, familles et vulnérables", "Derniers arrivés", "Clients sans bagages"], c:1, e:"Priorité aux PMR, familles et clients vulnérables."},
   {t:"Que faire en cas de vol annulé ?", o:["Fournir une attestation d’annulation", "Rien", "Laisser client imprimer seul", "PNC gère automatiquement"], c:0, e:"Attestation disponible sur demande."},
   {t:"Quelles sont les consignes pour un affrètement last minute ?", o:["Procédure standard", "Procédure dédiée avec infos et services", "Refus", "Libre"], c:1, e:"Consignes spécifiques à respecter."},
-  {t:"Comment gérer un changement de configuration cabine ?", o:["Jamais", "Procédure PAM de surclassement/déclassement", "Libre choix", "Décision PNC"], c:1, e:"Suivre les procédures PAM."}
-  ,
+  {t:"Comment gérer un changement de configuration cabine ?", o:["Jamais", "Procédure PAM de surclassement/déclassement", "Libre choix", "Décision PNC"], c:1, e:"Suivre les procédures PAM."},
+
   // Questions supplémentaires pour compléter à 100
   {t:"Quel est le délai minimum recommandé pour qu’un bagage suive un réacheminement ?", o:["1 heure", "2 heures", "3 heures", "4 heures"], c:1, e:"Minimum 2 heures pour garantir le transfert des bagages."},
   {t:"Un client peut-il obtenir un voucher lors d’un retard supérieur à 3 heures ?", o:["Oui", "Non"], c:0, e:"Selon réglementation, 3 heures minimum pour voucher."},
@@ -304,8 +304,86 @@
   {t:"Quelle est la procédure lors d’un vol annulé jour J ?", o:["Réacheminement + assistance", "Remboursement automatique", "Attente au guichet", "Aucune"], c:0, e:"Obligation d’assistance."},
   {t:"Quel est le délai conseillé pour transfert de bagages ?", o:["2 heures", "1 heure", "3 heures", "4 heures"], c:0, e:"2 heures minimum conseillé."},
   {t:"Que signifie une étiquette ‘RUSH’ sur un bagage ?", o:["Prioritaire", "Perdu", "Endommagé", "Retardé"], c:0, e:"Prioritaire à traiter."},
-  {t:"Quel est le poids de franchise cabine pour Business ?", o:["2 x 8 kg", "1 x 8 kg", "2 x 12 kg", "1 x 12 kg"], c:0, e:"2 bagages cabine de 8 kg chacun."}
+  {t:"Quel est le poids de franchise cabine pour Business ?", o:["2 x 8 kg", "1 x 8 kg", "2 x 12 kg", "1 x 12 kg"], c:0, e:"2 bagages cabine de 8 kg chacun."},
+
+  {t:"Quel waive s’applique pour un bagage pesant entre 23.5 et 23.9 kg déclaré à 24 kg ?", o:[
+    "TOLERANCE 1KG",
+    "TOLERANCE POOL AFRICA",
+    "GOLF",
+    "MEDICAL"
+  ], c:0, e:"TOLERANCE 1KG couvre une tolérance de poids jusqu’à 1 kg supplémentaire."},
+
+  {t:"Dans quel cas utilise-t-on le waive 'TOLERANCE POOL AFRICA' ?", o:[
+    "Bagages lourds à destination ou en provenance de la zone Afrique",
+    "Bagages perdus en transit",
+    "Bagages contenant du matériel médical",
+    "Bagages surclassés"
+  ], c:0, e:"Ce waive s’applique pour bagages excédant la franchise à destination ou origine Afrique."},
+
+  {t:"Que couvre le waive 'GOLF' ?", o:[
+    "Sac de golf pour passagers Flying Blue hors Explorer",
+    "Matériel médical pour clients PWD",
+    "Franchise spécifique pour militaires",
+    "Boite de fleurs"
+  ], c:0, e:"Le waive GOLF permet l’acheminement du sac de golf pour certains passagers."},
+
+  {t:"Le waive 'MEDICAL' est utilisé pour ?", o:[
+    "Matériel médical pour clients PWD",
+    "Franchise bagages supplémentaire",
+    "Equipement de sport",
+    "Produits périssables"
+  ], c:0, e:"Le waive MEDICAL est dédié au transport du matériel médical."},
+
+  {t:"Quel waive s’applique aux militaires OTAN et Américains ?", o:[
+    "MILITARY",
+    "WEAPON",
+    "TECHNICAL – IT",
+    "COM – EMPOWERMENT"
+  ], c:0, e:"Le waive MILITARY couvre la franchise spécifique militaire."},
+
+  {t:"Que signifie le waive 'WEAPON' ?", o:[
+    "Deuxième pièce lorsque munitions séparées de l’arme",
+    "Interdiction de transport d’armes",
+    "Transport gratuit des armes à feu",
+    "Franchise bagages vol spéciale"
+  ], c:0, e:"Ce waive permet une deuxième pièce pour les armes avec munitions séparées."},
+
+  {t:"Le waive 'FLEURS' est utilisé pour ?", o:[
+    "Boîte de fleurs au départ des destinations COI",
+    "Transport de produits frais",
+    "Sac à main spécial",
+    "Objets fragiles"
+  ], c:0, e:"Ce waive concerne la boîte de fleurs, uniquement au départ des COI."},
+
+  {t:"Que couvre le waive 'COM – EMPOWERMENT' ?", o:[
+    "Geste commercial au titre de l’empowerment",
+    "Erreur informatique",
+    "Retard bagages",
+    "Assistance PMR"
+  ], c:0, e:"Ce waive permet des gestes commerciaux dans la limite de l’empowerment."},
+
+  {t:"Quel waive s’applique pour un bagage cabine en transit non conforme prélevé en porte ?", o:[
+    "OPS – BOARDING",
+    "DISCREPANCY – INTERLINE",
+    "DISCREPANCY – RESERVATION",
+    "TECHNICAL – IT"
+  ], c:0, e:"OPS – BOARDING est utilisé pour bagage cabine non conforme en transit prélevé en porte."},
+
+  {t:"Un client a acheté un surclassement payant en Business après l’achat initial. Quel waive PAM dois-tu utiliser ?", o:[
+    "TECHNICAL – PAIDUPGRADE",
+    "DISCREPANCY – FQTV",
+    "COM – EMPOWERMENT",
+    "WAVE EXCESS"
+  ], c:0, e:"Le waive TECHNICAL – PAIDUPGRADE est dédié aux surclassements payants, garantissant la franchise supplémentaire."},
+
+  {t:"Quel waive PAM est utilisé pour accorder un geste commercial sur la franchise bagages lié à une situation client ?", o:[
+    "COM – EMPOWERMENT",
+    "TECHNICAL – PAIDUPGRADE",
+    "WAVE EXCESS",
+    "DISCREPANCY – FQTV"
+  ], c:0, e:"COM – EMPOWERMENT correspond aux gestes commerciaux validés par le management."}
 ];
+
 
 
 
