@@ -2,399 +2,1174 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Air France — PAM & procédures complètes</title>
+  <title>Quiz Air France - Questions PAM</title>
   <style>
-    :root {
-      --bg: #f6f7fb; --card: #ffffff; --txt: #111827; --muted: #6b7280;
-      --ok: #0f766e; --bad: #b91c1c; --pri: #0a66ff; --warn: #b45309;
-      --warnbg: #fff7ed; --time: #991b1b; --timebg: #fee2e2;
-    }
-    body {
-      margin: 0; padding: 0; background: var(--bg); color: var(--txt);
-      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    }
-    .wrap {
-      max-width: 980px; margin: 24px auto; background: var(--card);
-      border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.06);
-      padding: 24px;
-    }
-    header {
-      display: flex; flex-direction: column; align-items: center;
-      gap: .35rem; margin-bottom: 8px;
-    }
-    header img {
-      max-width: 220px; height: auto; display: block;
-    }
-    h1 {
-      margin: 4px 0 0; text-align: center;
-    }
-    .sub {
-      color: var(--muted); text-align: center;
-      margin: 6px 0 12px; display: flex; gap: 12px;
-      justify-content: center; flex-wrap: wrap; align-items: center;
-    }
-    .pill {
-      background: #eef2ff; color: #1e3a8a; border-radius: 999px;
-      padding: 4px 10px; font-size: .9rem;
-    }
-    .timer {
-      background: var(--timebg); color: var(--time);
-      border-radius: 999px; padding: 4px 14px; font-weight: 700;
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 1.1rem;
-      user-select: none;
-      min-width: 90px;
-      justify-content: center;
-    }
-    .time-low {
-      background: #fecaca; color: #7f1d1d;
-    }
-    .q {
-      font-weight: 700; margin: 10px 0 12px;
-    }
-    ul {
-      list-style: none; padding: 0; margin: 0;
-    }
-    li {
-      margin: .5rem 0;
-    }
-    label {
-      display: flex; gap: .6rem; align-items: flex-start;
-      cursor: pointer;
-    }
-    input[type=radio], input[type=checkbox] {
-      margin-top: .25rem;
-    }
-    .feed {
-      display: none; margin-top: 12px; border-radius: 10px; padding: 10px;
-    }
-    .ok {
-      display: block; background: #e7f7f3; color: #065f46;
-    }
-    .bad {
-      display: block; background: #fdeaea; color: #7f1d1d;
-    }
-    .row {
-      display: flex; gap: 10px; justify-content: space-between;
-      margin-top: 16px; flex-wrap: wrap;
-    }
-    button {
-      border: 0; border-radius: 10px; padding: 10px 14px;
-      cursor: pointer; font-weight: 600;
-    }
-    #next {
-      background: var(--pri); color: #fff;
-    }
-    #next:disabled {
-      opacity: .5; cursor: not-allowed;
-    }
-    #reset {
-      background: #6b7280; color: #fff;
-    }
-    .score {
-      margin-top: 8px; text-align: center; color: var(--muted);
-    }
-    footer {
-      margin-top: 18px; text-align: center; color: var(--muted);
-      font-size: .9rem;
-    }
-    .progress {
-      height: 10px; background: #e5e7eb; border-radius: 99px; overflow: hidden; margin: 8px 0 18px;
-    }
-    .bar {
-      height: 100%; width: 0; background: var(--pri); transition: width .25s;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.5; }
+    h2 { color: #0a66ff; }
+    .question { margin-bottom: 25px; }
+    .question-title { font-weight: bold; margin-bottom: 10px; }
+    .options { margin-left: 20px; }
+    .option { margin-bottom: 6px; }
+    .correct { color: green; font-style: italic; }
+    .explanation { margin-top: 6px; font-size: 0.9em; color: #555; }
   </style>
 </head>
 <body>
+  <h1>Quiz Air France - PAM & Procédures</h1>
 
-  <!-- 🔐 PASSWORD GATE -->
-  <div id="gate">
-    <div class="card" style="max-width: 380px; margin: 40vh auto;">
-      <h2>Accès quiz</h2>
-      <p>Entrez le mot de passe pour continuer.</p>
-      <input id="pw" type="password" placeholder="Mot de passe" />
-      <button onclick="unlock()">Entrer</button>
-      <div id="pwmsg" class="error" style="color:#b91c1c; display:none; margin-top:8px;">
-        Mot de passe incorrect
-      </div>
-      <div style="margin-top:12px; font-size:.85rem; color:#94a3b8;">
-        Astuce : le mot de passe est sensible à la casse.
-      </div>
+  <div class="question" id="q1">
+    <div class="question-title">1. Quel est le poids maximum autorisé pour un animal transporté en soute avec sa caisse selon la politique Air France ?</div>
+    <div class="options">
+      <div class="option">A. 50 kg au total pour l'animal et la caisse.</div>
+      <div class="option correct">B. 75 kg au total pour l'animal et la caisse.</div>
+      <div class="option">C. 90 kg au total pour l'animal et la caisse.</div>
+      <div class="option">D. Il n'y a aucune limite de poids.</div>
     </div>
+    <div class="explanation">Réponse correcte : B. La limite opérationnelle est de 75 kg au total, incluant la caisse.</div>
   </div>
 
-  <!-- APP -->
-  <div id="app" style="display:none">
-    <div class="wrap">
-      <header>
-        <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'"/>
-        <h1>Quiz Air France</h1>
-      </header>
-
-      <div class="sub">
-        <span id="meta" class="pill"></span>
-        <span id="timer" class="timer">30:00</span>
-        <span id="liveScore" class="pill-ghost"></span>
-      </div>
-
-      <div class="progress"><div id="bar" class="bar"></div></div>
-
-      <div id="quiz"></div>
-
-      <div class="row">
-        <button id="reset" onclick="resetQuiz()">Recommencer (nouvel ordre)</button>
-        <button id="next" onclick="nextQ()" disabled>Valider</button>
-      </div>
-
-      <div id="score" class="score"></div>
-
-      <footer>Mode examen — 30 minutes pour tout le quiz — ordre aléatoire — feedback instantané — généré le 2025-08-11.</footer>
+  <div class="question" id="q2">
+    <div class="question-title">2. Quel est l'âge minimum requis pour qu’un animal soit accepté en transport AVIH (animal en soute) chez Air France ?</div>
+    <div class="options">
+      <div class="option">A. 8 semaines.</div>
+      <div class="option">B. 10 semaines.</div>
+      <div class="option correct">C. 15 semaines.</div>
+      <div class="option">D. 12 semaines.</div>
     </div>
+    <div class="explanation">Réponse correcte : C. L’âge minimum est de 15 semaines, avec vaccinations à jour requises.</div>
   </div>
 
-  <audio id="beep">
-    <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABYAAABWAAACAAA=" type="audio/wav" />
-  </audio>
+  <div class="question" id="q3">
+    <div class="question-title">3. Comment Air France traite-t-elle les races brachycéphales (à museau court) pour le transport en soute ?</div>
+    <div class="options">
+      <div class="option">A. Elles sont acceptées sous réserve d’une caisse ventilée.</div>
+      <div class="option">B. Elles sont acceptées uniquement si le poids est inférieur à 8 kg.</div>
+      <div class="option correct">C. Elles sont systématiquement refusées en soute.</div>
+      <div class="option">D. Elles sont acceptées sans condition particulière.</div>
+    </div>
+    <div class="explanation">Réponse correcte : C. En raison du risque respiratoire élevé, ces races sont refusées en soute.</div>
+  </div>
 
-<script>
-  // 🔐 Password
-  const PASSWORD = "AF2025!";
-  if (sessionStorage.getItem("quiz_unlocked") === "1") {
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("app").style.display = "block";
-  }
-  function unlock(){
-    const v = (document.getElementById("pw").value||"").trim();
-    if (v === PASSWORD) {
-      sessionStorage.setItem("quiz_unlocked","1");
-      document.getElementById("gate").style.display="none";
-      document.getElementById("app").style.display="block";
-      setTimeout(()=>{
-        const first = document.querySelector('#app input[type="radio"], #app input[type="checkbox"]');
-        if (first) first.focus();
-      }, 50);
-    } else {
-      const msg = document.getElementById("pwmsg");
-      msg.style.display="block";
-      setTimeout(()=>msg.style.display="none", 2000);
-    }
-  }
-  document.addEventListener("keydown", (e)=>{
-    if (document.getElementById("gate").style.display !== "none" && e.key === "Enter") unlock();
-  });
+  <div class="question" id="q4">
+    <div class="question-title">4. Quelles sont les conditions d’acceptation d’un Staffie LOF (non classé catégorie 1 ou 2) en transport AVIH chez Air France ?</div>
+    <div class="options">
+      <div class="option correct">A. Le transport en soute est possible uniquement si la cage est conforme.</div>
+      <div class="option">B. Il est toujours interdit de transporter ce chien.</div>
+      <div class="option">C. Le transport est possible uniquement en cabine.</div>
+      <div class="option">D. Le transport est libre sans formalités.</div>
+    </div>
+    <div class="explanation">Réponse correcte : A. Un Staffie LOF non classé peut être accepté en soute si la cage est conforme aux règles.</div>
+  </div>
 
-  // === Pool complet des 110 questions reformulées ===
-  const POOL = [
-    // Questions 1 à 30 (extrait pour exemple, ici les 110 questions suivent le même style clair et complet)
-    {
-      type: "single",
-      t: "Quel est le poids maximum autorisé pour un animal transporté en soute avec sa caisse selon la politique Air France ?",
-      o: [
-        "50 kg au total pour l’animal et la caisse.",
-        "75 kg au total pour l’animal et la caisse.",
-        "90 kg au total pour l’animal et la caisse.",
-        "Il n’y a aucune limite de poids."
-      ],
-      c: 1,
-      e: "La limite opérationnelle pour un animal transporté en soute est de 75 kg au total, incluant la caisse."
-    },
-    // ... (ici toutes les autres questions bien formulées jusqu'à 110)
-    // Pour ne pas surcharger ici, je peux te fournir ce fichier complet en .zip ou en fichier txt, 
-    // ou te l’envoyer par morceaux si tu préfères
-  ];
+  <div class="question" id="q5">
+    <div class="question-title">5. Quelles sont les caractéristiques d’une caisse conforme pour le transport AVIH en soute chez Air France ?</div>
+    <div class="options">
+      <div class="option correct">A. La caisse doit être rigide et ventilée.</div>
+      <div class="option correct">B. La porte doit être boulonnée.</div>
+      <div class="option">C. Les roulettes sont obligatoires.</div>
+      <div class="option correct">D. La caisse doit avoir un verrou fiable.</div>
+    </div>
+    <div class="explanation">Réponse correcte : A, B et D. La caisse doit être rigide, bien ventilée, avec une porte boulonnée et un verrou solide.</div>
+  </div>
 
-  // Shuffle functions
-  function shuffle(arr){
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
+  <div class="question" id="q11">
+  <div class="question-title">11. Comment est acceptée une SVAN (valise spéciale à assistance numérique) chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Sans aucun document requis.</div>
+    <div class="option correct">B. Sous conditions et documents selon pays et compagnie.</div>
+    <div class="option">C. Toujours refusée.</div>
+    <div class="option">D. Doit obligatoirement être en bagage cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’acceptation dépend des règles du pays et de la compagnie.</div>
+</div>
 
-  function shuffleOptions(q){
-    const pairs = q.o.map((text, idx) => ({ text, idx }));
-    shuffle(pairs);
-    q.o = pairs.map(p => p.text);
-    if (q.type === 'single') {
-      q.c = pairs.findIndex(p => p.idx === q.c);
-    } else if (q.type === 'multi') {
-      q.c = q.c.map(idx => pairs.findIndex(p => p.idx === idx)).sort((a,b) => a-b);
-    }
-    return q;
-  }
+<div class="question" id="q12">
+  <div class="question-title">12. Dans quels cas faut-il refuser un AVIH chez Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Si la caisse est molle.</div>
+    <div class="option correct">B. Si l’animal a moins de 15 semaines.</div>
+    <div class="option correct">C. Si la race est brachycéphale.</div>
+    <div class="option correct">D. Si le poids total dépasse 75 kg.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B, C, et D. Toutes ces situations rendent le transport non conforme.</div>
+</div>
 
-  let Q = [];
-  let i = 0;
-  let answered = false;
-  let score = 0;
-  let totalTime = 30 * 60;
-  let timerInterval = null;
+<div class="question" id="q13">
+  <div class="question-title">13. Quel est le principe d’empowerment dans le cadre des opérations Air France ?</div>
+  <div class="options">
+    <div class="option">A. Prendre des décisions hors cadre réglementaire.</div>
+    <div class="option correct">B. Prendre des décisions dans un cadre défini et autorisé.</div>
+    <div class="option">C. Prendre des décisions uniquement avec accord écrit.</div>
+    <div class="option">D. Ne jamais prendre de décision seul.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’empowerment autorise à agir dans un cadre défini.</div>
+</div>
 
-  function initQuiz(){
-    Q = POOL.map(q => ({type:q.type||'single', t:q.t, o:[...q.o], c: Array.isArray(q.c)?[...q.c]:q.c, e:q.e})).map(shuffleOptions);
-    shuffle(Q);
-    i = 0; score = 0; answered = false;
-    document.getElementById('next').disabled = true;
-    render();
-    startGlobalTimer();
-  }
+<div class="question" id="q14">
+  <div class="question-title">14. Quel est l’objectif opérationnel de la procédure 'wave excess' chez Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Fluidifier les files d’attente et éviter les micro-encaissements.</div>
+    <div class="option">B. Augmenter les recettes de la compagnie.</div>
+    <div class="option">C. Créer des exceptions aléatoires pour les clients.</div>
+    <div class="option">D. Ralentir volontairement le flux passagers.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. La procédure vise à fluidifier les files et à gérer efficacement les flux.</div>
+</div>
 
-  function render(){
-    const bar = document.getElementById('bar');
-    const meta = document.getElementById('meta');
-    const sc = document.getElementById('liveScore');
-    const qn = Q[i];
-    const total = Q.length;
+<div class="question" id="q15">
+  <div class="question-title">15. Quelle proportion de cas pertinents est visée par la procédure 'wave excess' ?</div>
+  <div class="options">
+    <div class="option correct">A. Environ 10% des cas pertinents.</div>
+    <div class="option">B. Environ 50% des passagers.</div>
+    <div class="option">C. Toujours systématiquement.</div>
+    <div class="option">D. Jamais appliquée.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Cette procédure est utilisée de manière ciblée, autour de 10% des cas.</div>
+</div>
 
-    meta.textContent = `Question ${i+1} / ${total}${qn.type==='multi'?' • (plusieurs réponses)':''}`;
-    bar.style.width = `${Math.round(((i)/total)*100)}%`;
-    sc.textContent = `Score : ${score} / ${total}`;
+<div class="question" id="q16">
+  <div class="question-title">16. Dans quelles situations l’empowerment est-il pertinent chez Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Pour un petit geste comme offrir de l’eau ou un voucher modéré.</div>
+    <div class="option correct">B. Pour corriger une erreur évidente d’Air France.</div>
+    <div class="option">C. Pour nier systématiquement un droit CE261.</div>
+    <div class="option correct">D. Pour adapter l’accès SkyPriority aux passagers PMR.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B et D. L’empowerment permet ces actions sauf nier systématiquement un droit CE261.</div>
+</div>
 
-    const wrap = [];
-    wrap.push(`<div class="q">${qn.t}</div><ul>`);
-    if (qn.type === 'multi') {
-      qn.o.forEach((opt, idx) => {
-        wrap.push(`<li><label><input type="checkbox" name="opt" value="${idx}" onclick="onSelect()"/> ${opt}</label></li>`);
-      });
-    } else {
-      qn.o.forEach((opt, idx) => {
-        wrap.push(`<li><label><input type="radio" name="opt" value="${idx}" onclick="onSelect()"/> ${opt}</label></li>`);
-      });
-    }
-    wrap.push(`</ul><div id="feed" class="feed"></div>`);
-    document.getElementById('quiz').innerHTML = wrap.join('');
+<div class="question" id="q17">
+  <div class="question-title">17. Qui valide les décisions d’empowerment selon les procédures Air France ?</div>
+  <div class="options">
+    <div class="option">A. Toujours la direction d’escale.</div>
+    <div class="option correct">B. Le manager opérationnel selon les cas.</div>
+    <div class="option">C. Aucun contrôle n’est nécessaire.</div>
+    <div class="option">D. Le personnel PNC uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le manager opérationnel valide selon les procédures locales.</div>
+</div>
 
-    answered = false;
-    document.getElementById('next').disabled = true;
-    document.getElementById('next').textContent = 'Valider';
-  }
+<div class="question" id="q18">
+  <div class="question-title">18. Dans quel cas doit-on éviter la procédure 'wave excess' ?</div>
+  <div class="options">
+    <div class="option correct">A. En cas de conflit ou agression.</div>
+    <div class="option">B. Lorsque les files sont longues mais les passagers coopératifs.</div>
+    <div class="option">C. Pendant les pics de vacances.</div>
+    <div class="option">D. Lors de pannes système.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Cette procédure ne doit pas être utilisée en cas de conflits ou agressions.</div>
+</div>
 
-  function onSelect(){
-    if (!answered) document.getElementById('next').disabled = false;
-  }
+<div class="question" id="q19">
+  <div class="question-title">19. La traçabilité des actions d’empowerment est-elle obligatoire chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Non, elle est inutile.</div>
+    <div class="option correct">B. Oui, elle est souhaitable et souvent exigée selon le cadre.</div>
+    <div class="option">C. Elle est interdite.</div>
+    <div class="option">D. Seulement si un PNC la demande.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La traçabilité est souhaitable et nécessaire selon la procédure.</div>
+</div>
 
-  function evaluate(){
-    const qn = Q[i];
-    let correct = false;
-    if (qn.type === 'single') {
-      const sel = document.querySelector('input[name="opt"]:checked');
-      if (!sel) return null;
-      correct = (parseInt(sel.value, 10) === qn.c);
-    } else {
-      const sels = Array.from(document.querySelectorAll('input[name="opt"]:checked')).map(x=>parseInt(x.value, 10)).sort((a,b)=>a-b);
-      if (sels.length === 0) return null;
-      correct = (JSON.stringify(sels) === JSON.stringify(qn.c));
-    }
-    return correct;
-  }
+<div class="question" id="q20">
+  <div class="question-title">20. Comment la communication au client est-elle gérée lors d’une procédure 'wave excess' ?</div>
+  <div class="options">
+    <div class="option">A. Aucune explication n’est donnée.</div>
+    <div class="option">B. La communication est floue et vague.</div>
+    <div class="option correct">C. La communication est transparente et factuelle.</div>
+    <div class="option">D. Le client reçoit systématiquement une promesse.</div>
+  </div>
+  <div class="explanation">Réponse correcte : C. La communication doit être claire, transparente et factuelle.</div>
+</div>
 
-  function showFeedback(correct){
-    const qn = Q[i];
-    const feed = document.getElementById('feed');
-    if (correct) {
-      feed.className = 'feed ok';
-      feed.textContent = `Bonne réponse. ${qn.e}`;
-    } else {
-      feed.className = 'feed bad';
-      let sol = (qn.type === 'single') ? qn.o[qn.c] : qn.c.map(idx => qn.o[idx]).join(' + ');
-      feed.textContent = `Mauvaise réponse. Solution : ${sol}. ${qn.e}`;
-    }
-  }
+<div class="question" id="q21">
+  <div class="question-title">21. Quel est le périmètre financier autorisé pour une décision d’empowerment ?</div>
+  <div class="options">
+    <div class="option">A. Sans aucune limite financière.</div>
+    <div class="option correct">B. Dans des seuils financiers définis par la procédure.</div>
+    <div class="option">C. Au simple jugement de l’agent.</div>
+    <div class="option">D. Toujours 0 €.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les décisions doivent respecter les limites financières définies.</div>
+</div>
 
-  function nextQ(){
-    if (answered) {
-      i++;
-      if (i < Q.length) {
-        render();
-      } else {
-        finish();
-      }
-      return;
-    }
-    const res = evaluate();
-    if (res === null) {
-      alert("Choisis au moins une réponse.");
-      return;
-    }
-    if (res) score++;
-    showFeedback(res);
-    document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
-    answered = true;
-    document.getElementById('next').textContent = 'Question suivante';
-    setTimeout(() => {
-      i++;
-      if (i < Q.length) {
-        render();
-      } else {
-        finish();
-      }
-    }, 1100);
-  }
+<div class="question" id="q22">
+  <div class="question-title">22. Quelle est la priorité absolue lors de l’empowerment ?</div>
+  <div class="options">
+    <div class="option">A. L’image de la compagnie d’abord.</div>
+    <div class="option correct">B. La sécurité et la sûreté avant tout.</div>
+    <div class="option">C. La recette commerciale avant l’image.</div>
+    <div class="option">D. Il n’y a pas de priorité.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La sécurité et la sûreté sont prioritaires sur tout.</div>
+</div>
 
-  function resetQuiz(){
-    stopGlobalTimer();
-    initQuiz();
-  }
+<div class="question" id="q23">
+  <div class="question-title">23. Quelle documentation est nécessaire lors d’une application de 'wave excess' ?</div>
+  <div class="options">
+    <div class="option">A. Un dossier long et complet obligatoire.</div>
+    <div class="option correct">B. Une note rapide si la procédure l’exige.</div>
+    <div class="option">C. Aucune documentation n’est nécessaire.</div>
+    <div class="option">D. Une signature du client est obligatoire.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une note rapide est réalisée si demandée par la procédure.</div>
+</div>
 
-  function finish(){
-    stopGlobalTimer();
-    const total = Q.length;
-    const pct = Math.round(100 * score / total);
-    const appr = (pct >= 90) ? "Excellent (maîtrise)"
-                : (pct >= 80) ? "Très bien (solide)"
-                : (pct >= 70) ? "Bien (à consolider)"
-                : (pct >= 60) ? "Passable (renforcer les bases)"
-                : "Insuffisant (réviser PAM/IRG/DG)";
-    document.getElementById('bar').style.width = '100%';
-    document.getElementById('meta').textContent = 'Terminé ✅';
-    document.getElementById('quiz').innerHTML =
-      `<div class="q">Bravo ! Tu as terminé le quiz.</div>
-       <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%) — ${appr}</p>
-       <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
-    document.getElementById('next').disabled = true;
-    document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%) — ${appr}`;
-    document.getElementById('timer').textContent = '--:--';
-  }
+<div class="question" id="q24">
+  <div class="question-title">24. Quelles erreurs doivent être évitées lors de l’empowerment ?</div>
+  <div class="options">
+    <div class="option correct">A. Faire des promesses contraires à la politique de la compagnie.</div>
+    <div class="option correct">B. Contredire les procédures PAM.</div>
+    <div class="option correct">C. Exposer des données personnelles des clients.</div>
+    <div class="option">D. Rester factuel et professionnel.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B, et C. Il faut éviter les promesses hors politique, la contradiction PAM, et exposer les données privées.</div>
+</div>
 
-  function startGlobalTimer(){
-    stopGlobalTimer();
-    totalTime = 30 * 60;
-    updateTimerUI();
-    timerInterval = setInterval(() => {
-      totalTime--;
-      if (totalTime <= 60) {
-        document.getElementById('timer').classList.add('time-low');
-      }
-      if (totalTime <= 0) {
-        stopGlobalTimer();
-        alert("Temps écoulé ! Le quiz est terminé.");
-        finish();
-      } else {
-        updateTimerUI();
-      }
-    }, 1000);
-  }
+<div class="question" id="q25">
+  <div class="question-title">25. En cas de misco (Message d’Information Spécifique au Client), quelle est la priorité ?</div>
+  <div class="options">
+    <div class="option correct">A. Toujours privilégier un vol Air France immédiat si possible.</div>
+    <div class="option">B. Donner la priorité aux partenaires.</div>
+    <div class="option">C. Utiliser uniquement le train.</div>
+    <div class="option">D. Attendre le client sans action.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Le vol Air France est prioritaire si disponible.</div>
+</div>
 
-  function stopGlobalTimer(){
-    if(timerInterval){
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
-  }
+<div class="question" id="q26">
+  <div class="question-title">26. Quelle est la référence réglementaire européenne concernant les droits des passagers en cas de perturbation de vol ?</div>
+  <div class="options">
+    <div class="option correct">A. Le règlement CE261/2004.</div>
+    <div class="option">B. Le règlement CE201/1999.</div>
+    <div class="option">C. La recommandation IATA 302.</div>
+    <div class="option">D. La procédure PAM 7.5.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Le CE261/2004 est la référence principale sur les droits passagers en Europe.</div>
+</div>
 
-  function updateTimerUI(){
-    const m = Math.floor(totalTime/60);
-    const s = totalTime % 60;
-    document.getElementById('timer').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  }
+<div class="question" id="q27">
+  <div class="question-title">27. En cas d'annulation de vol le jour même, quelles actions doivent être réalisées par l'agent Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Informer les passagers via annonces et affichages.</div>
+    <div class="option correct">B. Proposer des options de réacheminement ou remboursement.</div>
+    <div class="option">C. Garder le silence sur la situation.</div>
+    <div class="option correct">D. Fournir des prestations d’assistance si éligible.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B et D. L’information, les options et les prestations sont obligatoires, le silence est proscrit.</div>
+</div>
 
-  if(sessionStorage.getItem("quiz_unlocked") === "1"){
-    initQuiz();
-  }
-</script>
+<div class="question" id="q28">
+  <div class="question-title">28. Comment Air France traite-t-elle un bagage non transférable lors d'un MISCO ?</div>
+  <div class="options">
+    <div class="option">A. Il est ignoré.</div>
+    <div class="option correct">B. Le passager est informé, le bagage est tagué RUSH et des options sont proposées.</div>
+    <div class="option">C. Le tag du bagage est détruit.</div>
+    <div class="option">D. Le voyage est annulé.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’information et le traitement RUSH sont obligatoires.</div>
+</div>
+
+<div class="question" id="q29">
+  <div class="question-title">29. Lors d’un hébergement dans le cadre d’un droit DBC, quels passagers ont la priorité ?</div>
+  <div class="options">
+    <div class="option correct">A. Les familles et personnes vulnérables, notamment PMR.</div>
+    <div class="option">B. Les derniers arrivés en escale.</div>
+    <div class="option">C. Les clients sans bagage.</div>
+    <div class="option">D. Les passagers d’affaires uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. La priorité est donnée aux personnes vulnérables et PMR.</div>
+</div>
+
+<div class="question" id="q30">
+  <div class="question-title">30. Que doit fournir Air France en cas d’annulation de vol ?</div>
+  <div class="options">
+    <div class="option correct">A. Une attestation d’annulation sur demande.</div>
+    <div class="option">B. Aucune attestation.</div>
+    <div class="option">C. Le passager doit imprimer l’attestation lui-même.</div>
+    <div class="option">D. Les PNC gèrent automatiquement l’attestation.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. L’attestation est fournie à la demande du passager.</div>
+</div>
+<div class="question" id="q31">
+  <div class="question-title">31. Quelle est la procédure pour un affrètement de dernière minute chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Procédure standard sans modification.</div>
+    <div class="option correct">B. Procédure spécifique avec informations et services adaptés.</div>
+    <div class="option">C. Refus systématique.</div>
+    <div class="option">D. Libre à la discrétion du personnel PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Un protocole spécifique d’information et traitement est appliqué.</div>
+</div>
+
+<div class="question" id="q32">
+  <div class="question-title">32. Comment Air France gère-t-elle un changement de configuration cabine (surclassement ou déclassement) ?</div>
+  <div class="options">
+    <div class="option">A. Jamais autorisé.</div>
+    <div class="option correct">B. Selon procédure PAM spécifique.</div>
+    <div class="option">C. Libre choix des agents.</div>
+    <div class="option">D. Décision exclusive des PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La procédure PAM encadre ces changements.</div>
+</div>
+
+<div class="question" id="q33">
+  <div class="question-title">33. Que signifie RTB (Retour à Base) dans le cadre d’un vol Air France ?</div>
+  <div class="options">
+    <div class="option">A. Le débarquement complet des passagers.</div>
+    <div class="option correct">B. L’envoi de messages dédiés et actions spécifiques à l’escale.</div>
+    <div class="option">C. Ne pas agir et laisser la situation courir.</div>
+    <div class="option">D. Oublier les bagages à bord.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le retour à base implique des actions dédiées à l’escale et communication.</div>
+</div>
+
+<div class="question" id="q34">
+  <div class="question-title">34. Dans quels cas le transport terrestre (bus ou train) est-il autorisé en remplacement d’un taxi selon PAM ?</div>
+  <div class="options">
+    <div class="option">A. Jamais, seul le taxi est autorisé.</div>
+    <div class="option correct">B. Selon les dispositions PAM, selon cas et conditions.</div>
+    <div class="option">C. Toujours un taxi est imposé.</div>
+    <div class="option">D. Le client doit avancer les frais et se faire rembourser.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le recours au bus ou train est possible selon le cadre PAM.</div>
+</div>
+
+<div class="question" id="q35">
+  <div class="question-title">35. Quelles sont les priorités lors d’un réacheminement passager ?</div>
+  <div class="options">
+    <div class="option correct">A. Sécurité du passager avant tout.</div>
+    <div class="option correct">B. Utiliser un vol Air France en priorité si disponible.</div>
+    <div class="option correct">C. Fournir une information claire et complète au client.</div>
+    <div class="option">D. Ignorer les correspondances prévues.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B et C. La sécurité, vol AF prioritaire et communication claire sont essentielles.</div>
+</div>
+
+<div class="question" id="q36">
+  <div class="question-title">36. Quelle est la règle concernant les power banks (batteries externes) dans les bagages en soute ?</div>
+  <div class="options">
+    <div class="option correct">A. Elles sont strictement interdites en soute.</div>
+    <div class="option">B. Elles sont autorisées si éteintes.</div>
+    <div class="option">C. Elles peuvent être transportées dans n’importe quelle condition.</div>
+    <div class="option">D. Elles sont autorisées en double emballage.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les batteries lithium de rechange sont interdites en soute.</div>
+</div>
+
+<div class="question" id="q37">
+  <div class="question-title">37. Comment un passager doit-il transporter une power bank en cabine ?</div>
+  <div class="options">
+    <div class="option correct">A. Sur lui, avec bornes protégées.</div>
+    <div class="option">B. Dans le coffre cabine uniquement.</div>
+    <div class="option">C. Dans la poche du siège.</div>
+    <div class="option">D. Dans la zone galley.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. La batterie doit être transportée sur soi avec bornes protégées.</div>
+</div>
+
+<div class="question" id="q38">
+  <div class="question-title">38. Quelle est la réglementation pour l’usage et transport des cigarettes électroniques ?</div>
+  <div class="options">
+    <div class="option">A. Usage autorisé et recharge permise en cabine.</div>
+    <div class="option correct">B. Transport uniquement en cabine, usage et recharge interdits.</div>
+    <div class="option">C. Transport uniquement en soute.</div>
+    <div class="option">D. Interdit totalement à bord.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les cigarettes électroniques doivent être transportées en cabine, usage et recharge interdits.</div>
+</div>
+
+<div class="question" id="q39">
+  <div class="question-title">39. Combien de briquets standard un passager peut-il avoir sur lui ?</div>
+  <div class="options">
+    <div class="option correct">A. Un briquet de sûreté sur soi.</div>
+    <div class="option">B. Libre en soute sans limite.</div>
+    <div class="option">C. Deux briquets en poche.</div>
+    <div class="option">D. Interdit totalement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Un briquet ou allumettes de sûreté est autorisé sur soi.</div>
+</div>
+
+<div class="question" id="q40">
+  <div class="question-title">40. Quelle est la règle concernant les briquets torche lors d’un voyage ?</div>
+  <div class="options">
+    <div class="option correct">A. Ils sont généralement interdits à bord.</div>
+    <div class="option">B. Ils sont autorisés en cabine.</div>
+    <div class="option">C. Ils sont autorisés en soute.</div>
+    <div class="option">D. Ils peuvent être transportés sans restriction.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les briquets torche sont interdits dans la plupart des cas.</div>
+</div>
+
+<!-- Continue similarly for questions 41 to 70 -->
+
+<div class="question" id="q41">
+  <div class="question-title">41. Les allumettes ‘strike anywhere’ sont-elles autorisées en cabine ?</div>
+  <div class="options">
+    <div class="option correct">A. Non, elles sont interdites.</div>
+    <div class="option">B. Oui, elles sont tolérées.</div>
+    <div class="option">C. Uniquement en soute.</div>
+    <div class="option">D. Librement autorisées.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Ces allumettes sont interdites.</div>
+</div>
+
+<div class="question" id="q42">
+  <div class="question-title">42. Quelles règles s’appliquent au transport des batteries de rechange lithium ?</div>
+  <div class="options">
+    <div class="option correct">A. Elles sont autorisées uniquement en cabine.</div>
+    <div class="option correct">B. Les bornes doivent être protégées.</div>
+    <div class="option">C. Elles peuvent être transportées en soute si inférieures à 100 Wh.</div>
+    <div class="option correct">D. Les bornes ne doivent jamais être exposées.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B, et D. Ces batteries sont transportées en cabine, bornes protégées et jamais exposées.</div>
+</div>
+
+<div class="question" id="q43">
+  <div class="question-title">43. Quelles sont les restrictions pour les batteries lithium de plus de 160 Wh ?</div>
+  <div class="options">
+    <div class="option">A. Elles sont autorisées en cabine.</div>
+    <div class="option">B. Elles sont autorisées en soute.</div>
+    <div class="option correct">C. Elles sont interdites pour le transport passager.</div>
+    <div class="option">D. Elles sont libres si déchargées.</div>
+  </div>
+  <div class="explanation">Réponse correcte : C. Les batteries >160 Wh sont interdites pour les passagers.</div>
+</div>
+
+<div class="question" id="q44">
+  <div class="question-title">44. Quelle est la règle concernant la glace carbonique utilisée pour le transport de denrées périssables ?</div>
+  <div class="options">
+    <div class="option">A. Elle est toujours interdite.</div>
+    <div class="option correct">B. Elle est autorisée avec une limite de poids et ventilation suffisante.</div>
+    <div class="option">C. Elle est autorisée sans limite en soute.</div>
+    <div class="option">D. Elle est autorisée sans limite en cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une limite (exemple 2,5 kg) et ventilation sont obligatoires.</div>
+</div>
+
+<div class="question" id="q45">
+  <div class="question-title">45. Le transport des cartouches de gaz pour camping est-il autorisé pour les passagers Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Non, il est interdit aux passagers.</div>
+    <div class="option">B. Oui, il est librement autorisé.</div>
+    <div class="option">C. Il est autorisé en soute uniquement.</div>
+    <div class="option">D. Il est autorisé en cabine uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les cartouches de gaz sont interdites pour les passagers.</div>
+</div>
+
+<div class="question" id="q46">
+  <div class="question-title">46. Quelle est la règle concernant les aérosols de toilette de 250 ml en cabine ?</div>
+  <div class="options">
+    <div class="option correct">A. Ils sont autorisés sous certaines conditions.</div>
+    <div class="option">B. Ils sont toujours interdits.</div>
+    <div class="option">C. Ils sont autorisés uniquement en soute.</div>
+    <div class="option">D. Ils sont autorisés uniquement en cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les aérosols sont tolérés sous conditions (taille, quantité).</div>
+</div>
+
+<div class="question" id="q47">
+  <div class="question-title">47. Comment doit être considéré un thermomètre à mercure personnel lors du transport ?</div>
+  <div class="options">
+    <div class="option">A. Il est librement autorisé.</div>
+    <div class="option correct">B. Son transport est restreint et à éviter.</div>
+    <div class="option">C. Il doit toujours être placé en soute.</div>
+    <div class="option">D. Il doit toujours être transporté en cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le risque mercure impose des restrictions sur ce type d’objet.</div>
+</div>
+
+<div class="question" id="q48">
+  <div class="question-title">48. Quelles sont les conditions de transport des bagages dits ‘smart luggage’ avec batterie amovible ?</div>
+  <div class="options">
+    <div class="option correct">A. Ils sont autorisés en soute si la batterie est retirée.</div>
+    <div class="option">B. Ils sont toujours interdits.</div>
+    <div class="option">C. Ils sont autorisés en cabine sans retirer la batterie.</div>
+    <div class="option">D. Ils sont autorisés en soute avec batterie installée.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. La batterie amovible doit être retirée si le bagage est en soute.</div>
+</div>
+
+<div class="question" id="q49">
+  <div class="question-title">49. Quelle est la procédure si une batterie lithium est endommagée et transportée par un passager ?</div>
+  <div class="options">
+    <div class="option">A. Le transport est possible sans restriction.</div>
+    <div class="option correct">B. Le transport est refusé.</div>
+    <div class="option">C. La batterie doit être chargée avant le vol.</div>
+    <div class="option">D. Le passager doit informer les PNC uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une batterie endommagée est refusée pour le transport.</div>
+</div>
+
+<div class="question" id="q50">
+  <div class="question-title">50. Les e-scooters ou e-bikes sont-ils généralement autorisés comme bagages passagers ?</div>
+  <div class="options">
+    <div class="option">A. Oui, ils sont admis déchargés.</div>
+    <div class="option correct">B. Ils sont généralement interdits aux passagers.</div>
+    <div class="option">C. Ils sont autorisés en soute uniquement.</div>
+    <div class="option">D. Ils sont autorisés en cabine uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Ils sont généralement interdits aux passagers en raison des risques batterie.</div>
+</div>
+<div class="question" id="q51">
+  <div class="question-title">51. Quelles sont les règles pour les liquides transportés en cabine ?</div>
+  <div class="options">
+    <div class="option correct">A. Récipients de 100 ml maximum, dans un sac plastique transparent de 1 litre.</div>
+    <div class="option correct">B. Quantités illimitées interdites, sauf exceptions duty free et médicaments.</div>
+    <div class="option">C. Pas de limite sur les liquides en cabine.</div>
+    <div class="option">D. Tous les liquides doivent être placés en soute.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A et B. Les règles 100 ml + sac 1L s’appliquent, avec exceptions pour duty free et médicaments.</div>
+</div>
+
+<div class="question" id="q52">
+  <div class="question-title">52. Les sprays auto-défense sont-ils autorisés dans les bagages passagers ?</div>
+  <div class="options">
+    <div class="option">A. Autorisés en soute.</div>
+    <div class="option correct">B. Interdits pour les passagers.</div>
+    <div class="option">C. Autorisés en cabine.</div>
+    <div class="option">D. Librement transportés.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Ces sprays sont interdits aux passagers.</div>
+</div>
+
+<div class="question" id="q53">
+  <div class="question-title">53. Combien de briquets de sûreté un passager peut-il transporter sur lui ?</div>
+  <div class="options">
+    <div class="option correct">A. Un seul briquet de sûreté.</div>
+    <div class="option">B. Jusqu'à trois briquets en cabine.</div>
+    <div class="option">C. Aucun briquet n’est autorisé.</div>
+    <div class="option">D. Deux briquets en poche.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Un seul briquet/allumettes de sûreté est autorisé sur soi.</div>
+</div>
+
+<div class="question" id="q54">
+  <div class="question-title">54. Quelles sont les règles pour les bouteilles d’oxygène personnelles transportées par les passagers ?</div>
+  <div class="options">
+    <div class="option">A. Transport libre sans aucune restriction.</div>
+    <div class="option correct">B. Transport réglementé avec accord préalable et restrictions.</div>
+    <div class="option">C. Autorisées uniquement en soute.</div>
+    <div class="option">D. Jamais autorisées à bord.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le transport nécessite accord et est soumis à restrictions.</div>
+</div>
+
+<div class="question" id="q55">
+  <div class="question-title">55. Qu’est-ce qu’un concentrateur d’oxygène portable (POC) chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Un appareil libre sans documents.</div>
+    <div class="option correct">B. Un appareil soumis à conditions : modèle approuvé, autonomie suffisante.</div>
+    <div class="option">C. Un appareil interdit à bord.</div>
+    <div class="option">D. Un appareil fourni par la compagnie.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le POC est autorisé sous conditions spécifiques.</div>
+</div>
+
+<div class="question" id="q56">
+  <div class="question-title">56. Où sont transportées les batteries lithium installées dans un appareil médical ?</div>
+  <div class="options">
+    <div class="option">A. En cabine uniquement.</div>
+    <div class="option">B. En soute uniquement.</div>
+    <div class="option correct">C. En cabine ou soute selon le type et puissance.</div>
+    <div class="option">D. Toujours interdites.</div>
+  </div>
+  <div class="explanation">Réponse correcte : C. Le transport dépend du modèle et de la puissance.</div>
+</div>
+
+<div class="question" id="q57">
+  <div class="question-title">57. Est-il autorisé de charger une batterie pendant le vol ?</div>
+  <div class="options">
+    <div class="option">A. Oui, toujours.</div>
+    <div class="option correct">B. Non, c’est déconseillé voire interdit.</div>
+    <div class="option">C. C’est obligatoire.</div>
+    <div class="option">D. Les PNC effectuent la charge.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Charger une batterie peut être interdit pendant le vol.</div>
+</div>
+
+<div class="question" id="q58">
+  <div class="question-title">58. Quelle procédure s’applique en cas de retrait d’articles interdits en cabine ?</div>
+  <div class="options">
+    <div class="option">A. Aucun retrait n’est effectué.</div>
+    <div class="option correct">B. Retrait et consignation avec procédure dédiée.</div>
+    <div class="option">C. À la discrétion du passager.</div>
+    <div class="option">D. Ignorer les articles interdits.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une procédure formelle de retrait et consignation est appliquée.</div>
+</div>
+
+<div class="question" id="q59">
+  <div class="question-title">59. Quelle est la règle concernant les ballons à hélium ?</div>
+  <div class="options">
+    <div class="option">A. Transport libre sans restriction.</div>
+    <div class="option correct">B. Réglementé selon l’aéroport et règles locales.</div>
+    <div class="option">C. Toujours interdit.</div>
+    <div class="option">D. Transport obligatoire en soute.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le transport est soumis aux règles locales et aéroportuaires.</div>
+</div>
+
+<div class="question" id="q60">
+  <div class="question-title">60. Les denrées périssables sont-elles acceptées en cabine ?</div>
+  <div class="options">
+    <div class="option">A. Jamais acceptées.</div>
+    <div class="option correct">B. Acceptées sous conditions d’emballage et de quantité.</div>
+    <div class="option">C. Toujours acceptées en cabine.</div>
+    <div class="option">D. Toujours acceptées en soute.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Sous conditions strictes d’emballage et quantités limitées.</div>
+</div>
+
+<div class="question" id="q61">
+  <div class="question-title">61. Que signifie le code WCBD pour fauteuil roulant ?</div>
+  <div class="options">
+    <div class="option">A. Fauteuil manuel classique.</div>
+    <div class="option correct">B. Fauteuil avec batterie sèche.</div>
+    <div class="option">C. Fauteuil avec batterie lithium.</div>
+    <div class="option">D. Civière.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. WCBD correspond à wheelchair with dry battery.</div>
+</div>
+
+<div class="question" id="q62">
+  <div class="question-title">62. Que signifie le code WCLB pour fauteuil roulant ?</div>
+  <div class="options">
+    <div class="option">A. Fauteuil manuel.</div>
+    <div class="option correct">B. Fauteuil avec batterie lithium.</div>
+    <div class="option">C. Fauteuil avec batterie humide.</div>
+    <div class="option">D. Béquilles.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. WCLB signifie wheelchair with lithium battery.</div>
+</div>
+
+<div class="question" id="q63">
+  <div class="question-title">63. Que signifie le code WCMP ?</div>
+  <div class="options">
+    <div class="option correct">A. Fauteuil manuel propulsé.</div>
+    <div class="option">B. Batterie humide.</div>
+    <div class="option">C. Batterie sèche.</div>
+    <div class="option">D. Assistance PMR.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. WCMP désigne wheelchair manual propelled.</div>
+</div>
+
+<div class="question" id="q64">
+  <div class="question-title">64. Quelle est la précaution clé concernant les fauteuils WCLB (batterie lithium) ?</div>
+  <div class="options">
+    <div class="option correct">A. Batterie fixée ou isolée, bornes protégées.</div>
+    <div class="option">B. Aucune précaution nécessaire.</div>
+    <div class="option">C. Transport en soute libre.</div>
+    <div class="option">D. Transport obligatoire en cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les batteries lithium doivent être sécurisées et protégées.</div>
+</div>
+
+<div class="question" id="q65">
+  <div class="question-title">65. Comment Air France gère-t-elle l’acheminement des fauteuils WCBD et WCLB ?</div>
+  <div class="options">
+    <div class="option">A. Toujours en cabine.</div>
+    <div class="option correct">B. Selon procédures PMR et marchandises dangereuses.</div>
+    <div class="option">C. Libre transport sans procédure.</div>
+    <div class="option">D. Refusés systématiquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Procédures spécifiques PMR + DG s’appliquent.</div>
+</div>
+
+<div class="question" id="q66">
+  <div class="question-title">66. Quel est le traitement prioritaire pour l’assistance WCHC (civière) ?</div>
+  <div class="options">
+    <div class="option">A. Pas de priorité spécifique.</div>
+    <div class="option correct">B. Priorité et coordination optimales entre les équipes.</div>
+    <div class="option">C. Jamais prise en charge en bus.</div>
+    <div class="option">D. Prise en charge uniquement par PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’assistance est prioritaire et coordonnée.</div>
+</div>
+
+<div class="question" id="q67">
+  <div class="question-title">67. Quelle est la politique d’acceptation du service STCR (civière) ?</div>
+  <div class="options">
+    <div class="option">A. Toujours refusé.</div>
+    <div class="option correct">B. Accepté sous conditions spécifiques.</div>
+    <div class="option">C. Libre à tout moment.</div>
+    <div class="option">D. Uniquement aux USA.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le service est soumis à procédure dédiée.</div>
+</div>
+
+<div class="question" id="q68">
+  <div class="question-title">68. Quelle est la règle concernant l’acceptation d’une jambe en extension pour un passager ?</div>
+  <div class="options">
+    <div class="option correct">A. Positions spécifiques d’acceptation sont prévues.</div>
+    <div class="option">B. Libre transport sans restriction.</div>
+    <div class="option">C. Toujours interdit de voler.</div>
+    <div class="option">D. Transport uniquement en soute.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Des règles d’acceptation spécifiques existent.</div>
+</div>
+
+<div class="question" id="q69">
+  <div class="question-title">69. Quel type d’assistance s’applique à un passager DPNA ?</div>
+  <div class="options">
+    <div class="option">A. Aucune particularité.</div>
+    <div class="option correct">B. Assistance et briefing adaptés selon besoin.</div>
+    <div class="option">C. Refus de transport.</div>
+    <div class="option">D. Toujours escorté par un agent.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Un accompagnement personnalisé est organisé.</div>
+</div>
+
+<div class="question" id="q70">
+  <div class="question-title">70. L’oxygène est-il toujours disponible à bord des avions Air France ?</div>
+  <div class="options">
+    <div class="option">A. Toujours disponible sur toutes les routes.</div>
+    <div class="option correct">B. Disponible uniquement sur certaines routes et sur réservation.</div>
+    <div class="option">C. Jamais disponible.</div>
+    <div class="option">D. Uniquement sur vols long-courriers.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La disponibilité dépend de la route et nécessite une réservation.</div>
+</div>
+<div class="question" id="q71">
+  <div class="question-title">71. Quelles conditions s’appliquent aux batteries des concentrateurs d’oxygène portables (POC) ?</div>
+  <div class="options">
+    <div class="option correct">A. L’autonomie suffisante doit être garantie.</div>
+    <div class="option">B. La batterie n’a pas d’importance.</div>
+    <div class="option">C. Le POC doit être transporté en soute.</div>
+    <div class="option">D. Le POC est toujours fourni par la compagnie.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Le passager doit assurer une autonomie suffisante.</div>
+</div>
+
+<div class="question" id="q72">
+  <div class="question-title">72. Quel est le parcours habituel d’une poussette enregistrée chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Toujours acheminée via la passerelle.</div>
+    <div class="option correct">B. Acheminement variable selon le circuit (tapis, comptoir spécial).</div>
+    <div class="option">C. Toujours à CDG Terminal 2E.</div>
+    <div class="option">D. Toujours transportée en cabine.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’acheminement dépend du circuit et du gabarit.</div>
+</div>
+
+<div class="question" id="q73">
+  <div class="question-title">73. Quelle étiquette est utilisée pour les bagages PMR (personnes à mobilité réduite) ?</div>
+  <div class="options">
+    <div class="option">A. Aucune étiquette spécifique.</div>
+    <div class="option correct">B. Étiquette dédiée PMR (PWD).</div>
+    <div class="option">C. Étiquette UM (mineurs non accompagnés).</div>
+    <div class="option">D. Étiquette P (prioritaire).</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une étiquette spécifique PMR est apposée.</div>
+</div>
+
+<div class="question" id="q74">
+  <div class="question-title">74. Quelle est la gestion des quotas PMR et SSR en cabine ?</div>
+  <div class="options">
+    <div class="option">A. Sans aucune limite.</div>
+    <div class="option correct">B. Selon quotas et configuration de l’avion.</div>
+    <div class="option">C. Toujours refusés.</div>
+    <div class="option">D. Libre sans contrôle.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les quotas dépendent de la configuration et des règles de sécurité.</div>
+</div>
+
+<div class="question" id="q75">
+  <div class="question-title">75. Quelles sont les mesures d’aide à la mobilité personnelle lors du transport ?</div>
+  <div class="options">
+    <div class="option correct">A. Identification claire.</div>
+    <div class="option correct">B. Protection des bornes des batteries.</div>
+    <div class="option correct">C. Information au transporteur.</div>
+    <div class="option">D. Embarquement sans contrôle.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A, B et C. L’embarquement suit les règles normales de contrôle.</div>
+</div>
+
+<div class="question" id="q76">
+  <div class="question-title">76. Le contrôle documentaire est-il obligatoire à l’enregistrement ?</div>
+  <div class="options">
+    <div class="option">A. Inutile si billet électronique.</div>
+    <div class="option correct">B. Obligatoire pour vérifier visas, durée de séjour et documents.</div>
+    <div class="option">C. Réalisé uniquement par le PNC.</div>
+    <div class="option">D. Le client se contrôle lui-même.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le contrôle est obligatoire à l’enregistrement.</div>
+</div>
+
+<div class="question" id="q77">
+  <div class="question-title">77. Quelle est la politique API (Advance Passenger Information) pour les États-Unis, Royaume-Uni et Canada ?</div>
+  <div class="options">
+    <div class="option">A. Optionnelle.</div>
+    <div class="option correct">B. Obligatoire selon pays.</div>
+    <div class="option">C. Toujours inutile.</div>
+    <div class="option">D. Non traitée par PAM.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’API est obligatoire selon les exigences des pays.</div>
+</div>
+
+<div class="question" id="q78">
+  <div class="question-title">78. Que signifie HLE dans le jargon Air France ?</div>
+  <div class="options">
+    <div class="option correct">A. Heure limite d’enregistrement.</div>
+    <div class="option">B. Heure libre d’embarquement.</div>
+    <div class="option">C. Heure limite d’embarquement.</div>
+    <div class="option">D. Heure légale en Europe.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. HLE désigne l’heure limite pour s’enregistrer.</div>
+</div>
+
+<div class="question" id="q79">
+  <div class="question-title">79. Quelles conditions s’appliquent à l’enregistrement de bout en bout (EBB) ?</div>
+  <div class="options">
+    <div class="option">A. Sans condition.</div>
+    <div class="option correct">B. Soumis à conditions et restrictions spécifiques.</div>
+    <div class="option">C. Toujours refusé.</div>
+    <div class="option">D. Géré par le PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’EBB nécessite de respecter certaines conditions.</div>
+</div>
+
+<div class="question" id="q80">
+  <div class="question-title">80. Quels types d’informations doivent être affichées dans la zone d’enregistrement ?</div>
+  <div class="options">
+    <div class="option">A. Aucune information obligatoire.</div>
+    <div class="option correct">B. Informations réglementaires et commerciales.</div>
+    <div class="option">C. Publicité uniquement.</div>
+    <div class="option">D. Prix des billets uniquement.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les informations obligatoires incluent aspects réglementaires et commerciaux.</div>
+</div>
+
+<div class="question" id="q81">
+  <div class="question-title">81. Comment sont gérées les files d’attente chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Aucune gestion spécifique.</div>
+    <div class="option correct">B. Gestion dédiée avec SkyPriority incluse.</div>
+    <div class="option">C. Libre service uniquement.</div>
+    <div class="option">D. Réservée aux VIP.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La gestion intègre SkyPriority et autres priorités.</div>
+</div>
+
+<div class="question" id="q82">
+  <div class="question-title">82. L’impression de la carte d’embarquement (BP) est-elle possible via kiosks ?</div>
+  <div class="options">
+    <div class="option">A. Jamais possible.</div>
+    <div class="option correct">B. Possible selon système et lieu.</div>
+    <div class="option">C. Interdit aux USA.</div>
+    <div class="option">D. Imprimée uniquement par le PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les kiosks peuvent permettre l’impression selon la configuration.</div>
+</div>
+
+<div class="question" id="q83">
+  <div class="question-title">83. Quelle est la procédure à suivre après la clôture de l’enregistrement ?</div>
+  <div class="options">
+    <div class="option correct">A. Traiter les passagers refusés et liste d’attente selon procédure.</div>
+    <div class="option">B. Accepter des passagers en liste d’attente librement.</div>
+    <div class="option">C. Toujours prolonger l’enregistrement.</div>
+    <div class="option">D. Ignorer les passagers en retard.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Les refus et standby sont traités conformément aux procédures dédiées.</div>
+</div>
+
+<div class="question" id="q84">
+  <div class="question-title">84. Quels messages sont envoyés en fin de vol ?</div>
+  <div class="options">
+    <div class="option">A. Inutiles et jamais envoyés.</div>
+    <div class="option correct">B. Automatiques et manuels selon contexte.</div>
+    <div class="option">C. Exclusivement par PNC.</div>
+    <div class="option">D. Jamais transmis.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Certains messages sont automatiques, d’autres manuels.</div>
+</div>
+
+<div class="question" id="q85">
+  <div class="question-title">85. Que faire en cas de panne d’Altéa DC ?</div>
+  <div class="options">
+    <div class="option">A. Stopper toutes les opérations.</div>
+    <div class="option correct">B. Suivre procédure de secours DC backup ou manuelle.</div>
+    <div class="option">C. Annuler tous les vols.</div>
+    <div class="option">D. Attendre la réparation.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La procédure de secours doit être appliquée.</div>
+</div>
+
+<div class="question" id="q86">
+  <div class="question-title">86. Comment sont organisées les zones de boarding chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Zones aléatoires sans priorité.</div>
+    <div class="option correct">B. Zones organisées par priorités, incluant PMR et SkyPriority.</div>
+    <div class="option">C. Réservées aux VIP uniquement.</div>
+    <div class="option">D. PMR embarque toujours en dernier.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les zones sont gérées par ordre de priorité.</div>
+</div>
+
+<div class="question" id="q87">
+  <div class="question-title">87. Qu’est-ce que le pré-embarquement ?</div>
+  <div class="options">
+    <div class="option">A. Jamais réalisé.</div>
+    <div class="option correct">B. Priorité d’embarquement pour PMR, UM, familles selon PAM.</div>
+    <div class="option">C. Toujours réservé aux passagers business.</div>
+    <div class="option">D. Aucune priorité spécifique.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le pré-embarquement concerne les passagers avec besoins spécifiques.</div>
+</div>
+
+<div class="question" id="q88">
+  <div class="question-title">88. Que faire si un client est manquant à la porte d’embarquement ?</div>
+  <div class="options">
+    <div class="option">A. Fermer la porte immédiatement.</div>
+    <div class="option correct">B. Appliquer la procédure client manquant et faire les annonces appropriées.</div>
+    <div class="option">C. Ignorer le client.</div>
+    <div class="option">D. Laisser la décision au PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Il faut suivre la procédure définie et informer les passagers.</div>
+</div>
+
+<div class="question" id="q89">
+  <div class="question-title">89. Quelles sont les actions avant la fermeture définitive de la porte d’embarquement ?</div>
+  <div class="options">
+    <div class="option correct">A. Annonces internes et retrait de la passerelle.</div>
+    <div class="option">B. Fermer sans annonce.</div>
+    <div class="option">C. Décision laissée au PNC.</div>
+    <div class="option">D. Toujours fermer 15 minutes avant l’heure de départ.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Une procédure claire d’annonces et fermeture est appliquée.</div>
+</div>
+
+<div class="question" id="q90">
+  <div class="question-title">90. Quelle est la gestion des modifications last minute des passagers ?</div>
+  <div class="options">
+    <div class="option">A. Jamais acceptées.</div>
+    <div class="option correct">B. Traitement selon processus PAM.</div>
+    <div class="option">C. Libre à la décision du PNC.</div>
+    <div class="option">D. Toujours refusées.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les modifications tardives suivent une procédure spécifique.</div>
+</div>
+
+<div class="question" id="q91">
+  <div class="question-title">91. Comment se déroule le contact avec l’équipage dans le cadre PAM ?</div>
+  <div class="options">
+    <div class="option">A. Inutile.</div>
+    <div class="option correct">B. Coordination avec PIL, PIM et le client.</div>
+    <div class="option">C. Client informe directement sans coordination.</div>
+    <div class="option">D. Jamais réalisé.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Une coordination précise est organisée avec l’équipage.</div>
+</div>
+
+<div class="question" id="q92">
+  <div class="question-title">92. Quelle adaptation est prévue en cas de conditions météo défavorables ?</div>
+  <div class="options">
+    <div class="option">A. Aucune adaptation.</div>
+    <div class="option correct">B. Application de procédures spécifiques PAM.</div>
+    <div class="option">C. Décision laissée au PNC.</div>
+    <div class="option">D. Toujours transport en bus.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Les procédures PAM s’appliquent selon la situation.</div>
+</div>
+
+<div class="question" id="q93">
+  <div class="question-title">93. Qu’est-ce que le débarquement rapide global ?</div>
+  <div class="options">
+    <div class="option">A. Inexistant.</div>
+    <div class="option correct">B. Procédure dédiée pour accélérer le débarquement.</div>
+    <div class="option">C. Toujours réalisé.</div>
+    <div class="option">D. À la discrétion du PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Il s’agit d’une procédure spécifique.</div>
+</div>
+
+<div class="question" id="q94">
+  <div class="question-title">94. Les bagages cabine sont-ils garantis ?</div>
+  <div class="options">
+    <div class="option">A. Toujours garantis.</div>
+    <div class="option correct">B. Ils peuvent être repris en porte d’embarquement.</div>
+    <div class="option">C. Jamais repris après l’enregistrement.</div>
+    <div class="option">D. Toujours payants.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La compagnie peut récupérer les bagages cabine en porte.</div>
+</div>
+
+<div class="question" id="q95">
+  <div class="question-title">95. Qu’est-ce que le CBBG (bagage sur siège) ?</div>
+  <div class="options">
+    <div class="option">A. Strictement interdit.</div>
+    <div class="option correct">B. Possible sous certaines conditions.</div>
+    <div class="option">C. Toujours gratuit.</div>
+    <div class="option">D. Transport obligatoire en soute.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le transport sur siège est possible avec conditions spécifiques.</div>
+</div>
+
+<div class="question" id="q96">
+  <div class="question-title">96. Quelle est la définition d’une étiquette HEAVY ?</div>
+  <div class="options">
+    <div class="option correct">A. Bagage pesant plus de 23 kg typiquement.</div>
+    <div class="option">B. Bagage pesant plus de 32 kg.</div>
+    <div class="option">C. Étiquette obligatoire sur tous les bagages.</div>
+    <div class="option">D. Étiquette toujours apposée.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Marque les bagages lourds selon la politique AF.</div>
+</div>
+
+<div class="question" id="q97">
+  <div class="question-title">97. Pour quels passagers l’étiquette PRIORITY est-elle utilisée ?</div>
+  <div class="options">
+    <div class="option">A. Jamais utilisée.</div>
+    <div class="option correct">B. Pour les statuts et produits éligibles.</div>
+    <div class="option">C. Uniquement pour les mineurs non accompagnés (UM).</div>
+    <div class="option">D. Toujours utilisée.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Utilisée pour les passagers avec statut prioritaire.</div>
+</div>
+
+<div class="question" id="q98">
+  <div class="question-title">98. Quelle étiquette est apposée sur les bagages UM (mineurs non accompagnés) ?</div>
+  <div class="options">
+    <div class="option correct">A. Étiquette dédiée UM.</div>
+    <div class="option">B. Interdite sur les bagages UM.</div>
+    <div class="option">C. Étiquette PMR.</div>
+    <div class="option">D. Étiquette pour poussettes.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. Une étiquette spécifique est utilisée pour les bagages UM.</div>
+</div>
+
+<div class="question" id="q99">
+  <div class="question-title">99. Qu’est-ce que le bagage ‘pooling’ chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Valable partout et toujours.</div>
+    <div class="option correct">B. Périmètre limité à certaines zones.</div>
+    <div class="option">C. Inexistant.</div>
+    <div class="option">D. Toujours refusé.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le pooling est limité à des zones spécifiques.</div>
+</div>
+
+<div class="question" id="q100">
+  <div class="question-title">100. Comment varie la franchise bagage en soute chez Air France ?</div>
+  <div class="options">
+    <div class="option">A. Toujours une pièce de 23 kg.</div>
+    <div class="option correct">B. Varie selon billet, statut et route.</div>
+    <div class="option">C. Toujours deux pièces de 23 kg.</div>
+    <div class="option">D. Jamais applicable.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La franchise dépend du billet, du statut et de la route.</div>
+</div>
+
+<div class="question" id="q101">
+  <div class="question-title">101. Qu’est-ce que l’ABA (bagage supplémentaire anticipé) ?</div>
+  <div class="options">
+    <div class="option">A. Inexistant.</div>
+    <div class="option correct">B. Possibilité d’achat à l’avance d’un bagage supplémentaire.</div>
+    <div class="option">C. Toujours gratuit.</div>
+    <div class="option">D. Uniquement à l’aéroport.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’ABA est un achat anticipé possible.</div>
+</div>
+
+<div class="question" id="q102">
+  <div class="question-title">102. Qu’est-ce que la DSI (déclaration de valeur) ?</div>
+  <div class="options">
+    <div class="option">A. Inutile pour les bagages.</div>
+    <div class="option correct">B. Déclaration possible selon valeur du bagage.</div>
+    <div class="option">C. Toujours obligatoire.</div>
+    <div class="option">D. Gérée uniquement par le PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. La DSI est faite en fonction de la valeur déclarée.</div>
+</div>
+
+<div class="question" id="q103">
+  <div class="question-title">103. Qu’est-ce que WorldTracer ?</div>
+  <div class="options">
+    <div class="option">A. Jamais utilisé.</div>
+    <div class="option correct">B. Outil de suivi des bagages en cas de perte ou dommage.</div>
+    <div class="option">C. Exclusivement géré par les PNC.</div>
+    <div class="option">D. Client seul responsable.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. WorldTracer permet de localiser et suivre les bagages perdus ou endommagés.</div>
+</div>
+
+<div class="question" id="q104">
+  <div class="question-title">104. Quelles conciergeries sont autorisées en zone d’enregistrement Air France ?</div>
+  <div class="options">
+    <div class="option">A. Toutes les conciergeries sont autorisées.</div>
+    <div class="option correct">B. Uniquement AF BeMyGuest et ADP Extime.</div>
+    <div class="option">C. Aucune conciergerie n’est autorisée.</div>
+    <div class="option">D. Selon badge du passager.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Seules certaines conciergeries sont autorisées.</div>
+</div>
+
+<div class="question" id="q105">
+  <div class="question-title">105. Comment gérer une conciergerie sans badge ?</div>
+  <div class="options">
+    <div class="option">A. Laisser passer sans contrôle.</div>
+    <div class="option correct">B. Challenger la personne et alerter le service dédié si besoin.</div>
+    <div class="option">C. Toujours refuser l’accès.</div>
+    <div class="option">D. Ignorer la présence.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Il faut vérifier et alerter en cas de doute.</div>
+</div>
+
+<div class="question" id="q106">
+  <div class="question-title">106. Quel accompagnement est réservé en zone d’enregistrement ?</div>
+  <div class="options">
+    <div class="option">A. Toute conciergerie peut accompagner.</div>
+    <div class="option correct">B. Uniquement AF BeMyGuest et ADP Extime.</div>
+    <div class="option">C. Toujours pour les familles.</div>
+    <div class="option">D. Réservé au personnel PNC.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. L’accompagnement est strictement réservé aux conciergeries autorisées.</div>
+</div>
+
+<div class="question" id="q107">
+  <div class="question-title">107. Que signifie ICP2 ?</div>
+  <div class="options">
+    <div class="option">A. Insulte ou intimidation légère.</div>
+    <div class="option correct">B. Agressivité verbale ou physique légère.</div>
+    <div class="option">C. Agression grave.</div>
+    <div class="option">D. Pas d’ICP.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. ICP2 concerne les agressions légères verbales ou physiques.</div>
+</div>
+
+<div class="question" id="q108">
+  <div class="question-title">108. Qui remet le Bristol d’avertissement ?</div>
+  <div class="options">
+    <div class="option">A. Tout agent.</div>
+    <div class="option correct">B. Le manager de proximité.</div>
+    <div class="option">C. Le personnel PNC.</div>
+    <div class="option">D. Le client.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Le manager de proximité délivre cet avertissement.</div>
+</div>
+
+<div class="question" id="q109">
+  <div class="question-title">109. Quelle est la conduite à tenir lorsqu’un agent est filmé par un client ?</div>
+  <div class="options">
+    <div class="option">A. Autoriser le filmage.</div>
+    <div class="option correct">B. Refuser, consigner l’incident et alerter le canal dédié.</div>
+    <div class="option">C. Ignorer.</div>
+    <div class="option">D. Le PNC répond au client.</div>
+  </div>
+  <div class="explanation">Réponse correcte : B. Il faut refuser et signaler selon la procédure.</div>
+</div>
+
+<div class="question" id="q110">
+  <div class="question-title">110. Quelle est la démarche principale lors d’une annulation ou perturbation de vol ?</div>
+  <div class="options">
+    <div class="option correct">A. Informer les passagers, proposer des solutions, et assurer les prestations d’assistance.</div>
+    <div class="option">B. Garder le silence.</div>
+    <div class="option">C. Annuler les vols sans information.</div>
+    <div class="option">D. Laisser les passagers se débrouiller seuls.</div>
+  </div>
+  <div class="explanation">Réponse correcte : A. La compagnie doit informer et assister les passagers conformément au règlement.</div>
+</div>
 
 </body>
 </html>
