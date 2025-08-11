@@ -215,4 +215,162 @@
       {t:"Quelles sont les consignes en cas de panne du système Altéa DC ?", o:["Stop des opérations", "Procédure de secours ou manuelle", "Annuler les vols", "Attendre réparation"], c:1, e:"Procédures de secours obligatoires."},
       {t:"Qui a la priorité à l’enregistrement dans les files ?", o:["Aucune", "SkyPriority", "Libre service", "VIP uniquement"], c:1, e:"SkyPriority bénéficie d’une file dédiée."},
       {t:"Le client peut-il transporter une power bank en cabine ?", o:["Oui, sur soi et bornes protégées", "Non", "Oui en soute", "Oui avec double emballage"], c:0, e:"Autorisé en cabine, bornes protégées."},
-      {t:"Que faire si un client est manquant à la porte d’embarquement ?", o:["Fermer la porte immédiatement",
+      {t:"Que faire si un client est manquant à la porte d’embarquement ?", o:["Fermer la porte immédiatement", "Procédure client manquant + annonces", "Ignorer", "PNC décide"], c:1, e:"Procédure dédiée obligatoire."},
+      {t:"Quelle est la procédure pour un changement de configuration cabine ?", o:["Jamais", "Procédure PAM de sur/déclassement", "Libre", "Décision PNC"], c:1, e:"Respecter la procédure PAM."}
+      // (Ajoute ici les autres questions jusqu'à 110, au besoin je peux compléter)
+    ];
+
+    // Mélange fonction
+    function shuffle(array){
+      for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Mélange options et recalcul index correct
+    function shuffleOptions(q){
+      const pairs = q.o.map((text, idx) => ({text, idx}));
+      shuffle(pairs);
+      q.o = pairs.map(p => p.text);
+      if(Array.isArray(q.c)){
+        q.c = q.c.map(ci => pairs.findIndex(p => p.idx === ci)).sort((a,b)=>a-b);
+      } else {
+        q.c = pairs.findIndex(p => p.idx === q.c);
+      }
+      return q;
+    }
+
+    let Q = [];
+    let i = 0;
+    let answered = false;
+    let score = 0;
+    let timer = 25 * 60;
+    let ticker = null;
+
+    function initQuiz(){
+      Q = BASE.map(q => ({t:q.t, o:[...q.o], c:q.c, e:q.e})).map(shuffleOptions);
+      shuffle(Q);
+      i = 0; score = 0; answered = false;
+      document.getElementById('next').disabled = true;
+      render();
+      startTimer();
+      updateTimerUI();
+      document.getElementById('score').textContent = '';
+    }
+
+    function render(){
+      const bar = document.getElementById('bar');
+      const meta = document.getElementById('meta');
+      const sc  = document.getElementById('liveScore');
+      const qn  = Q[i];
+      const total = Q.length;
+
+      meta.textContent = `Question ${i+1} / ${total}`;
+      bar.style.width = `${Math.round(((i)/total)*100)}%`;
+      sc.textContent = `Score : ${score} / ${total}`;
+
+      let wrap = `<div class="q">${qn.t}</div><ul>`;
+      qn.o.forEach((opt,idx) => {
+        wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="pick(${idx})"> ${opt}</label></li>`;
+      });
+      wrap += `</ul><div id="feed" class="feed"></div>`;
+
+      document.getElementById('quiz').innerHTML = wrap;
+      answered = false;
+      document.getElementById('next').disabled = true;
+    }
+
+    function pick(sel){
+      if(answered) return;
+      answered = true;
+      const qn = Q[i];
+      const feed = document.getElementById('feed');
+      if(Array.isArray(qn.c)){
+        const isCorrect = Array.isArray(sel) ? JSON.stringify(sel.sort()) === JSON.stringify(qn.c) : false;
+        if(isCorrect){
+          score++;
+          feed.className = 'feed ok';
+          feed.textContent = `Bonne réponse. ${qn.e}`;
+        } else {
+          let sol = qn.c.map(idx => qn.o[idx]).join(' + ');
+          feed.className = 'feed bad';
+          feed.textContent = `Mauvaise réponse. Bonne réponse : ${sol}. ${qn.e}`;
+        }
+      } else {
+        if(sel === qn.c){
+          score++;
+          feed.className = 'feed ok';
+          feed.textContent = `Bonne réponse. ${qn.e}`;
+        } else {
+          feed.className = 'feed bad';
+          feed.textContent = `Mauvaise réponse. Bonne réponse : "${qn.o[qn.c]}". ${qn.e}`;
+        }
+      }
+      document.getElementById('next').disabled = false;
+      document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
+    }
+
+    function nextQ(){
+      if(!answered){
+        alert("Choisis une réponse avant de continuer.");
+        return;
+      }
+      i++;
+      if(i < Q.length) render();
+      else finish();
+    }
+
+    function resetQuiz(){
+      stopTimer();
+      timer = 25 * 60;
+      initQuiz();
+    }
+
+    function finish(){
+      stopTimer();
+      const total = Q.length;
+      const pct = Math.round(100 * score / total);
+      document.getElementById('bar').style.width = '100%';
+      document.getElementById('meta').textContent = 'Terminé ✅';
+      document.getElementById('quiz').innerHTML = `
+        <div class="q">Bravo ! Tu as terminé le quiz.</div>
+        <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
+        <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
+      document.getElementById('next').disabled = true;
+      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
+    }
+
+    function startTimer(){
+      stopTimer();
+      ticker = setInterval(() => {
+        timer--;
+        if(timer <= 0){
+          document.getElementById('timer').classList.add('timeup');
+          document.getElementById('timer').textContent = "Temps écoulé";
+          finish();
+        } else {
+          updateTimerUI();
+        }
+      }, 1000);
+    }
+
+    function stopTimer(){
+      if(ticker){
+        clearInterval(ticker);
+        ticker = null;
+      }
+    }
+
+    function updateTimerUI(){
+      const m = Math.floor(timer/60);
+      const s = timer % 60;
+      document.getElementById('timer').textContent = `Temps restant : ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    // Démarrage
+    initQuiz();
+  </script>
+</body>
+</html>
