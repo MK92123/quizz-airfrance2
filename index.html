@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
+
+ <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -85,7 +85,7 @@
       align-items: flex-start;
       cursor: pointer;
     }
-    input[type=radio] {
+    input[type=radio], input[type=checkbox] {
       margin-top: .25rem;
     }
     .feed {
@@ -153,27 +153,26 @@
       <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
       <h1>Quiz Air France</h1>
     </header>
-	<header>
-  <p id="disclaimer" style="
-    font-size: 0.9rem;
-    color: #b91c1c;
-    background-color: #fee2e2;
-    border: 1px solid #b91c1c;
-    padding: 8px 12px;
-    border-radius: 8px;
-    max-width: 100%;
-    text-align: center;
-    margin-bottom: 12px;
-    font-weight: 700;
-  ">
-Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autorisée est interdite. En cas de fuite, merci de contacter kneycie@gmail.com tst
-  Toute diffusion ou utilisation non autorisée est interdite. 
-  </p>
+    <header>
+      <p id="disclaimer" style="
+        font-size: 0.9rem;
+        color: #b91c1c;
+        background-color: #fee2e2;
+        border: 1px solid #b91c1c;
+        padding: 8px 12px;
+        border-radius: 8px;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 12px;
+        font-weight: 700;
+      ">
+      Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autorisée est interdite. En cas de fuite, merci de contacter kneycie@gmail.com
+      Toute diffusion ou utilisation non autorisée est interdite. 
+      </p>
 
-  <img src="..." alt="Air France Logo" onerror="this.style.display='none'">
-  <h1>Quiz Air France</h1>
-</header>
-
+      <img src="..." alt="Air France Logo" onerror="this.style.display='none'">
+      <h1>Quiz Air France</h1>
+    </header>
 
     <div class="sub">
       <span id="meta" class="pill"></span>
@@ -191,9 +190,12 @@ Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autoris
   </div>
 
 <script>
+// =====================
+// Banque de questions
+// =====================
 const BASE = [
   {t:"Quel est le poids maximum autorisé pour un bagage en soute pour un client Business Air France ?", o:["1x23 kg","2x32 kg","3x23 kg","2x23 kg"], c:[1], e:"La franchise Business est de 2 bagages de 32 kg chacun."},
-  {t:"Quelle est la franchise bagage cabine pour un client Premium Economy chez Air France ?", o:["1x12 kg","2x12 kg","2x18 kg","2 bagages mais total 12 kg"], c:[2], e:"Premium Economy : 2 bagages cabine, poids total 18 kg."},
+  {t:"Quelle est la franchise bagage cabine pour un client Premium Economy chez Air France ?", o:["1x12 kg","2x12 kg","2x18 kg","2 bagages mais total 12 kg"], c:[3], e:"Premium  : 2 bagages cabine TTL 12kg"},
   {t:"Que signifie 'MISCO' ?", o:["Mise en correspondance","Correspondance manquée","Service client prioritaire","Réacheminement automatique"], c:[1], e:"MISCO = Missed connection, correspondance manquée."},
   {t:"Quelle est la procédure en cas d’excès de poids bagages en soute ?", o:["Faire payer un supplément","Accepter sans frais","Faire un waive excess","Offrir un voucher"], c:[0], e:"L’excès de poids est facturé selon la politique tarifaire."},
   {t:"Le 'wave excess' permet de :", o:["Cumuler le poids des bagages","Offrir un surclassement","Éviter les frais d’excès","Attribuer un siège prioritaire"], c:[0], e:"Cumuler les poids pour vérifier la franchise totale."},
@@ -281,145 +283,219 @@ const BASE = [
   {t:"Si un UMNR fait l'objet d'un réacheminement sur le vol d'une autre compagnie ou par voie terrestre je dois :", o:["M'assurer d'obtenir un accord écrit (fax ou mail) soit de la personne ayant confié le mineur à l'escale de départ soit de l'attendant","S'assurer que l'escale de déroutement prévoit le réacheminement de l'UM jusqu'à l'escale de sa destination d'origine","Obtenir l'accord de l'enfant","Aviser immédiatement l'escale d'arrivée par message"], c:[0,1,3], e:"Accord écrit + coordination réacheminement + avis escale d'arrivée"}
 ];
 
-  // Fonction mélange
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// =====================
+// Utilitaires
+// =====================
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
+}
 
-  // Mélange options et recalcul index correct
-  function shuffleOptions(q) {
-    const pairs = q.o.map((text, idx) => ({ text, idx }));
-    shuffle(pairs);
-    q.o = pairs.map(p => p.text);
+// Mélange options et recalcule les index corrects (gère c = nombre OU tableau)
+function shuffleOptions(q) {
+  const pairs = q.o.map((text, idx) => ({ text, idx }));
+  shuffle(pairs);
+  q.o = pairs.map(p => p.text);
+
+  if (Array.isArray(q.c)) {
+    const newC = [];
+    pairs.forEach((p, newIdx) => { if (q.c.includes(p.idx)) newC.push(newIdx); });
+    q.c = newC.sort((a,b)=>a-b);
+  } else {
     q.c = pairs.findIndex(p => p.idx === q.c);
-    return q;
   }
+  return q;
+}
 
-  let Q = [];
-  let i = 0;
-  let answered = false;
-  let score = 0;
-  let timer = 30 * 60; // 30 minutes en secondes
-  let ticker = null;
+// =====================
+// État du quiz
+// =====================
+let Q = [];
+let i = 0;
+let answered = false;
+let score = 0;
+let timer = 30 * 60; // 30 min
+let ticker = null;
+// pour multi-réponses
+let currentSel = new Set();
 
-  function initQuiz() {
-    Q = BASE.map(q => ({ t: q.t, o: [...q.o], c: q.c, e: q.e })).map(shuffleOptions);
-    shuffle(Q);
-    i = 0; score = 0; answered = false;
-    document.getElementById('next').disabled = true;
-    render();
-    startTimer();
-  }
+// =====================
+// Démarrage / rendu
+// =====================
+function initQuiz() {
+  Q = BASE.map(q => ({ t: q.t, o: [...q.o], c: q.c, e: q.e })).map(shuffleOptions);
+  shuffle(Q);
+  i = 0; score = 0; answered = false;
+  currentSel = new Set();
+  document.getElementById('next').disabled = true;
+  render();
+  startTimer();
+}
 
-  function render() {
-    const bar = document.getElementById('bar');
-    const meta = document.getElementById('meta');
-    const sc = document.getElementById('liveScore');
-    const qn = Q[i];
-    const total = Q.length;
+function render() {
+  const bar = document.getElementById('bar');
+  const meta = document.getElementById('meta');
+  const sc = document.getElementById('liveScore');
+  const qn = Q[i];
+  const total = Q.length;
 
-    meta.textContent = `Question ${i + 1} / ${total}`;
-    bar.style.width = `${Math.round(((i) / total) * 100)}%`;
-    sc.textContent = `Score : ${score} / ${total}`;
+  meta.textContent = `Question ${i + 1} / ${total}`;
+  bar.style.width = `${Math.round((i / total) * 100)}%`;
+  sc.textContent = `Score : ${score} / ${total}`;
 
-    let wrap = `<div class="q">${qn.t}</div><ul>`;
-    qn.o.forEach((opt, idx) => {
-      wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="pick(${idx})"> ${opt}</label></li>`;
-    });
-    wrap += `</ul><div id="feed" class="feed"></div>`;
+  const isMulti = Array.isArray(qn.c) && qn.c.length > 1;
+  const inputType = isMulti ? 'checkbox' : 'radio';
 
-    document.getElementById('quiz').innerHTML = wrap;
-    answered = false;
-    document.getElementById('next').disabled = true;
-    updateTimerUI();
-  }
+  let wrap = `<div class="q">${qn.t}${isMulti ? " <span style='color:#6b7280;font-weight:400'>(plusieurs réponses)</span>" : ""}</div><ul>`;
+  qn.o.forEach((opt, idx) => {
+    wrap += `
+      <li>
+        <label>
+          <input type="${inputType}" name="opt${i}" value="${idx}" onclick="pick(${idx})">
+          ${opt}
+        </label>
+      </li>`;
+  });
+  wrap += `</ul><div id="feed" class="feed"></div>`;
 
-  function pick(sel) {
+  document.getElementById('quiz').innerHTML = wrap;
+  answered = false;
+  // Pour multi, on n’active pas Next tant qu’aucune coche ; pour simple on attend pick()
+  document.getElementById('next').disabled = isMulti;
+  updateTimerUI();
+}
+
+// =====================
+// Sélection & validation
+// =====================
+function pick(sel) {
+  const qn = Q[i];
+  const isMulti = Array.isArray(qn.c) && qn.c.length > 1;
+
+  if (!isMulti) {
     if (answered) return;
     answered = true;
-    const qn = Q[i];
     const feed = document.getElementById('feed');
-    if (sel === qn.c) {
+    if (sel === qn.c[0]) {
       score++;
       feed.className = 'feed ok';
       feed.textContent = `Bonne réponse. ${qn.e}`;
     } else {
       feed.className = 'feed bad';
-      feed.textContent = `Mauvaise réponse. Bonne réponse : "${qn.o[qn.c]}". ${qn.e}`;
+      const corr = qn.o[qn.c[0]];
+      feed.textContent = `Mauvaise réponse. Bonne réponse : "${corr}". ${qn.e}`;
     }
     document.getElementById('next').disabled = false;
     document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
+    return;
   }
 
-  function nextQ() {
+  // multi-réponses
+  const input = document.querySelector(`input[name="opt${i}"][value="${sel}"]`);
+  if (input.checked) currentSel.add(sel); else currentSel.delete(sel);
+
+  // Activer "Suivant" seulement si au moins 1 coche
+  document.getElementById('next').disabled = currentSel.size === 0;
+}
+
+function nextQ() {
+  const qn = Q[i];
+  const isMulti = Array.isArray(qn.c) && qn.c.length > 1;
+
+  if (!isMulti) {
     if (!answered) {
       alert("Choisis une réponse avant de continuer.");
       return;
     }
-    i++;
-    if (i < Q.length) render();
-    else finish();
-  }
-
-  function resetQuiz() {
-    stopTimer();
-    timer = 30 * 60;
-    initQuiz();
-  }
-
-  function finish() {
-    stopTimer();
-    const total = Q.length;
-    const pct = Math.round(100 * score / total);
-    document.getElementById('bar').style.width = '100%';
-    document.getElementById('meta').textContent = 'Terminé ✅';
-    document.getElementById('quiz').innerHTML = `
-      <div class="q">Bravo ! Tu as terminé le quiz.</div>
-      <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
-      <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
-    document.getElementById('next').disabled = true;
-    document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
-  }
-
-  function startTimer() {
-    stopTimer();
-    ticker = setInterval(() => {
-      timer--;
-      if (timer <= 0) {
-        document.getElementById('timer').classList.add('timeup');
-        document.getElementById('timer').textContent = "Temps écoulé";
-        finish();
-      } else {
-        updateTimerUI();
-      }
-    }, 1000);
-  }
-
-  function stopTimer() {
-    if (ticker) {
-      clearInterval(ticker);
-      ticker = null;
+  } else {
+    // comparer ensembles: sélection exacte requise
+    const correct = new Set(qn.c);
+    let ok = (currentSel.size === correct.size);
+    if (ok) {
+      for (const v of currentSel) if (!correct.has(v)) { ok = false; break; }
     }
+    const feed = document.getElementById('feed');
+    if (ok) {
+      score++;
+      feed.className = 'feed ok';
+      feed.textContent = `Bonne réponse. ${qn.e}`;
+    } else {
+      feed.className = 'feed bad';
+      const corrLabels = qn.c.map(idx => `"${qn.o[idx]}"`).join(", ");
+      feed.textContent = `Mauvaise réponse. Bonnes réponses : ${corrLabels}. ${qn.e}`;
+    }
+    document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
   }
 
-  function updateTimerUI() {
-    const m = Math.floor(timer / 60);
-    const s = timer % 60;
-    document.getElementById('timer').textContent = `Temps restant : ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-  }
+  // passage à la question suivante
+  i++;
+  currentSel = new Set();
+  if (i < Q.length) render();
+  else finish();
+}
 
-  // Démarrage
+// =====================
+// Timer & fin
+// =====================
+function resetQuiz() {
+  stopTimer();
+  timer = 30 * 60;
+  initQuiz();
+}
+
+function finish() {
+  stopTimer();
+  const total = Q.length;
+  const pct = Math.round(100 * score / total);
+  document.getElementById('bar').style.width = '100%';
+  document.getElementById('meta').textContent = 'Terminé ✅';
+  document.getElementById('quiz').innerHTML = `
+    <div class="q">Bravo ! Tu as terminé le quiz.</div>
+    <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
+    <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
+  document.getElementById('next').disabled = true;
+  document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
+}
+
+function startTimer() {
+  stopTimer();
+  ticker = setInterval(() => {
+    timer--;
+    if (timer <= 0) {
+      document.getElementById('timer').classList.add('timeup');
+      document.getElementById('timer').textContent = "Temps écoulé";
+      finish();
+    } else {
+      updateTimerUI();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (ticker) { clearInterval(ticker); ticker = null; }
+}
+
+function updateTimerUI() {
+  const m = Math.floor(timer / 60);
+  const s = timer % 60;
+  document.getElementById('timer').textContent =
+    `Temps restant : ${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+// =====================
+// Mot de passe & lancement
+// =====================
 function askPassword() {
   const pass = prompt("Entrez le mot de passe pour accéder au quiz :");
   if (pass === "AF2025") {
     initQuiz();
   } else {
     alert("Mot de passe incorrect. Accès refusé.");
-    document.getElementById('quiz').innerHTML = "<p style='color:red; text-align:center; font-weight:bold;'>Accès refusé : mot de passe incorrect.</p>";
+    document.getElementById('quiz').innerHTML =
+      "<p style='color:red; text-align:center; font-weight:bold;'>Accès refusé : mot de passe incorrect.</p>";
     document.getElementById('next').disabled = true;
     document.getElementById('reset').disabled = true;
     document.getElementById('meta').textContent = '';
@@ -430,9 +506,11 @@ function askPassword() {
 
 // Démarrage avec demande de mot de passe
 askPassword();
-
-  initQuiz();
 </script>
 
 </body>
 </html>
+  // … continuer jusqu’à 110 questions …
+  
+
+
