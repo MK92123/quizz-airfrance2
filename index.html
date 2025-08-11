@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Air France — Questions 1 à 25</title>
+  <title>Quiz Air France - Questions 1 à 20</title>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -85,7 +85,7 @@
       align-items: flex-start;
       cursor: pointer;
     }
-    input[type=radio] {
+    input[type=radio], input[type=checkbox] {
       margin-top: .25rem;
     }
     .feed {
@@ -151,11 +151,11 @@
   <div class="wrap">
     <header>
       <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
-      <h1>Quiz Air France — Questions 1 à 25</h1>
+      <h1>Quiz Air France — Questions 1 à 20</h1>
     </header>
     <div class="sub">
       <span id="meta" class="pill"></span>
-      <span id="timer" class="pill">Temps restant : 25:00</span>
+      <span id="timer" class="pill">Temps restant : 30:00</span>
       <span id="liveScore" class="pill"></span>
     </div>
     <div class="progress"><div id="bar" class="bar"></div></div>
@@ -165,7 +165,7 @@
       <button id="next" onclick="nextQ()" disabled>Suivant</button>
     </div>
     <div id="score" class="score"></div>
-    <footer>Version 1.0 — Questions 1 à 25 • chrono 25:00 • feedback instantané • score final</footer>
+    <footer>Version 1.0 — ordre aléatoire • chrono 30:00 • feedback instantané • score final</footer>
   </div>
 
   <script>
@@ -173,55 +173,51 @@
       {t:"Quelle est la limite maximale autorisée pour le poids total (animal + caisse) d’un AVIH transporté chez Air France ?", o:["50 kg", "75 kg", "90 kg", "Aucune limite"], c:1, e:"Limite opérationnelle 75 kg."},
       {t:"Quel est l’âge minimum requis pour qu’un animal puisse être accepté en tant qu’AVIH selon les règles Air France ?", o:["8 semaines", "10 semaines", "15 semaines", "12 semaines"], c:2, e:"Minimum 15 semaines + vaccinations requises."},
       {t:"Pourquoi les races brachycéphales sont-elles refusées en soute chez Air France ?", o:["Acceptées sous réserve", "Acceptées si caisse ventilée", "Refusées à cause du risque respiratoire", "Acceptées si poids < 8 kg"], c:2, e:"Risque respiratoire élevé → refus en soute."},
-      {t:"Dans quelles conditions un Staffordshire Bull Terrier LOF non classé en catégorie 1 ou 2 peut-il être transporté en soute ?", o:["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], c:1, e:"Staffie LOF non classé → possible en soute si cage conforme."},
+      {t:"Dans quelles conditions un Staffie LOF non classé en catégorie 1 ou 2 peut-il être transporté en soute ?", o:["Toujours interdit", "Possible en soute avec cage conforme", "Cabine uniquement", "Libre sans formalités"], c:1, e:"Staffie LOF non classé → possible en soute si cage conforme."},
       {t:"Quelles sont les caractéristiques d’une caisse conforme pour un AVIH ?", o:["Rigide et ventilée", "Porte boulonnée", "Roulettes obligatoires", "Verrou fiable"], c: [0,1,3], e:"Rigide, ventilée, porte boulonnée, verrou solide."},
       {t:"Où doit-on créer le service AVIH dans Altéa ?", o:["Remarque libre", "SSR AVIH avec quota vérifié", "OSI uniquement", "Aucun"], c:1, e:"Créer SSR + contrôler quota."},
       {t:"Quels documents sanitaires sont exigés pour le transport d’un AVIH en UE ?", o:["Inutiles", "Exigés selon pays et compagnie", "Jamais requis", "Vérifiés uniquement par le PNC"], c:1, e:"Conformes aux exigences pays/compagnie."},
-      {t:"Quand est-il nécessaire d’appeler le CLD et d’envoyer un télex pour un AVIH ?", o:["Toujours, même si réservé", "Uniquement si réservation sold out", "Si ajout tardif ou sans réservation", "Jamais"], c:2, e:"Si pas de réservation AVIH et ajout tardif."},
+      {t:"Quand faut-il appeler le CLD et envoyer un télex pour un AVIH ?", o:["Toujours, même si déjà réservé", "Uniquement si réservations sold out", "Si ajout tardif ou sans réservation", "Jamais"], c:2, e:"Si pas de réservation AVIH et ajout tardif."},
       {t:"Comment est traitée une correspondance courte AVIH entre SPL, CDG et ORY ?", o:["Toujours refusée", "Acceptée sans condition", "Traitée selon procédures dédiées", "Libre si caisse souple"], c:2, e:"Procédures AVIH spécifiques en correspondance."},
       {t:"Quelle est la règle clé pour un PETC en cabine ?", o:["Animal libre", "Sous le siège avec limites de gabarit et poids", "Dans le coffre cabine", "Dans les toilettes"], c:1, e:"Confiné sous le siège, limites cabine."},
       {t:"Les SVAN sont-ils acceptés sans documents ?", o:["Oui", "Sous conditions et documents pays/compagnie", "Toujours refusés", "Bagage cabine obligatoire"], c:1, e:"Selon réglementation pays/compagnie."},
       {t:"Quand faut-il refuser un AVIH ?", o:["Caisse molle", "Animal < 15 semaines", "Race brachycéphale", "Poids total > 75 kg"], c: [0,1,2,3], e:"Tous ces cas sont non conformes."},
       {t:"Quel est le principe de l’empowerment chez Air France ?", o:["Décider hors cadre", "Décider dans un cadre défini", "Uniquement avec accord écrit", "Jamais"], c:1, e:"Agir dans les limites d’empowerment."},
-      {t:"Quel est l’objectif opérationnel du ‘wave excess’ ?", o:["Fluidifier les files et éviter micro-encaissements", "Augmenter les recettes", "Créer des exceptions aléatoires", "Ralentir le flux"], c:0, e:"Fluidité/efficacité, pas systématique."},
+      {t:"Quel est l’objectif opérationnel du ‘wave excess’ ?", o:["Fluidifier les files et éviter les micro-encaissements", "Augmenter les recettes", "Créer des exceptions aléatoires", "Ralentir le flux"], c:0, e:"Fluidité/efficacité, pas systématique."},
       {t:"Quand doit-on éviter le ‘wave excess’ ?", o:["En cas de conflit ou agression", "Files longues avec pax coopératif", "Pics de vacances", "Pannes système"], c:0, e:"Ne pas l’utiliser en cas sensible."},
-      {t:"Que signifie la traçabilité dans le cadre de l’empowerment ?", o:["Inutile", "Souhaitable selon cadre défini", "Interdite", "Uniquement si PNC demande"], c:1, e:"La traçabilité est souhaitable pour les décisions prises."},
-      {t:"Quelle est la priorité absolue dans l’empowerment ?", o:["Image de la compagnie", "Sécurité et sûreté", "Recette financière", "Aucune priorité"], c:1, e:"La sécurité et la sûreté sont toujours prioritaires."},
-      {t:"Quelle est la procédure en cas d’annulation jour J ?", o:["Informer les clients par annonce et affichage", "Garder le silence", "Proposer des options de réacheminement", "Offrir des prestations si éligible"], c:[0,2,3], e:"Informer, proposer et assister sont obligatoires."},
-      {t:"Quelles actions doit-on prendre lors d’un misco avec bagage non transférable à temps ?", o:["Ignorer le bagage", "Informer le client, taguer en rush et proposer des options", "Détruire le tag", "Annuler le voyage"], c:1, e:"Informer le client et gérer le bagage en priorité."},
-      {t:"Qui bénéficie prioritairement d’un hébergement DBC ?", o:["Au hasard", "PMR, familles et vulnérables", "Derniers arrivés", "Clients sans bagages"], c:1, e:"Priorité aux PMR, familles et clients vulnérables."},
-      {t:"Que faire en cas de vol annulé ?", o:["Fournir une attestation d’annulation", "Rien", "Laisser client imprimer seul", "PNC gère automatiquement"], c:0, e:"Attestation disponible sur demande."},
-      {t:"Quelles sont les consignes pour un affrètement last minute ?", o:["Procédure standard", "Procédure dédiée avec infos et services", "Refus", "Libre"], c:1, e:"Consignes spécifiques à respecter."}
+      {t:"Qui peut autoriser un ‘process override’ en escale ?", o:["Tout agent", "Manager opérationnel selon procédure"], c:1, e:"Chaîne d’autorité définie."},
+      {t:"La tolérance ‘bag pool’ s’applique-t-elle à tout le réseau AF ?", o:["Oui", "Non, périmètre limité (ex. Afrique 12–13)"], c:1, e:"Limitée à un périmètre défini."},
+      {t:"À l’arrivée, poussette enregistrée en soute :", o:["Toujours remise passerelle", "Tapis bagages ou comptoir bagages spéciaux selon acheminement", "Toujours à l’escale de correspondance"], c:1, e:"Selon circuit bagage/gabarit."},
+      {t:"Quelle est la règle pour les liquides en cabine ?", o:["100 ml max chacun, sac 1L", "Aucune limite"], c:0, e:"Règle 100 ml + sac 1L + exceptions."},
+      {t:"Les aérosols de toilette (250 ml) sont-ils autorisés ?", o:["Oui, avec restrictions", "Non, jamais admis"], c:0, e:"Quantités et protections de valve requises."}
     ];
-
-    // Mélange fonction
-    function shuffle(array){
-      for(let i = array.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Mélange options et recalcul index correct
-    function shuffleOptions(q){
-      const pairs = q.o.map((text, idx) => ({text, idx}));
-      shuffle(pairs);
-      q.o = pairs.map(p => p.text);
-      if(Array.isArray(q.c)){
-        q.c = q.c.map(ci => pairs.findIndex(p => p.idx === ci)).sort((a,b)=>a-b);
-      } else {
-        q.c = pairs.findIndex(p => p.idx === q.c);
-      }
-      return q;
-    }
 
     let Q = [];
     let i = 0;
     let answered = false;
     let score = 0;
-    let timer = 25 * 60;
+    let timer = 30 * 60;
     let ticker = null;
+
+    function shuffle(array){
+      for(let j = array.length - 1; j > 0; j--){
+        const k = Math.floor(Math.random() * (j + 1));
+        [array[j], array[k]] = [array[k], array[j]];
+      }
+      return array;
+    }
+
+    function shuffleOptions(q){
+      const pairs = q.o.map((text, idx) => ({text, idx}));
+      shuffle(pairs);
+      q.o = pairs.map(p => p.text);
+      if(Array.isArray(q.c)){
+        q.c = q.c.map(ci => pairs.findIndex(p => p.idx === ci)).sort((a,b) => a - b);
+      } else {
+        q.c = pairs.findIndex(p => p.idx === q.c);
+      }
+      return q;
+    }
 
     function initQuiz(){
       Q = BASE.map(q => ({t:q.t, o:[...q.o], c:q.c, e:q.e})).map(shuffleOptions);
@@ -237,17 +233,22 @@
     function render(){
       const bar = document.getElementById('bar');
       const meta = document.getElementById('meta');
-      const sc  = document.getElementById('liveScore');
-      const qn  = Q[i];
+      const sc = document.getElementById('liveScore');
+      const qn = Q[i];
       const total = Q.length;
 
-      meta.textContent = `Question ${i+1} / ${total}`;
-      bar.style.width = `${Math.round(((i)/total)*100)}%`;
+      meta.textContent = `Question ${i + 1} / ${total}`;
+      bar.style.width = `${Math.round(((i) / total) * 100)}%`;
       sc.textContent = `Score : ${score} / ${total}`;
 
       let wrap = `<div class="q">${qn.t}</div><ul>`;
-      qn.o.forEach((opt,idx) => {
-        wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="pick(${idx})"> ${opt}</label></li>`;
+      qn.o.forEach((opt, idx) => {
+        if(Array.isArray(qn.c)){
+          // For multiple choice questions, use checkboxes
+          wrap += `<li><label><input type="checkbox" name="opt" value="${idx}" onclick="onSelect()"> ${opt}</label></li>`;
+        } else {
+          wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="onSelect()"> ${opt}</label></li>`;
+        }
       });
       wrap += `</ul><div id="feed" class="feed"></div>`;
 
@@ -256,49 +257,62 @@
       document.getElementById('next').disabled = true;
     }
 
-    function pick(sel){
-      if(answered) return;
-      answered = true;
+    function onSelect(){
+      if(!answered) document.getElementById('next').disabled = false;
+    }
+
+    function evaluate(){
       const qn = Q[i];
-      const feed = document.getElementById('feed');
       if(Array.isArray(qn.c)){
-        const isCorrect = Array.isArray(sel) ? JSON.stringify(sel.sort()) === JSON.stringify(qn.c) : false;
-        if(isCorrect){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
-        } else {
-          let sol = qn.c.map(idx => qn.o[idx]).join(' + ');
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : ${sol}. ${qn.e}`;
-        }
+        const selected = Array.from(document.querySelectorAll('input[name="opt"]:checked')).map(el => parseInt(el.value));
+        selected.sort((a,b) => a - b);
+        if(selected.length === 0) return null;
+        return JSON.stringify(selected) === JSON.stringify(qn.c);
       } else {
-        if(sel === qn.c){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
+        const selected = document.querySelector('input[name="opt"]:checked');
+        if(!selected) return null;
+        return parseInt(selected.value) === qn.c;
+      }
+    }
+
+    function nextQ(){
+      if(answered){
+        i++;
+        if(i < Q.length){
+          render();
         } else {
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : "${qn.o[qn.c]}". ${qn.e}`;
+          finish();
+        }
+        return;
+      }
+      const correct = evaluate();
+      if(correct === null){
+        alert("Choisis au moins une réponse.");
+        return;
+      }
+      answered = true;
+      const feed = document.getElementById('feed');
+      const qn = Q[i];
+      if(correct){
+        score++;
+        feed.className = 'feed ok';
+        feed.textContent = `Bonne réponse. ${qn.e}`;
+      } else {
+        feed.className = 'feed bad';
+        if(Array.isArray(qn.c)){
+          const sol = qn.c.map(idx => qn.o[idx]).join(' + ');
+          feed.textContent = `Mauvaise réponse. Solution : ${sol}. ${qn.e}`;
+        } else {
+          feed.textContent = `Mauvaise réponse. Solution : "${qn.o[qn.c]}". ${qn.e}`;
         }
       }
       document.getElementById('next').disabled = false;
       document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
     }
 
-    function nextQ(){
-      if(!answered){
-        alert("Choisis une réponse avant de continuer.");
-        return;
-      }
-      i++;
-      if(i < Q.length) render();
-      else finish();
-    }
-
     function resetQuiz(){
       stopTimer();
-      timer = 25 * 60;
+      timer = 30 * 60;
       initQuiz();
     }
 
@@ -345,357 +359,4 @@
 
     // Démarrage
     initQuiz();
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Quiz Air France — Questions 26 à 55</title>
-  <style>
-    :root {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --txt: #111827;
-      --muted: #6b7280;
-      --ok: #0f766e;
-      --bad: #b91c1c;
-      --pri: #0a66ff;
-    }
-    body {
-      margin: 0; padding: 2rem;
-      background: var(--bg);
-      color: var(--txt);
-      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    }
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      background: var(--card);
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.06);
-      padding: 24px;
-    }
-    header {
-      display: flex; flex-direction: column; align-items: center; gap: .35rem;
-      margin-bottom: 8px;
-    }
-    header img {
-      max-width: 220px; height: auto; display: block;
-    }
-    h1 {
-      margin: 4px 0 0; text-align: center;
-    }
-    .sub {
-      color: var(--muted);
-      text-align: center;
-      margin: 6px 0 12px;
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .pill {
-      background: #eef2ff;
-      color: #1e3a8a;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: .9rem;
-    }
-    .progress {
-      height: 10px;
-      background: #e5e7eb;
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 8px 0 18px;
-    }
-    .bar {
-      height: 100%;
-      width: 0;
-      background: var(--pri);
-      transition: width .25s;
-    }
-    .q {
-      font-weight: 700;
-      margin: 10px 0 12px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      margin: .4rem 0;
-    }
-    label {
-      display: flex;
-      gap: .6rem;
-      align-items: flex-start;
-      cursor: pointer;
-    }
-    input[type=radio] {
-      margin-top: .25rem;
-    }
-    .feed {
-      display: none;
-      margin-top: 12px;
-      border-radius: 10px;
-      padding: 10px;
-    }
-    .ok {
-      display: block;
-      background: #e7f7f3;
-      color: #065f46;
-    }
-    .bad {
-      display: block;
-      background: #fdeaea;
-      color: #7f1d1d;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    #next {
-      background: var(--pri);
-      color: #fff;
-    }
-    #next:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-    }
-    #reset {
-      background: #6b7280;
-      color: #fff;
-    }
-    .score {
-      margin-top: 8px;
-      text-align: center;
-      color: var(--muted);
-    }
-    footer {
-      margin-top: 18px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-    .timeup {
-      color: #b91c1c;
-      font-weight: 700;
-    }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
-      <h1>Quiz Air France — Questions 26 à 55</h1>
-    </header>
-    <div class="sub">
-      <span id="meta" class="pill"></span>
-      <span id="timer" class="pill">Temps restant : 25:00</span>
-      <span id="liveScore" class="pill"></span>
-    </div>
-    <div class="progress"><div id="bar" class="bar"></div></div>
-    <div id="quiz"></div>
-    <div class="row">
-      <button id="reset" onclick="resetQuiz()">Recommencer (nouvel ordre)</button>
-      <button id="next" onclick="nextQ()" disabled>Suivant</button>
-    </div>
-    <div id="score" class="score"></div>
-    <footer>Version 1.0 — Questions 26 à 55 • chrono 25:00 • feedback instantané • score final</footer>
-  </div>
-
-  <script>
-    const BASE = [
-      {t:"Quelle étiquette est apposée sur les bagages d’un UM ?", o:["UM", "PWD", "HEAVY", "PRIORITY"], c:0, e:"Les bagages des UM portent une étiquette spécifique ‘UM’."},
-      {t:"Quelles sont les conditions pour un mineur voyageant en groupe vers l’Espagne sans AST ?", o:["Accepté sans conditions", "Refusé", "Accompagné par PNC", "Document d’identité seul"], c:1, e:"L’AST est obligatoire pour les mineurs en groupe."},
-      {t:"Que faire si un client tunisien MISCO arrive sans visa pour un vol le lendemain ?", o:["Le loger chez un collègue", "Vérifier visa, sinon hébergement à l’aéroport", "Réacheminer immédiatement", "Hôtel en ville"], c:1, e:"Sans visa valide, pas de sortie de l’aéroport."},
-      {t:"Quelle zone d’enregistrement est réservée aux UM au Terminal 2E ?", o:["Zone 14", "Zone 12", "Zone 3", "Zone 8"], c:0, e:"Les UM s’enregistrent en zone 14."},
-      {t:"Quelle priorité d’embarquement a un PMR ?", o:["Embarquement prioritaire", "Pas de priorité", "Embarquement en dernier", "Libre"], c:0, e:"Les PMR bénéficient d’un embarquement prioritaire."},
-      {t:"Comment doit être placé le ‘BIS’ dans une commande Ozion PMR ?", o:["Avant le prénom", "Avant le nom", "En commentaire", "Nulle part"], c:0, e:"Le BIS est placé avant le prénom sur la commande d’origine."},
-      {t:"Quelles sont les conditions pour le transport d’un animal SVAN ?", o:["Toujours accepté", "Sous conditions et documents pays/compagnie", "Interdit", "Bagage cabine obligatoire"], c:1, e:"SVAN soumis à réglementation spécifique."},
-      {t:"Quels sont les équipements autorisés pour un fauteuil roulant WCBD ?", o:["Fauteuil manuel", "Fauteuil à batterie sèche", "Fauteuil à batterie lithium", "Béquilles"], c:1, e:"WCBD désigne un fauteuil à batterie sèche."},
-      {t:"Quels sont les équipements autorisés pour un fauteuil roulant WCLB ?", o:["Fauteuil manuel", "Fauteuil à batterie lithium", "Fauteuil à batterie humide", "Béquilles"], c:1, e:"WCLB signifie fauteuil à batterie lithium."},
-      {t:"Comment gérer un bagage ‘pooling’ chez Air France ?", o:["Valable partout", "Périmètre limité", "Inexistant", "Toujours refusé"], c:1, e:"Le bagage pooling est limité à certains périmètres."},
-      {t:"Quelle est la procédure en cas d’échec de l’enregistrement EBB ?", o:["Accepter sans conditions", "EBB soumis à conditions et restrictions", "Toujours refusé", "PNC gère"], c:1, e:"L’enregistrement EBB est soumis à conditions."},
-      {t:"Que signifie l’acronyme PAM chez Air France ?", o:["Passenger Assistance Management", "Passenger Assistance Manual", "Priority Access Mode", "Passenger Air Movement"], c:1, e:"PAM signifie Passenger Assistance Manual."},
-      {t:"Quelles sont les règles pour transporter une batterie lithium dans un fauteuil roulant ?", o:["Toujours en cabine", "Toujours en soute", "Selon le type d’appareil et la puissance", "Interdit"], c:2, e:"Transport selon appareil et puissance de batterie."},
-      {t:"Quelles sont les restrictions pour les allumettes ‘strike anywhere’ ?", o:["Tolérées", "Interdites", "Soute uniquement", "Cabine illimité"], c:1, e:"Les allumettes ‘strike anywhere’ sont interdites."},
-      {t:"Comment doit être géré un client filmant un agent ?", o:["Ignorer", "Informer du refus, consigner et alerter", "PNC répond", "Autorisé"], c:1, e:"Refuser le filmage, consigner et alerter."},
-      {t:"Quelle est la politique d’Air France pour les power banks en cabine ?", o:["Autorisé sur soi uniquement", "Interdit", "Autorisé uniquement en soute", "Autorisé dans les coffres cabine"], c:0, e:"Power banks autorisées sur soi uniquement en cabine."},
-      {t:"Comment doit être traité un bagage avec tag RUSH ?", o:["Ignore", "Priorité haute pour acheminement", "Déchargé à l’aéroport", "Mélangé aux autres bagages"], c:1, e:"Tag RUSH indique priorité haute pour le bagage."},
-      {t:"Que signifie l’acronyme DBC ?", o:["Droit à la Bonne Conduite", "Droit au Bien-être Client", "Droits des Bagages et Compensation", "Droit au réacheminement et assistance"], c:3, e:"DBC désigne droits liés à réacheminement et assistance."},
-      {t:"Quel est l’objectif principal d’un réacheminement ?", o:["Faire payer un nouveau billet", "Offrir une solution alternative rapide", "Annuler le vol", "Proposer un hébergement"], c:1, e:"Réacheminement vise à une solution alternative."},
-      {t:"Quelles sont les consignes en cas de vol annulé jour J ?", o:["Informer, proposer des options et offrir prestations", "Ne rien dire", "Retarder les annonces", "Fermer les portes"], c:0, e:"Communication claire et assistance obligatoire."},
-      {t:"Que faire en cas d’insultes ou intimidation envers un agent ?", o:["Ignore", "Procédure ICP selon gravité", "Répondre à l’insulte", "Renvoyer le client"], c:1, e:"Suivre procédure ICP adaptée."},
-      {t:"Qu’est-ce que la procédure ‘wave excess’ ?", o:["Gestion pour fluidifier files et éviter micro-encaissements", "Augmentation systématique des tarifs", "Création d’exceptions aléatoires", "Ralentissement des flux"], c:0, e:"Procédure pour fluidifier les files."},
-      {t:"Quelles actions prendre en cas de changement de configuration cabine ?", o:["Jamais changer", "Suivre procédure PAM de sur/déclassement", "Libre choix PNC", "Changer sans avis"], c:1, e:"Respecter la procédure PAM spécifique."}
-    ];
-
-    // Fonction de mélange
-    function shuffle(array){
-      for(let i = array.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    // Mélange des options et recalcul de l'index correct
-    function shuffleOptions(q){
-      const pairs = q.o.map((text, idx) => ({text, idx}));
-      shuffle(pairs);
-      q.o = pairs.map(p => p.text);
-      if(Array.isArray(q.c)){
-        q.c = q.c.map(ci => pairs.findIndex(p => p.idx === ci)).sort((a,b)=>a-b);
-      } else {
-        q.c = pairs.findIndex(p => p.idx === q.c);
-      }
-      return q;
-    }
-
-    let Q = [];
-    let i = 0;
-    let answered = false;
-    let score = 0;
-    let timer = 25 * 60;
-    let ticker = null;
-
-    function initQuiz(){
-      Q = BASE.map(q => ({t:q.t, o:[...q.o], c:q.c, e:q.e})).map(shuffleOptions);
-      shuffle(Q);
-      i = 0; score = 0; answered = false;
-      document.getElementById('next').disabled = true;
-      render();
-      startTimer();
-      updateTimerUI();
-      document.getElementById('score').textContent = '';
-    }
-
-    function render(){
-      const bar = document.getElementById('bar');
-      const meta = document.getElementById('meta');
-      const sc  = document.getElementById('liveScore');
-      const qn  = Q[i];
-      const total = Q.length;
-
-      meta.textContent = `Question ${i+1} / ${total}`;
-      bar.style.width = `${Math.round(((i)/total)*100)}%`;
-      sc.textContent = `Score : ${score} / ${total}`;
-
-      let wrap = `<div class="q">${qn.t}</div><ul>`;
-      qn.o.forEach((opt,idx) => {
-        wrap += `<li><label><input type="radio" name="opt" value="${idx}" onclick="pick(${idx})"> ${opt}</label></li>`;
-      });
-      wrap += `</ul><div id="feed" class="feed"></div>`;
-
-      document.getElementById('quiz').innerHTML = wrap;
-      answered = false;
-      document.getElementById('next').disabled = true;
-    }
-
-    function pick(sel){
-      if(answered) return;
-      answered = true;
-      const qn = Q[i];
-      const feed = document.getElementById('feed');
-      if(Array.isArray(qn.c)){
-        const isCorrect = Array.isArray(sel) ? JSON.stringify(sel.sort()) === JSON.stringify(qn.c) : false;
-        if(isCorrect){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
-        } else {
-          let sol = qn.c.map(idx => qn.o[idx]).join(' + ');
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : ${sol}. ${qn.e}`;
-        }
-      } else {
-        if(sel === qn.c){
-          score++;
-          feed.className = 'feed ok';
-          feed.textContent = `Bonne réponse. ${qn.e}`;
-        } else {
-          feed.className = 'feed bad';
-          feed.textContent = `Mauvaise réponse. Bonne réponse : "${qn.o[qn.c]}". ${qn.e}`;
-        }
-      }
-      document.getElementById('next').disabled = false;
-      document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
-    }
-
-    function nextQ(){
-      if(!answered){
-        alert("Choisis une réponse avant de continuer.");
-        return;
-      }
-      i++;
-      if(i < Q.length) render();
-      else finish();
-    }
-
-    function resetQuiz(){
-      stopTimer();
-      timer = 25 * 60;
-      initQuiz();
-    }
-
-    function finish(){
-      stopTimer();
-      const total = Q.length;
-      const pct = Math.round(100 * score / total);
-      document.getElementById('bar').style.width = '100%';
-      document.getElementById('meta').textContent = 'Terminé ✅';
-      document.getElementById('quiz').innerHTML = `
-        <div class="q">Bravo ! Tu as terminé le quiz.</div>
-        <p class="score">Score final : <strong>${score}/${total}</strong> (${pct}%).</p>
-        <p>Tu peux cliquer sur “Recommencer (nouvel ordre)” pour rejouer.</p>`;
-      document.getElementById('next').disabled = true;
-      document.getElementById('liveScore').textContent = `Score final : ${score} / ${total} (${pct}%)`;
-    }
-
-    function startTimer(){
-      stopTimer();
-      ticker = setInterval(() => {
-        timer--;
-        if(timer <= 0){
-          document.getElementById('timer').classList.add('timeup');
-          document.getElementById('timer').textContent = "Temps écoulé";
-          finish();
-        } else {
-          updateTimerUI();
-        }
-      }, 1000);
-    }
-
-    function stopTimer(){
-      if(ticker){
-        clearInterval(ticker);
-        ticker = null;
-      }
-    }
-
-    function updateTimerUI(){
-      const m = Math.floor(timer/60);
-      const s = timer % 60;
-      document.getElementById('timer').textContent = `Temps restant : ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }
-
-    // Démarrage
-    initQuiz();
-  </script>
-</body>
-</html>
+  </script
