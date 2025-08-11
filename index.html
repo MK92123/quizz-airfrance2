@@ -27,16 +27,9 @@
       box-shadow: 0 8px 24px rgba(0,0,0,.06);
       padding: 24px;
     }
-    header {
-      display: flex; flex-direction: column; align-items: center; gap: .35rem;
-      margin-bottom: 8px;
-    }
-    header img {
-      max-width: 220px; height: auto; display: block;
-    }
-    h1 {
-      margin: 4px 0 0; text-align: center;
-    }
+    header { display: flex; flex-direction: column; align-items: center; gap: .35rem; margin-bottom: 8px; }
+    header img { max-width: 220px; height: auto; display: block; }
+    h1 { margin: 4px 0 0; text-align: center; }
     .sub {
       color: var(--muted);
       text-align: center;
@@ -46,104 +39,25 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-    .pill {
-      background: #eef2ff;
-      color: #1e3a8a;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: .9rem;
-    }
-    .progress {
-      height: 10px;
-      background: #e5e7eb;
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 8px 0 18px;
-    }
-    .bar {
-      height: 100%;
-      width: 0;
-      background: var(--pri);
-      transition: width .25s;
-    }
-    .q {
-      font-weight: 700;
-      margin: 10px 0 12px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    li {
-      margin: .4rem 0;
-    }
-    label {
-      display: flex;
-      gap: .6rem;
-      align-items: flex-start;
-      cursor: pointer;
-    }
-    input[type=radio], input[type=checkbox] {
-      margin-top: .25rem;
-    }
-    .feed {
-      display: none;
-      margin-top: 12px;
-      border-radius: 10px;
-      padding: 10px;
-    }
-    .ok {
-      display: block;
-      background: #e7f7f3;
-      color: #065f46;
-    }
-    .bad {
-      display: block;
-      background: #fdeaea;
-      color: #7f1d1d;
-    }
-    .row {
-      display: flex;
-      gap: 10px;
-      justify-content: space-between;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    #next {
-      background: var(--pri);
-      color: #fff;
-    }
-    #next:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-    }
-    #reset {
-      background: #6b7280;
-      color: #fff;
-    }
-    .score {
-      margin-top: 8px;
-      text-align: center;
-      color: var(--muted);
-    }
-    footer {
-      margin-top: 18px;
-      text-align: center;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-    .timeup {
-      color: #b91c1c;
-      font-weight: 700;
-    }
+    .pill { background: #eef2ff; color: #1e3a8a; border-radius: 999px; padding: 4px 10px; font-size: .9rem; }
+    .progress { height: 10px; background: #e5e7eb; border-radius: 99px; overflow: hidden; margin: 8px 0 18px; }
+    .bar { height: 100%; width: 0; background: var(--pri); transition: width .25s; }
+    .q { font-weight: 700; margin: 10px 0 12px; }
+    ul { list-style: none; padding: 0; margin: 0; }
+    li { margin: .4rem 0; }
+    label { display: flex; gap: .6rem; align-items: flex-start; cursor: pointer; }
+    input[type=radio], input[type=checkbox] { margin-top: .25rem; }
+    .feed { display: none; margin-top: 12px; border-radius: 10px; padding: 10px; }
+    .ok { display: block; background: #e7f7f3; color: #065f46; }
+    .bad { display: block; background: #fdeaea; color: #7f1d1d; }
+    .row { display: flex; gap: 10px; justify-content: space-between; margin-top: 16px; flex-wrap: wrap; }
+    button { border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 600; }
+    #next { background: var(--pri); color: #fff; }
+    #next:disabled { opacity: .5; cursor: not-allowed; }
+    #reset { background: #6b7280; color: #fff; }
+    .score { margin-top: 8px; text-align: center; color: var(--muted); }
+    footer { margin-top: 18px; text-align: center; color: var(--muted); font-size: .9rem; }
+    .timeup { color: #b91c1c; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -165,10 +79,9 @@
         margin-bottom: 12px;
         font-weight: 700;
       ">
-      Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autorisée est interdite. En cas de fuite, merci de contacter kneycie@gmail.com
-      Toute diffusion ou utilisation non autorisée est interdite. 
+        Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autorisée est interdite. En cas de fuite, merci de contacter kneycie@gmail.com
+        Toute diffusion ou utilisation non autorisée est interdite. 
       </p>
-
       <img src="..." alt="Air France Logo" onerror="this.style.display='none'">
       <h1>Quiz Air France</h1>
     </header>
@@ -185,12 +98,12 @@
       <button id="next" onclick="nextQ()" disabled>Suivant</button>
     </div>
     <div id="score" class="score"></div>
-    <footer>Version 4.0 — ordre aléatoire • chrono 30:00 • feedback instantané • score final</footer>
+    <footer>Version 5.0 — ordre aléatoire • multi-clic: correction puis suivant • chrono 30:00</footer>
   </div>
 
 <script>
 // =====================
-// Banque de questions (87)
+// Banque de questions (87) — mêmes libellés que fournis par toi.
 // =====================
 const BASE = [
   {t:"Quel est le poids maximum autorisé pour un bagage en soute pour un client Business Air France ?", o:["1x23 kg","2x32 kg","3x23 kg","2x23 kg"], c:[1], e:"La franchise Business est de 2 bagages de 32 kg chacun."},
@@ -293,13 +206,11 @@ function shuffle(array) {
   return array;
 }
 
-// Mélange options et recalcule les index corrects (gère c = tableau d'indices)
+// Mélange options et recalcule les index corrects
 function shuffleOptions(q) {
   const pairs = q.o.map((text, idx) => ({ text, idx }));
   shuffle(pairs);
   q.o = pairs.map(p => p.text);
-
-  // c est toujours un tableau (même pour une seule bonne réponse)
   const newC = [];
   pairs.forEach((p, newIdx) => { if (q.c.includes(p.idx)) newC.push(newIdx); });
   q.c = newC.sort((a,b)=>a-b);
@@ -307,16 +218,15 @@ function shuffleOptions(q) {
 }
 
 // =====================
-// État du quiz
+// État
 // =====================
 let Q = [];
 let i = 0;
-let answered = false;
 let score = 0;
-let timer = 30 * 60; // 30 min
+let timer = 30 * 60;
 let ticker = null;
-// pour multi-réponses
 let currentSel = new Set();
+let phase = "answer"; // 'answer' -> corriger; 'review' -> passer à la suivante
 
 // =====================
 // Démarrage / rendu
@@ -324,8 +234,7 @@ let currentSel = new Set();
 function initQuiz() {
   Q = BASE.map(q => ({ t: q.t, o: [...q.o], c: [...q.c], e: q.e })).map(shuffleOptions);
   shuffle(Q);
-  i = 0; score = 0; answered = false;
-  currentSel = new Set();
+  i = 0; score = 0; currentSel = new Set(); phase = "answer";
   document.getElementById('next').disabled = true;
   render();
   startTimer();
@@ -342,7 +251,7 @@ function render() {
   bar.style.width = `${Math.round((i / total) * 100)}%`;
   sc.textContent = `Score : ${score} / ${total}`;
 
-  const isMulti = Array.isArray(qn.c) && qn.c.length > 1;
+  const isMulti = qn.c.length > 1;
   const inputType = isMulti ? 'checkbox' : 'radio';
 
   let wrap = `<div class="q">${qn.t}${isMulti ? " <span style='color:#6b7280;font-weight:400'>(plusieurs réponses)</span>" : ""}</div><ul>`;
@@ -350,7 +259,7 @@ function render() {
     wrap += `
       <li>
         <label>
-          <input type="${inputType}" name="opt${i}" value="${idx}" onclick="pick(${idx})">
+          <input type="${inputType}" name="opt${i}" value="${idx}" onclick="toggleSel(${idx})">
           ${opt}
         </label>
       </li>`;
@@ -358,62 +267,41 @@ function render() {
   wrap += `</ul><div id="feed" class="feed"></div>`;
 
   document.getElementById('quiz').innerHTML = wrap;
-  answered = false;
-  // Pour multi, Next désactivé tant qu'aucune coche ; pour simple, Next s'activera au pick()
-  document.getElementById('next').disabled = isMulti;
+  phase = "answer";
+  document.getElementById('next').textContent = "Suivant";
+  document.getElementById('next').disabled = true;
   updateTimerUI();
 }
 
-// =====================
-// Sélection & validation
-// =====================
-function pick(sel) {
-  const qn = Q[i];
-  const isMulti = qn.c.length > 1;
-
-  if (!isMulti) {
-    if (answered) return;
-    answered = true;
-    const feed = document.getElementById('feed');
-    if (sel === qn.c[0]) {
-      score++;
-      feed.className = 'feed ok';
-      feed.textContent = `Bonne réponse. ${qn.e}`;
-    } else {
-      feed.className = 'feed bad';
-      const corr = qn.o[qn.c[0]];
-      feed.textContent = `Mauvaise réponse. Bonne réponse : "${corr}". ${qn.e}`;
-    }
-    document.getElementById('next').disabled = false;
-    document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
-    return;
+function toggleSel(idx) {
+  const input = document.querySelector(`input[name="opt${i}"][value="${idx}"]`);
+  if (input.type === "radio") {
+    currentSel = new Set([idx]);
+  } else {
+    if (input.checked) currentSel.add(idx); else currentSel.delete(idx);
   }
-
-  // multi-réponses
-  const input = document.querySelector(`input[name="opt${i}"][value="${sel}"]`);
-  if (input.checked) currentSel.add(sel); else currentSel.delete(sel);
-
-  // Activer "Suivant" seulement si au moins 1 coche
   document.getElementById('next').disabled = currentSel.size === 0;
 }
 
+// =====================
+// Suivant: correction puis avance
+// =====================
 function nextQ() {
   const qn = Q[i];
-  const isMulti = qn.c.length > 1;
+  const feed = document.getElementById('feed');
 
-  if (!isMulti) {
-    if (!answered) {
-      alert("Choisis une réponse avant de continuer.");
+  if (phase === "answer") {
+    if (currentSel.size === 0) {
+      alert("Choisis au moins une réponse.");
       return;
     }
-  } else {
-    // comparer ensembles: sélection exacte requise
+    // correction
     const correct = new Set(qn.c);
     let ok = (currentSel.size === correct.size);
     if (ok) {
       for (const v of currentSel) if (!correct.has(v)) { ok = false; break; }
     }
-    const feed = document.getElementById('feed');
+
     if (ok) {
       score++;
       feed.className = 'feed ok';
@@ -421,12 +309,21 @@ function nextQ() {
     } else {
       feed.className = 'feed bad';
       const corrLabels = qn.c.map(idx => `"${qn.o[idx]}"`).join(", ");
-      feed.textContent = `Mauvaise réponse. Bonnes réponses : ${corrLabels}. ${qn.e}`;
+      feed.innerHTML = `Mauvaise réponse. Bonnes réponses : ${corrLabels}. ${qn.e}`;
     }
     document.getElementById('liveScore').textContent = `Score : ${score} / ${Q.length}`;
+
+    // verrouiller les inputs
+    document.querySelectorAll(`input[name="opt${i}"]`).forEach(el => el.disabled = true);
+
+    // passer en phase review
+    phase = "review";
+    document.getElementById('next').textContent = "Continuer";
+    document.getElementById('next').disabled = false;
+    return;
   }
 
-  // passage à la question suivante
+  // phase === 'review' -> passer à la question suivante
   i++;
   currentSel = new Set();
   if (i < Q.length) render();
@@ -500,7 +397,6 @@ function askPassword() {
   }
 }
 
-// Démarrage avec demande de mot de passe
 askPassword();
 </script>
 
