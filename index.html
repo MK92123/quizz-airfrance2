@@ -274,6 +274,10 @@ const BASE = [
   {t:"Comment sont traités les bagages ‘SMART luggage’ ?", o:["Batterie amovible retirée pour soute","Toujours interdits","Transportés en cabine","Transport libre"], c:0, e:"En soute, retirer la batterie si amovible (sinon refus)."},
   {t:"Procédure en cas de vol en surcharge (overbooking) ?", o:["Proposer volontaires, indemniser selon règlement","Refuser embarquement arbitrairement","Gérer par numéro de REQ","Offrir surclassement"], c:0, e:"Recherche de volontaires et indemnisation selon réglementation."},
   {t:"Quels passagers ont priorité à l’embarquement ?", o:["PMR, familles, Flying Blue Gold/Platinum","Clients Economy","Passagers standby","Clients sans billet"], c:0, e:"PMR, familles et clients éligibles Flying Blue prioritaires."}
+  {t:"Quel type de client à particularité ne sont non éligible au surclassement", o:["STCR","WCHS","ESCO","UMNR"], c:[1,3], e:"PAM 2.2.2.4 STCR/ESCO non éligible au surclassement"},
+  {t:"Un client voyage avec un PETC sur long courrier, il souhaite acheté un surclassement de dernière minute, c'est possible ?", o:["Non","Oui","Non même si c'est un SVAN","Oui avec acceptation préalable du CCP"], c:[1,3], e:"PAM 2.2.2.4 SVAN/PETC non éligible au surclassement"},
+  {t:"L'offre de surclassement à l'aéroport est accesible pour les clients: ", o:["Au départ de toutes les escales","Pour tous les clients en éspèce et en CB","Pour tous les clients mebre Fliying Blue, en éspèce en miles ou en CB ","Pour un client voyageant en civière "], c:[1,2,3], e:"[TON EXPLICATION ICI]"},
+
 ];
 
 
