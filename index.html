@@ -153,6 +153,28 @@
       <img src="https://th.bing.com/th/id/R.e981a076438938f94b4bdef2cc28ed8c?rik=Tl8jWSDOnbPScw&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fair-france-logo-png-air-france-logo-airfrance-skyteam-symbol-5650.png&ehk=%2bzIUC9nKAkbnVe1Gq4lsFCWxLCR3mhuQeeenhYbyNyQ%3d&risl=&pid=ImgRaw&r=0" alt="Air France Logo" onerror="this.style.display='none'">
       <h1>Quiz Air France</h1>
     </header>
+	<header>
+  <p id="disclaimer" style="
+    font-size: 0.9rem;
+    color: #b91c1c;
+    background-color: #fee2e2;
+    border: 1px solid #b91c1c;
+    padding: 8px 12px;
+    border-radius: 8px;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 700;
+  ">
+Propriété exclusive d'un Agent AF. Toute diffusion ou reproduction non autorisée est interdite. En cas de fuite, merci de contacter kneycie@gmail.com
+  Toute diffusion ou utilisation non autorisée est interdite. 
+  </p>
+
+  <img src="..." alt="Air France Logo" onerror="this.style.display='none'">
+  <h1>Quiz Air France</h1>
+</header>
+
+
     <div class="sub">
       <span id="meta" class="pill"></span>
       <span id="timer" class="pill">Temps restant : 30:00</span>
@@ -520,6 +542,24 @@
   }
 
   // Démarrage
+function askPassword() {
+  const pass = prompt("Entrez le mot de passe pour accéder au quiz :");
+  if (pass === "AF2025") {
+    initQuiz();
+  } else {
+    alert("Mot de passe incorrect. Accès refusé.");
+    document.getElementById('quiz').innerHTML = "<p style='color:red; text-align:center; font-weight:bold;'>Accès refusé : mot de passe incorrect.</p>";
+    document.getElementById('next').disabled = true;
+    document.getElementById('reset').disabled = true;
+    document.getElementById('meta').textContent = '';
+    document.getElementById('timer').textContent = '';
+    document.getElementById('liveScore').textContent = '';
+  }
+}
+
+// Démarrage avec demande de mot de passe
+askPassword();
+
   initQuiz();
 </script>
 
