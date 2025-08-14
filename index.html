@@ -123,23 +123,18 @@ const BASE = [
   {t:"Chiens catégorie 1 (pit-bull, tosa) ?", o:["Interdits vols commerciaux","Acceptés avec passeport","Carte vaccination","Document LOF"], c:[0], e:"Interdits sur vols commerciaux Air France."},
   {t:"Limite poids bagage standard Economy ?", o:["1 bagage 23 kg","2 bagages 32 kg","1 bagage 18 kg","2 bagages 20 kg"], c:[0], e:"Economy standard : 1 bagage en soute de 23 kg."},
   {t:"Tolérance ‘bag pool Africa’ s’applique à ?", o:["Bagages lourds excédant franchise zone Afrique","Un client voyageant pour l'afrique du Nord Maghreb","client s'enregistrant en EDS 14 ","Bagages à waive"], c:[0,2], e:"Tolérance de cumul de poids limitée au périmètre Afrique."},
-  
   {t:"Objets interdits en soute ?", o:["Allumettes de sûreté","sprays auto-défense","batteries lithium non protégées"], c:[0,1,2], e:"Articles dangereux interdits en soute."},
   {t:"Limite poids bagage cabine Economy ?", o:["1 bagage 12 kg","2 bagages 18 kg","1 bagage 10 kg","3 bagages 10 kg"], c:[0], e:"Economy : 1 bagage cabine (total 12 kg)."},
   {t:"Délai minimum recommandé transfert bagages ?", o:["2 heures","1 heure","3 heures","4 heures"], c:[0], e:"2 heures recommandées pour un transfert sûr."},
-  
   {t:"Documents pour mineurs Espagne sans AST ?", o:["AST obligatoire","Justificatif de domicile","CNI périmée","Passeport seul"], c:[0], e:"AST obligatoire selon destination."},
   {t:"Règle recharge e-cigarette à bord ?", o:["Interdite recharge et vapotage","Recharge autorisée","Sans restriction","Interdite soute"], c:[0], e:"Recharge et vapotage interdits en vol."},
   {t:"Critères animal accepté en cabine (PETC) ?", o:["Poids max 8 kg avec caisse sous siège","Poids max 15 kg","Poids max 5 kg","Pas de limite poids"], c:[0], e:"Max 8 kg (caisse incluse), sous le siège."},
   {t:"Poids max bagage Business ?", o:["2 bagages 32 kg chacun","3 bagages 23 kg","1 bagage 23 kg","2 bagages 23 kg"], c:[0], e:"Business : 2 pièces de 32 kg."},
-  
   {t:"Limite poids bagage cabine Business ?", o:["2 bagages 18 kg","1 bagage 12 kg","1 bagage 8 kg","3 bagages 10 kg"], c:[0], e:"Business : 2 bagages cabine, total 18 kg."},
   {t:"Règle acheminement fauteuils avec WCLB ?", o:["Batteries fixées, bornes protégées, info transporteur","Aucune précaution","Interdits","Acceptés librement"], c:[0], e:"Respect des règles spécifiques aux batteries (déconnexion/protection si requis)."},
-  
   {t:"Poids max autorisé animal AVIH ?", o:["75 kg","50 kg","100 kg","8 kg"], c:[0], e:"Jusqu’à 75 kg (animal + caisse) selon conditions."},
   {t:"La PAM 6.5 traite : ", o:["des 6.5 passagers indisciplinés"," des clients P"," de la matrice de réacheminement","des PWD"], c:[0], e:"Suivre PAM 6.5 pour passagers indisciplinés."},
   {t:"Limite âge minimum AVIH ?", o:["15 semaines avec vaccins","8 semaines sans vaccin","10 semaines libre","Aucune limite"], c:[0], e:"Minimum 15 semaines + vaccins à jour."},
-
   {t:"ICP2 est caractérisé par:", o:["Comportement agressif verbal","l'incivilité comportement dit seulement perturbateur","La violence","Insultes,Intimidations"], c:[0,3], e:"ICP2 c'est un comportement agressif verbal (insultes, invectives) ou physique (intimidation) : refus explicite des propositions du personnel ou d'appliquer les consignes."},
   {t:"Que signifie waive ‘TECHNICAL – PAIDUPGRADE’ après l'enregistrement d'un bagage de 25 kg pour un client ayant acheté un DOD en J?", o:["Waive surclassement payant (levée du $) sur franchise","Waive en cas de service payant en attente de paiement sur Altéa affichant un $","Waive pour un troisième bagage non inclus dans la franchise","Assistance PMR"], c:[0], e:"Waive pour valider un surclassement payant (icône $)."},
   {t:"Limite poids max waive ‘TOLERANCE 1KG’ : le bagage est à 23,7 ?", o:["1 kg supplémentaire","2 kg","Pas de tolérance","5 kg"], c:[0], e:"Tolérance +1 kg max par bagage (ex. 23,9 kg)."},
@@ -150,7 +145,6 @@ const BASE = [
   {t:"Quels passagers ont priorité à l’embarquement ?", o:["PMR, familles, Flying Blue Gold/Platinum","Clients Economy","Passagers standby","Clients sans billet"], c:[0], e:"PMR, familles et clients éligibles Flying Blue prioritaires."},
   {t:"Quel type de client à particularité non éligible au surclassement ?", o:["STCR","WCHS","ESCO","UMNR"], c:[0,2], e:"PAM 2.2.2.4 STCR/ESCO non éligible au surclassement"},
   {t:"Un client Ultimate au Salon a le droit à : ", o:["Peu importe la classe de réservation de ses invités et sa classe de réservation, 8 invités","1 invité peu importe la classe de réservation","8 invités si il est en Business ou La première","2 invités dans toutes les circonstances"], c:[0], e:"PAM 6.1.10.1 Ultimate : 8 invités, peu importe leur classe et la classe du client Ultimate."},
-
   {t:"Les ACARS sont:", o:["Des insectes", "Aircraft Communication Addressing and Reporting System","Système avion de communication et de transmission","Accompagnateur d’un client sur civière ","Carte American Express "], c:[1,2], e:"PAM 1.2 Lexique : (Aircraft Communication Addressing and Reporting System) Système avion de communication et de transmission "},
   {t:"Comment le système d'attribution de siège est-il géré ?", o:[" Passager assi en fonction de leurs PCV","Selon leur valeur commerciale","Selon les règles d'acceptation","Selon leur date d'achat de billet"], c:[0,1,2], e:"Altéa DC assoit automatiquement les clients selon leur valeur commerciale (PCV) et selon les règles d’acceptation. Lors de la préparation du vol, il peut être nécessaire d’attribuer des sièges spécifiques à certains clients. "},
   {t:"Chez Air France PVC désigne :", o:["La plue value des clients","Process Customer Value","Papa Victor Charlie","Passager volontonraire au changement"], c:[1], e:"PVC = Process Customer Value c'est la valeur du client pour Air France client fidèle, encarté..."},
