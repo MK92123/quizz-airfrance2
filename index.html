@@ -91,44 +91,44 @@
   </div>
 
   <script>
-    // 🔁 Remplace uniquement ces 2 lignes quand tes pages seront prêtes :
-    const LIEN_1 = "https://mk92123.github.io/quizz1/index.html"; // ← à remplacer par l'URL GitHub Pages du QCM 1
-    const LIEN_2 = "MON_LIEN_2"; // ← à remplacer par l'URL GitHub Pages du QCM 2
+    document.addEventListener("DOMContentLoaded", function() {
+      // 🔁 Remplace uniquement ces 2 lignes quand tes pages seront prêtes :
+      const LIEN_1 = "https://mk92123.github.io/quizz1/index.html"; // ← lien QCM 1
+      const LIEN_2 = "MON_LIEN_2"; // ← lien QCM 2
 
-    // ⤵️ Pas besoin de toucher à la suite
-    const a1 = document.getElementById('qcm1');
-    const a2 = document.getElementById('qcm2');
-    const card2 = document.getElementById('card2');
+      const a1 = document.getElementById('qcm1');
+      const a2 = document.getElementById('qcm2');
+      const card2 = document.getElementById('card2');
 
-    // QCM 1 : actif si lien renseigné
-    if (LIEN_1 && !LIEN_1.startsWith("MON_LIEN")) {
-      a1.href = LIEN_1;
-    } else {
-      a1.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("Renseigne d'abord MON_LIEN_1 dans le script.");
-      });
-    }
+      // QCM 1 : actif si lien renseigné
+      if (LIEN_1 && !LIEN_1.startsWith("MON_LIEN")) {
+        a1.setAttribute("href", LIEN_1);
+        a1.addEventListener("click", function(e) {
+          window.location.href = LIEN_1;
+        });
+      } else {
+        a1.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert("Renseigne d'abord MON_LIEN_1 dans le script.");
+        });
+      }
 
-    // QCM 2 : maintenance tant que le lien n'est pas remplacé
-    if (LIEN_2 && !LIEN_2.startsWith("MON_LIEN")) {
-      // Lien réel → activer, retirer le style maintenance
-      a2.href = LIEN_2;
-      a2.classList.add('btn-primary');
-      card2.classList.remove('maint');
-      // Remplacer le badge
-      const badge = card2.querySelector('.badge');
-      if (badge) badge.textContent = "Disponible";
-      // Masquer la note maintenance
-      const note = card2.querySelector('.maint-note');
-      if (note) note.style.display = 'none';
-    } else {
-      // Lien placeholder → bloquer le clic avec message
-      a2.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("QCM 2 en maintenance 🔧\nIl sera accessible dès que MON_LIEN_2 sera remplacé par l'URL GitHub Pages.");
-      });
-    }
+      // QCM 2 : maintenance tant que le lien n'est pas remplacé
+      if (LIEN_2 && !LIEN_2.startsWith("MON_LIEN")) {
+        a2.href = LIEN_2;
+        a2.classList.add('btn-primary');
+        card2.classList.remove('maint');
+        const badge = card2.querySelector('.badge');
+        if (badge) badge.textContent = "Disponible";
+        const note = card2.querySelector('.maint-note');
+        if (note) note.style.display = 'none';
+      } else {
+        a2.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert("QCM 2 en maintenance 🔧\nIl sera accessible dès que MON_LIEN_2 sera remplacé par l'URL GitHub Pages.");
+        });
+      }
+    });
   </script>
 </body>
 </html>
